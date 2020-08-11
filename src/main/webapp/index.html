@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alpollo</title>
+</head>
+<body>
+  <p></p>
+  <script>
+      fetch('/hello', {method: 'GET'}).then(response => response.text()).then((text) => {
+          document.querySelector('p').innerText = text;
+      });
+  </script>
+</body>
+</html>
