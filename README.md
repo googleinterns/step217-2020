@@ -1,3 +1,3 @@
-# step217-2020
+# Alpollo
 
 Capstone project for STEP 2020
