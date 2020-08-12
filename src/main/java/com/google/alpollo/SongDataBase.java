@@ -6,8 +6,8 @@ import java.util.List;
 public class SongDataBase {
     public static List<Song> topSongs() {
         List<Song> songs = new ArrayList<>();
-        songs.add(new Song("The Weeknd", "Blinding Lights", "some text"));
-        songs.add(new Song("Drake", "Toosie Slide", "another text"));
+        songs.add(new Song("The Weeknd", "Blinding Lights", "After Hours"));
+        songs.add(new Song("Drake", "Toosie Slide", "Dark Lane Demo Tapes"));
         return songs;
     }
 }
