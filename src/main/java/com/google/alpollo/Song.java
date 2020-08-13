@@ -11,15 +11,15 @@ public class Song {
         this.album = album;
     }
 
-    public String artist() {
+    public String getArtists() {
         return artist;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
-    public String album() {
+    public String getAlbum() {
         return album;
     }
 }
