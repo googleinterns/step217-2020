@@ -9,7 +9,8 @@ import java.io.IOException;
 import java.util.List;
 import com.google.gson.Gson;
 
-"/top"
+/** Servlet that returns a list of the most requested songs. */
+@WebServlet("/top")
 public class TopSongsServlet extends HttpServlet {
     private final Gson gson = new Gson();
 
