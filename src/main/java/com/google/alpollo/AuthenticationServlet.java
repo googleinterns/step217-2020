@@ -17,9 +17,9 @@ public class AuthenticationServlet extends HttpServlet {
         private final boolean loggedIn;
         private final String authUrl;
 
-        public LoggedInInfo(boolean loggedIn, String loginUrl) {
+        public LoggedInInfo(boolean loggedIn, String authUrl) {
             this.loggedIn = loggedIn;
-            this.authUrl = loginUrl;
+            this.authUrl = authUrl;
         }
     }
 
@@ -29,7 +29,7 @@ public class AuthenticationServlet extends HttpServlet {
         UserService userService = UserServiceFactory.getUserService();
 
         boolean loggedIn = userService.isUserLoggedIn();
-        String loginUrl = userService.createLoginURL("/");
-        response.getWriter().println(gson.toJson(new LoggedInInfo(loggedIn, loginUrl)));
+        String authUrl = userService.createLoginURL("/");
+        response.getWriter().println(gson.toJson(new LoggedInInfo(loggedIn, authUrl)));
     }
 }
