@@ -13,12 +13,12 @@
       });
 
       fetch('/auth', {method: 'GET'}).then(response => response.json()).then((loggedInInfo) => {
-          let loginLogout = document.querySelector('a');
-          loginLogout.href = loggedInInfo.loginUrl;
+          let authLinkElement = document.querySelector('a');
+          authLinkElement.href = loggedInInfo.authUrl;
           if (loggedInInfo.loggedIn) {
-              loginLogout.innerText = "Logout";
+              authLinkElement.innerText = "Logout";
           } else {
-              loginLogout.innerText = "Login"
+              authLinkElement.innerText = "Login"
           }
       });
   </script>

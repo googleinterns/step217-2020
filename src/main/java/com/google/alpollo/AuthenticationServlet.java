@@ -14,12 +14,12 @@ public class AuthenticationServlet extends HttpServlet {
     private final Gson gson = new Gson();
 
     private class LoggedInInfo {
-        final boolean loggedIn;
-        final String loginUrl;
+        private final boolean loggedIn;
+        private final String authUrl;
 
         public LoggedInInfo(boolean loggedIn, String loginUrl) {
             this.loggedIn = loggedIn;
-            this.loginUrl = loginUrl;
+            this.authUrl = loginUrl;
         }
     }
 
