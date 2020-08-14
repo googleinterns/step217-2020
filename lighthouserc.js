@@ -1,7 +1,7 @@
 module.exports = {
     ci: {
       collect: {
-        url: ['http://localhost:3000/'],
+        url: ['http://localhost:8080/'],
         startServerCommand: 'mvn package appengine:run',
       },
       upload: {
