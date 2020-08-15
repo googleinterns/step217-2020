@@ -1,7 +1,7 @@
 module.exports = {
     extends: 'lighthouse:default',
     passes: [
-      { passName: 'defaultPass', pauseAfterLoadMs: 15000 }
+      { passName: 'defaultPass', pauseAfterLoadMs: 45000 }
     ],
     ci: {
       collect: {
