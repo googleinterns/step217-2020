@@ -16,4 +16,4 @@ jobs:
       - name: Build webapp
         run: cd src/main/webapp && npm run build && cd ../../../
       - name: Run LightHouse CI
-        run: lhci autorun --collect.settings.configPath=lighthouserc.js
+        run: lhci autorun --collect.settings.configPath=lighthouserc.js --max-wait-for-load=600000
