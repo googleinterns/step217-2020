@@ -19,6 +19,10 @@ public class SentimentServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String lyrics = request.getParameter("lyrics");
     Sentiment sentiment = getSentiment(lyrics);
+    
+    String json = gson.toJson(sentiment);
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
   }
 
   /**
