@@ -1,6 +1,6 @@
 package com.google.alpollo;
 
-/** Implements the structure of the song. */
+/** Represents the structure of the song. */
 public class Song {
     private final String artist;
     private final String name;
