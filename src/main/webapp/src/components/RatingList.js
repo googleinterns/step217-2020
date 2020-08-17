@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   listIcon: {
+    fontFamily: "ABeeZee",
+    fontSize: "28px",
     color: "#3A3838",
   },
 }));
@@ -25,7 +27,7 @@ function EnumeratedList(props) {
   const reactListItems = listItems.map((item, index) => (
     <ListItem key={index + 1}>
       <ListItemIcon className={classes.listIcon}>
-        <Typography variant="h5">{index + 1}</Typography>
+        {index + 1}
       </ListItemIcon>
       <ListItemText
         primary={item.songName}
