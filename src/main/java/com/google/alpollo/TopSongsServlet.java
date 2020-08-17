@@ -11,13 +11,13 @@ import com.google.gson.Gson;
 
 "/top"
 public class TopSongsServlet extends HttpServlet {
-    private final Gson gson = new Gson();
+  private final Gson gson = new Gson();
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("application/json");
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    response.setContentType("application/json");
 
-        final List<Song> songs = SongDataBase.topSongs();
-        response.getWriter().write(gson.toJson(songs));
-    }
+    final List<Song> songs = SongDataBase.topSongs();
+    response.getWriter().write(gson.toJson(songs));
+  }
 }
