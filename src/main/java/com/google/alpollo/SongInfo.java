@@ -7,10 +7,10 @@ import com.google.cloud.language.v1.Entity;
 
 public class SongInfo {
   private String songName;
-  private int score;
+  private double score;
   private List<Entity> entityList = new ArrayList<>();
 
-  public SongInfo(String songName, int score, List<Entity> entityList) {
+  public SongInfo(String songName, double score, List<Entity> entityList) {
     this.songName = songName;
     this.score = score;
     this.entityList = entityList;
@@ -20,7 +20,7 @@ public class SongInfo {
     return songName;
   }
 
-  public int getSentimentScore() {
+  public double getSentimentScore() {
     return score;
   }
 
