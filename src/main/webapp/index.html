@@ -5,17 +5,17 @@
     <title>Alpollo</title>
 </head>
 <body>
-  <p></p>
-  <a></a>
+  <p id="hello"></p>
+  <a id="auth"></a>
   <script>
       fetch('/hello', {method: 'GET'}).then(response => response.text()).then((text) => {
-          document.querySelector('p').innerText = text;
+          document.getElementById("hello").innerText = text;
       });
 
       fetch('/auth', {method: 'GET'}).then(response => response.json()).then((loggedInInfo) => {
-          let authLinkElement = document.querySelector('a');
+          let authLinkElement = document.getElementById("auth");
           authLinkElement.href = loggedInInfo.authUrl;
-          if (loggedInInfo.loggedIn) {
+          if (loggedInInfo.isLoggedIn) {
               authLinkElement.innerText = "Logout";
           } else {
               authLinkElement.innerText = "Login"

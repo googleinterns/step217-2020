@@ -14,13 +14,13 @@ import com.google.gson.Gson;
 public class AuthenticationServlet extends HttpServlet {
     private final Gson gson = new Gson();
 
-    /** Class provides info about logged in status of the user and link to the authentication. */
+    /** Class that provides info about logged in status of the user and link to the authentication. */
     private class LoggedInInfo {
-        private final boolean loggedIn;
+        private final boolean isLoggedIn;
         private final String authUrl;
 
-        public LoggedInInfo(boolean loggedIn, String authUrl) {
-            this.loggedIn = loggedIn;
+        public LoggedInInfo(boolean isLoggedIn, String authUrl) {
+            this.isLoggedIn = isLoggedIn;
             this.authUrl = authUrl;
         }
     }
@@ -30,8 +30,8 @@ public class AuthenticationServlet extends HttpServlet {
         response.setContentType("application/json");
         UserService userService = UserServiceFactory.getUserService();
 
-        boolean loggedIn = userService.isUserLoggedIn();
+        boolean isLoggedIn = userService.isUserLoggedIn();
         String authUrl = userService.createLoginURL("/");
-        response.getWriter().println(gson.toJson(new LoggedInInfo(loggedIn, authUrl)));
+        response.getWriter().println(gson.toJson(new LoggedInInfo(isLoggedIn, authUrl)));
     }
 }
