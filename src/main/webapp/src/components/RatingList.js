@@ -41,6 +41,7 @@ function EnumeratedList(props) {
 export default function RatingList() {
   const classes = useStyles();
 
+  // TODO Fetch top songs from database.
   const topSongs = [
     {
       songName: "Yesterday",
