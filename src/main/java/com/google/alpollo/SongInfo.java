@@ -15,4 +15,16 @@ public class SongInfo {
         this.score = score;
         this.entityList = entityList;
     }   
+
+    public String getSongName() {
+        return songName;
+    }
+
+    public int getSentimentScore() {
+        return score;
+    }
+
+    public List<Entity> getEntityList() {
+        return entityList;
+    }
 }
