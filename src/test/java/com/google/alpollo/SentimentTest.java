@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.io.IOException;
-
 import com.google.cloud.language.v1.Sentiment;
 
 @RunWith(JUnit4.class)
@@ -36,7 +34,7 @@ public final class SentimentTest {
   }
 
   @Test
-  public void checkSentimentScore() throws IOException {
+  public void checkSentimentScore() throws Exception {
     Sentiment sentiment = helper.getSentiment(lyrics);
     float actual = sentiment.getScore();
     float expected = -0.1f;
@@ -45,7 +43,7 @@ public final class SentimentTest {
   }
 
   @Test
-  public void checkSentimentMagnitude() throws IOException {
+  public void checkSentimentMagnitude() throws Exception {
     Sentiment sentiment = helper.getSentiment(lyrics);
     float actual = sentiment.getMagnitude();
     float expected = 0.7f;
