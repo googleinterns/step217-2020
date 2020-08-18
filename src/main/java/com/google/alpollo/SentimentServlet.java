@@ -6,8 +6,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.api.gax.rpc.FixedHeaderProvider;
+import com.google.api.gax.rpc.HeaderProvider;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.LanguageServiceSettings;
+import com.google.cloud.language.v1.LanguageServiceSettings.Builder;
 import com.google.cloud.language.v1.Sentiment;
 import com.google.gson.Gson;
 
@@ -33,6 +38,7 @@ public class SentimentServlet extends HttpServlet {
   public Sentiment getSentiment(String lyrics) throws IOException {
     Document doc =
         Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
+    
     LanguageServiceClient languageService = LanguageServiceClient.create();
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
     languageService.close();
