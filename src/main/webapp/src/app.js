@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Navbar from "./components/Navbar";
-import RatingList from "./components/RatingList";
+import Navbar from "./components/navbar";
+import RatingList from "./components/ratingList";
 import axios from "axios";
-import "./App.css";
+import "./app.css";
 
 class App extends Component {
   constructor(props) {
