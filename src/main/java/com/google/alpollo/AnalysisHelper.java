@@ -24,7 +24,8 @@ public class AnalysisHelper {
         Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
 
     // Set the header manually so we can use the Natural Language API.
-    LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(FixedHeaderProvider.create("X-Goog-User-Project","google.com:alpollo-step-2020")).build();
+    LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
+        FixedHeaderProvider.create("X-Goog-User-Project","google.com:alpollo-step-2020")).build();
     LanguageServiceClient languageService = LanguageServiceClient.create(settings);
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
     languageService.close();
