@@ -43,4 +43,13 @@ public final class SentimentTest {
     
     Assert.assertEquals(expected, actual, 0.05f);
   }
+
+  @Test
+  public void checkSentimentMagnitude() throws IOException {
+    Sentiment sentiment = helper.getSentiment(lyrics);
+    float actual = sentiment.getMagnitude();
+    float expected = 0.7f;
+    
+    Assert.assertEquals(expected, actual, 0.05f);
+  }
 }
