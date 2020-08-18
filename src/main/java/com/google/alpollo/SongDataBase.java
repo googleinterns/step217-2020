@@ -3,7 +3,7 @@ package com.google.alpollo;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Class provides methods to work with the database. */
+/** Class that provides methods to work with the database. */
 public class SongDataBase {
   /** Returns the list of the most requested songs. */
   public static List<Song> topSongs() {
