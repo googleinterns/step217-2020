@@ -35,5 +35,12 @@ public final class SentimentTest {
     helper = new AnalysisHelper();
   }
 
-  
+  @Test
+  public void checkSentimentScore() throws IOException {
+    Sentiment sentiment = helper.getSentiment(lyrics);
+    float actual = sentiment.getScore();
+    float expected = -0.1f;
+    
+    Assert.assertEquals(expected, actual, 0.05f);
+  }
 }
