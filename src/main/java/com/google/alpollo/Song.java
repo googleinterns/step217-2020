@@ -1,5 +1,6 @@
 package com.google.alpollo;
 
+/** Represents the structure of the song. */
 public class Song {
   private final String artist;
   private final String name;
@@ -11,14 +12,17 @@ public class Song {
     this.album = album;
   }
 
+  /** Returns artists's name of the song. */
   public String getArtists() {
     return artist;
   }
 
+  /** Returns the name of the song. */
   public String getName() {
     return name;
   }
 
+  /** Returns the name of the song's album. */
   public String getAlbum() {
     return album;
   }
