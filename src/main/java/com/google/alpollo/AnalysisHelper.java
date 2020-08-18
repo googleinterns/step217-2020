@@ -1,8 +1,5 @@
 package com.google.alpollo;
 
-import java.io.*;
-import java.util.Objects;
-
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
@@ -26,9 +23,7 @@ public class AnalysisHelper {
     Document doc =
             Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
 
-    InputStream inputStream = ClassLoader.getSystemResourceAsStream("config.json");
-    final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
-    String projectID = gson.fromJson(reader, ConfigInfo.class).getProjectID();
+    String projectID = ConfigHelper.getProjectID();
 
     // Set the header manually so we can use the Natural Language API.
     LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
