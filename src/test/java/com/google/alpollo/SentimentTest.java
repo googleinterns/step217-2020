@@ -9,12 +9,10 @@ import org.junit.runners.JUnit4;
 import java.io.IOException;
 
 import com.google.cloud.language.v1.Sentiment;
-import com.google.gson.Gson;
 
 @RunWith(JUnit4.class)
 public final class SentimentTest {
-  private SentimentServlet servlet;
-  private final Gson gson = new Gson();
+  private AnalysisHelper helper;
   private static final String lyrics = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
       + "All these nights I lie awake and on my own\n" + "My pale fire hardly burns\n"
       + "Never fell in love with the one who loves me\n" + "But with the ones who love me not\n"
@@ -34,14 +32,8 @@ public final class SentimentTest {
 
   @Before
   public void setUp() {
-    servlet = new SentimentServlet();
+    helper = new AnalysisHelper();
   }
 
-  @Test
-  public void checkSentiment() throws IOException {
-    String actual = gson.toJson(servlet.getSentiment(lyrics));
-    String expected = "{\"score\" : \"0.4\", \"magnitude\" : \"0.4\"}";
-    
-    Assert.assertEquals(expected, actual);
-  }
+  
 }
