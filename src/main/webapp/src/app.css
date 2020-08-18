@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'ABeeZee';
+    font-style: normal;
+    font-weight: 400;
+    src: local('ABeeZee'), local('ABeeZee-Regular'), url(https://fonts.gstatic.com/s/abeezee/v9/TV7JXr7j4tW7mgYreANhGQ.woff2) format('woff2');
+    font-display: swap;
+  }
+
+  .AppMain {
+      width: 100%;
+  }

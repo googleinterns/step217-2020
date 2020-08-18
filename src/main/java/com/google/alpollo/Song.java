@@ -13,7 +13,7 @@ public class Song {
   }
 
   /** Returns artists's name of the song. */
-  public String getArtists() {
+  public String getArtist() {
     return artist;
   }
 
