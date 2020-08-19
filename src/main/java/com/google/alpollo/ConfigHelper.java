@@ -1,6 +1,8 @@
 package com.google.alpollo;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,7 +32,8 @@ final public class ConfigHelper {
     throw new RuntimeException("Instantiation of ConfigHelper is not allowed!");
   }
 
-  public static String getProjectID() {
+  public static String getProjectID() throws NullPointerException,
+      JsonIOException, JsonSyntaxException {
     InputStream inputStream = ClassLoader.getSystemResourceAsStream(configFileName);
     final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
     return gson.fromJson(reader, ConfigInfo.class).getProjectID();
