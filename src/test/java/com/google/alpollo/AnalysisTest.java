@@ -5,9 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
 import java.io.IOException;
-
 import com.google.cloud.language.v1.Sentiment;
 
 @RunWith(JUnit4.class)
