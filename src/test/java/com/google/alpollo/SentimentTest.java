@@ -1,5 +1,7 @@
 package com.google.alpollo;
 
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import com.google.cloud.language.v1.Sentiment;
+
+import java.io.IOException;
 
 @RunWith(JUnit4.class)
 public final class SentimentTest {
@@ -34,7 +38,7 @@ public final class SentimentTest {
   }
 
   @Test
-  public void checkSentimentScore() throws Exception {
+  public void checkSentimentScore() throws IOException {
     Sentiment sentiment = helper.getSentiment(lyrics);
     float actual = sentiment.getScore();
     float expected = -0.1f;
@@ -43,7 +47,7 @@ public final class SentimentTest {
   }
 
   @Test
-  public void checkSentimentMagnitude() throws Exception {
+  public void checkSentimentMagnitude() throws IOException {
     Sentiment sentiment = helper.getSentiment(lyrics);
     float actual = sentiment.getMagnitude();
     float expected = 0.7f;
