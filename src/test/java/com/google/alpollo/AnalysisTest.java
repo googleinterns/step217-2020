@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 @RunWith(JUnit4.class)
 public final class AnalysisTest {
   private final Gson gson = new Gson();
-  private final AnalysisHelper helper;
+  private AnalysisHelper helper;
   private static final String LYRICS_LONG = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
       + "All these nights I lie awake and on my own\n" + "My pale fire hardly burns\n"
       + "Never fell in love with the one who loves me\n" + "But with the ones who love me not\n"

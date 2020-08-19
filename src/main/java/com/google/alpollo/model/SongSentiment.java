@@ -6,10 +6,10 @@ package com.google.alpollo.model;
  * Class is mainly used for converting its instances to JSON strings.
  */
 public class SongSentiment {
-  private double score;
-  private double magnitude;
+  private final float score;
+  private final float magnitude;
 
-  public SongSentiment(double score, double magnitude) {
+  public SongSentiment(float score, float magnitude) {
     this.score = score;
     this.magnitude = magnitude;
   }
