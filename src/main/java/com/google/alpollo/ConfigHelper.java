@@ -6,11 +6,18 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Objects;
 
-public class ConfigHelper {
-    private String configFileName = "config.json";
-    static final private Gson gson = new Gson();
+/**
+ * Helps to load configuration file and retrieve data from it.
+ */
+final public class ConfigHelper {
+    private static final String configFileName = "config.json";
+    private static final Gson gson = new Gson();
 
-    static final private class ConfigInfo {
+    /**
+     * Class which represents the content of configuration file,
+     * used only to get Json object from file.
+     */
+    private static final class ConfigInfo {
         private String projectID;
 
         public String getProjectID() {
@@ -18,8 +25,12 @@ public class ConfigHelper {
         }
     }
 
-    static public String getProjectID() throws Exception {
-        InputStream inputStream = ClassLoader.getSystemResourceAsStream("config.json");
+    private ConfigHelper() {
+        throw new RuntimeException("Instantiation of ConfigHelper is not allowed!");
+    }
+
+    public static String getProjectID() {
+        InputStream inputStream = ClassLoader.getSystemResourceAsStream(configFileName);
         final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
         return gson.fromJson(reader, ConfigInfo.class).getProjectID();
     }

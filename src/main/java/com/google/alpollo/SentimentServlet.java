@@ -29,9 +29,10 @@ public class SentimentServlet extends HttpServlet {
       response.getWriter().println(json);
     } catch (JsonIOException | JsonSyntaxException jsonException){
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-              "Json file with shawarma places is invalid");
+              "Json file with configuration info is invalid");
     } catch (Exception e) {
-      response.sendError(HttpServletResponse.SC_NOT_FOUND);
+      response.sendError(HttpServletResponse.SC_NOT_FOUND,
+              "Internal error occurred or config.json file not found");
     }
   }
 }
