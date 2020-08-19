@@ -20,15 +20,12 @@ public class AnalysisHelper {
    * and a magnitude, representing how strong the sentiment is, ranging from 0 to 1
    */
   public Sentiment getSentiment(String lyrics) throws IOException{
-    Document doc =
-        Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
-
-    // Set the header manually so we can use the Natural Language API.
     LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
         FixedHeaderProvider.create("X-Goog-User-Project","google.com:alpollo-step-2020")).build();
-    LanguageServiceClient languageService = LanguageServiceClient.create(settings);
-    Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
-    languageService.close();
-    return sentiment;
+    try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
+      Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
+      Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
+      return sentiment;
+   }
   }
 }
