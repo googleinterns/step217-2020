@@ -2,6 +2,7 @@ package com.google.alpollo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -23,5 +24,6 @@ public class EntityServlet extends HttpServlet {
     AnalysisHelper helper = new AnalysisHelper();
     List<Entity> entityList = new ArrayList<>(helper.getEntityList(lyrics));
     List<SongEntity> simplifiedEntityList = helper.getSimplifiedEntityList(entityList);
+    simplifiedEntityList.sort(Collections.reverseOrder(SongEntity.ORDER_BY_SALIENCE));
   }
 }
