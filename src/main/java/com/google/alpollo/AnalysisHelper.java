@@ -10,7 +10,6 @@ import com.google.cloud.language.v1.Sentiment;
 /**
  * Helper class for cleaner code and easier testing.
  */
-
 public class AnalysisHelper {
   
   /**
@@ -20,7 +19,7 @@ public class AnalysisHelper {
    */
   public Sentiment getSentiment(String lyrics) throws IOException {
     LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
-        FixedHeaderProvider.create("X-Goog-User-Project","google.com:alpollo-step-2020")).build();
+        FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
