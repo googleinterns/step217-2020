@@ -28,9 +28,11 @@ public class AnalysisHelper {
   public Sentiment getSentiment(String lyrics) throws IOException {
     LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
         FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
+      
       return sentiment;
     } 
   }
@@ -44,11 +46,13 @@ public class AnalysisHelper {
   public List<Entity> getEntityList(String lyrics) throws IOException {
     LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
         FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       AnalyzeEntitiesRequest request = AnalyzeEntitiesRequest.newBuilder().setDocument(doc)
           .setEncodingType(EncodingType.UTF16).build();
       AnalyzeEntitiesResponse response = language.analyzeEntities(request);
+
       return response.getEntitiesList();
     }
   }
@@ -59,11 +63,13 @@ public class AnalysisHelper {
    */
   public List<SongEntity> getSimplifiedEntityList(List<Entity> entityList) {
     List<SongEntity> simplifiedEntityList = new ArrayList<>();
-    for(Entity entity : entityList) {
+
+    for (Entity entity : entityList) {
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
           Math.round(entity.getSalience()*100.0)/100.0);
       simplifiedEntityList.add(simplifiedEntity);
     }
+
     return simplifiedEntityList;
   }
 
