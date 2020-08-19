@@ -9,9 +9,9 @@ import java.util.Comparator;
  */
 public class SongEntity {
   private final String name;
-  private final float salience;
+  private final double salience;
 
-  public SongEntity(String name, float salience) {
+  public SongEntity(String name, double salience) {
     this.name = name;
     this.salience = salience;
   }
@@ -22,7 +22,7 @@ public class SongEntity {
   public static final Comparator<SongEntity> ORDER_BY_SALIENCE = new Comparator<SongEntity>() {
     @Override
     public int compare(SongEntity a, SongEntity b) {
-      return Float.compare(a.salience, b.salience);
+      return Double.compare(a.salience, b.salience);
     }
   };
 }
