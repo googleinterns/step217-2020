@@ -7,13 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
+import java.io.IOException;
 import com.google.cloud.language.v1.Sentiment;
 
 import java.io.IOException;
 
 @RunWith(JUnit4.class)
-public final class SentimentTest {
+public final class AnalysisTest {
   private AnalysisHelper helper;
   private static final String lyrics = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
       + "All these nights I lie awake and on my own\n" + "My pale fire hardly burns\n"
