@@ -17,7 +17,7 @@ public class SongEntity {
   }
 
   /**
-   * A comparator for sorting song entities by their start time in ascending order.
+   * A comparator for sorting song entities by their salience in ascending order.
    */
   public static final Comparator<SongEntity> ORDER_BY_SALIENCE = new Comparator<SongEntity>() {
     @Override
