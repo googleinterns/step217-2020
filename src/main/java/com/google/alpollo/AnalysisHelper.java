@@ -24,6 +24,6 @@ public class AnalysisHelper {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
       return sentiment;
-   } 
+    } 
   }
 }
