@@ -65,4 +65,18 @@ public class AnalysisHelper {
     }
     return simplifiedEntityList;
   }
+
+  public List<SongEntity> getTopSalientEntities(List<SongEntity> simplifiedEntityList) {
+    List<SongEntity> topSalientEntities = new ArrayList<>();
+    
+    if (simplifiedEntityList.size() <= 10) {
+      return simplifiedEntityList;
+    } else {
+      for (int i = 0; i < 10; i++) {
+        topSalientEntities.add(simplifiedEntityList.get(i));
+      }
+    }
+
+    return topSalientEntities;
+  }
 }
