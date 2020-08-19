@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.alpollo.model.SongEntity;
 import com.google.cloud.language.v1.Entity;
 import com.google.gson.Gson;
 
@@ -21,5 +22,6 @@ public class EntityServlet extends HttpServlet {
     String lyrics = request.getParameter("lyrics");
     AnalysisHelper helper = new AnalysisHelper();
     List<Entity> entityList = new ArrayList<>(helper.getEntityList(lyrics));
+    List<SongEntity> simplifiedEntityList = helper.getSimplifiedEntityList(entityList);
   }
 }
