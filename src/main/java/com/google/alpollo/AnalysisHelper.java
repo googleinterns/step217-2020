@@ -12,7 +12,6 @@ import com.google.cloud.language.v1.Sentiment;
  * from the API
  */
 public class AnalysisHelper {
-  
   /**
    * Based on the lyrics sent, the AI can extract the main "sentiment" of the text.
    * This sentiment has a score, showing the overall positivity of the text, ranging from -1.0 to 1.0
@@ -25,6 +24,6 @@ public class AnalysisHelper {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
       return sentiment;
-   }
+   } 
   }
 }
