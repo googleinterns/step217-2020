@@ -50,6 +50,4 @@ public final class AnalysisTest {
     
     Assert.assertEquals(expected, actual, 0.05f);
   }
-
-  
 }
