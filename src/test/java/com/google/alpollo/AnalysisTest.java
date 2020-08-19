@@ -74,9 +74,9 @@ public final class AnalysisTest {
     simplifiedEntityList.sort(Collections.reverseOrder(SongEntity.ORDER_BY_SALIENCE));
 
     String actual = gson.toJson(helper.getTopSalientEntities(simplifiedEntityList));
-    String expected = gson.toJson(Arrays.asList(new SongEntity("mountain", 0.8), 
-        new SongEntity("mountain", 0.1), new SongEntity("story", 0.1), new SongEntity("sale", 0.0), 
-        new SongEntity("tale", 0.0)));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("mountain", 0.84), 
+        new SongEntity("mountain", 0.06), new SongEntity("story", 0.05), new SongEntity("sale", 0.03), 
+        new SongEntity("tale", 0.01)));
         
     Assert.assertEquals(expected, actual);
   }
