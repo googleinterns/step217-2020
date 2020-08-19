@@ -21,13 +21,13 @@ public class AnalysisHelper {
    */
   public Sentiment getSentiment(String lyrics) throws Exception {
     Document doc =
-            Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
+        Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
 
     String projectID = ConfigHelper.getProjectID();
 
     // Set the header manually so we can use the Natural Language API.
     LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
-            FixedHeaderProvider.create("X-Goog-User-Project", projectID)).build();
+        FixedHeaderProvider.create("X-Goog-User-Project", projectID)).build();
     LanguageServiceClient languageService = LanguageServiceClient.create(settings);
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
     languageService.close();

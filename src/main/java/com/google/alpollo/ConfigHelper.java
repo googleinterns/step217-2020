@@ -1,6 +1,7 @@
 package com.google.alpollo;
 
 import com.google.gson.Gson;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -10,28 +11,28 @@ import java.util.Objects;
  * Helps to load configuration file and retrieve data from it.
  */
 final public class ConfigHelper {
-    private static final String configFileName = "config.json";
-    private static final Gson gson = new Gson();
+  private static final String configFileName = "config.json";
+  private static final Gson gson = new Gson();
 
-    /**
-     * Class which represents the content of configuration file,
-     * used only to get Json object from file.
-     */
-    private static final class ConfigInfo {
-        private String projectID;
+  /**
+   * Class which represents the content of configuration file,
+   * used only to get Json object from file.
+   */
+  private static final class ConfigInfo {
+    private String projectID;
 
-        public String getProjectID() {
-            return projectID;
-        }
+    public String getProjectID() {
+      return projectID;
     }
+  }
 
-    private ConfigHelper() {
-        throw new RuntimeException("Instantiation of ConfigHelper is not allowed!");
-    }
+  private ConfigHelper() {
+    throw new RuntimeException("Instantiation of ConfigHelper is not allowed!");
+  }
 
-    public static String getProjectID() {
-        InputStream inputStream = ClassLoader.getSystemResourceAsStream(configFileName);
-        final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
-        return gson.fromJson(reader, ConfigInfo.class).getProjectID();
-    }
+  public static String getProjectID() {
+    InputStream inputStream = ClassLoader.getSystemResourceAsStream(configFileName);
+    final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
+    return gson.fromJson(reader, ConfigInfo.class).getProjectID();
+  }
 }
