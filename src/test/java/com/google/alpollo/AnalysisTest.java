@@ -80,4 +80,19 @@ public final class AnalysisTest {
         
     Assert.assertEquals(expected, actual);
   }
+
+  @Test
+  public void top10SalientEntitiesWithMoreThan10Entities() throws IOException {
+    List<Entity> entityList = new ArrayList<>(helper.getEntityList(LYRICS_LONG));
+    List<SongEntity> simplifiedEntityList = helper.getSimplifiedEntityList(entityList);
+    simplifiedEntityList.sort(Collections.reverseOrder(SongEntity.ORDER_BY_SALIENCE));
+
+    String actual = gson.toJson(helper.getTopSalientEntities(simplifiedEntityList));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("seaside", 0.36), 
+        new SongEntity("source", 0.34), new SongEntity("mountain", 0.05), new SongEntity("ones", 0.03), 
+        new SongEntity("one", 0.03), new SongEntity("roundabout", 0.02), new SongEntity("love", 0.02),
+        new SongEntity("nights", 0.02), new SongEntity("fire", 0.02), new SongEntity("root", 0.01)));
+        
+    Assert.assertEquals(expected, actual);
+  }
 }
