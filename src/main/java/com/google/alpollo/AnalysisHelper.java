@@ -1,8 +1,14 @@
 package com.google.alpollo;
 
 import java.io.IOException;
+import java.util.List;
+
 import com.google.api.gax.rpc.FixedHeaderProvider;
+import com.google.cloud.language.v1.AnalyzeEntitiesRequest;
+import com.google.cloud.language.v1.AnalyzeEntitiesResponse;
 import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.EncodingType;
+import com.google.cloud.language.v1.Entity;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.LanguageServiceSettings;
 import com.google.cloud.language.v1.Sentiment;
@@ -25,5 +31,23 @@ public class AnalysisHelper {
       Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
       return sentiment;
    } 
+  }
+
+  /**
+   * Based on the lyrics sent, the AI can extract the main "entities" present in the text.
+   * Basically, it can figure out what the author speaks about: places, people, things etc.
+   * Each entity object has a name and a salience score, telling us how important the word is,
+   * ranging from 0 to 1.0 .
+   */
+  public List<Entity> getEntityList(String lyrics) throws IOException {
+    LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
+        FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+    try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
+      Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
+      AnalyzeEntitiesRequest request = AnalyzeEntitiesRequest.newBuilder().setDocument(doc)
+          .setEncodingType(EncodingType.UTF16).build();
+      AnalyzeEntitiesResponse response = language.analyzeEntities(request);
+      return response.getEntitiesList();
+    }
   }
 }
