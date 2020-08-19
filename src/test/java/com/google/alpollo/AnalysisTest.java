@@ -1,7 +1,5 @@
 package com.google.alpollo;
 
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,8 +7,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import java.io.IOException;
 import com.google.cloud.language.v1.Sentiment;
-
-import java.io.IOException;
 
 @RunWith(JUnit4.class)
 public final class AnalysisTest {

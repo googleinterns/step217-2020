@@ -10,8 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
-import java.io.IOException;
-
 /**
  * Helper class with methods that use the Natural Language API or use the data that comes
  * from the API
