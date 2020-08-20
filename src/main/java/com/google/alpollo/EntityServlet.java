@@ -14,6 +14,10 @@ import com.google.alpollo.model.SongEntity;
 import com.google.cloud.language.v1.Entity;
 import com.google.gson.Gson;
 
+/**
+ * Sending a POST request with the lyrics of the song as a parameter will return to the client
+ * a list of the most important entities (people, places, things) found in that song.
+ */
 @WebServlet("/entity")
 public class EntityServlet extends HttpServlet {
   private final Gson gson = new Gson();

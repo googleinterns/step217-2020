@@ -9,6 +9,7 @@ import java.util.Comparator;
  */
 public class SongEntity {
   private final String name;
+  // Each entity has a salience score, telling us how important the word is in the given context.
   private final double salience;
 
   public SongEntity(String name, double salience) {
