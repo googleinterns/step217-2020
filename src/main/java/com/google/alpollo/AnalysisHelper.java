@@ -19,6 +19,8 @@ import com.google.cloud.language.v1.Sentiment;
  * from the API
  */
 public final class AnalysisHelper {
+  private static LanguageServiceSettings SETTINGS;
+
   private AnalysisHelper() {};
 
   /**
@@ -27,8 +29,10 @@ public final class AnalysisHelper {
    * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf
    */
   public static Sentiment getSentiment(String lyrics) throws IOException {
-    LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
+    if (SETTINGS == null) {
+      LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
         FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+    }
 
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
@@ -45,8 +49,10 @@ public final class AnalysisHelper {
    * ranging from 0 to 1.0 .
    */
   public static List<Entity> getEntityList(String lyrics) throws IOException {
-    LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
+    if (SETTINGS == null) {
+      LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
         FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+    }
 
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
