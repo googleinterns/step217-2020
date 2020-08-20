@@ -65,7 +65,7 @@ public class AnalysisHelper {
 
     for (Entity entity : entityList) {
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
-          Math.round(entity.getSalience()*100.0)/100.0);
+          Math.round(entity.getSalience() * 100.0) / 100.0);
       simplifiedEntityList.add(simplifiedEntity);
     }
 
