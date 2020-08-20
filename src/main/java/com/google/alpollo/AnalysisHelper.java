@@ -16,7 +16,7 @@ import com.google.cloud.language.v1.Sentiment;
 
 /**
  * Helper class with methods that use the Natural Language API or use the data that comes
- * from the API
+ * from the API.
  */
 public final class AnalysisHelper {
   private static LanguageServiceSettings SETTINGS;
@@ -26,15 +26,15 @@ public final class AnalysisHelper {
   /**
    * Based on the lyrics sent, the AI can extract the main "sentiment" of the text.
    * This sentiment has a score, showing the overall positivity of the text, ranging from -1.0 to 1.0
-   * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf
+   * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf.
    */
   public static Sentiment getSentiment(String lyrics) throws IOException {
     if (SETTINGS == null) {
-      LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
-        FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+      SETTINGS = LanguageServiceSettings.newBuilder().setHeaderProvider(
+          FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
     }
 
-    try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
+    try (LanguageServiceClient language = LanguageServiceClient.create(SETTINGS)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
       
@@ -50,11 +50,11 @@ public final class AnalysisHelper {
    */
   public static List<Entity> getEntityList(String lyrics) throws IOException {
     if (SETTINGS == null) {
-      LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
-        FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+      SETTINGS = LanguageServiceSettings.newBuilder().setHeaderProvider(
+          FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
     }
 
-    try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
+    try (LanguageServiceClient language = LanguageServiceClient.create(SETTINGS)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       AnalyzeEntitiesRequest request = AnalyzeEntitiesRequest.newBuilder().setDocument(doc)
           .setEncodingType(EncodingType.UTF16).build();

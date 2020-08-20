@@ -1,14 +1,12 @@
 package com.google.alpollo;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import com.google.alpollo.model.SongEntity;
 import com.google.cloud.language.v1.Entity;
@@ -18,6 +16,7 @@ import com.google.gson.Gson;
 @RunWith(JUnit4.class)
 public final class AnalysisTest {
   private final Gson gson = new Gson();
+  private static final float TOLERANCE = 0.05f;
   private static final String LYRICS_LONG = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
       + "All these nights I lie awake and on my own\n" + "My pale fire hardly burns\n"
       + "Never fell in love with the one who loves me\n" + "But with the ones who love me not\n"
@@ -44,7 +43,7 @@ public final class AnalysisTest {
     float actual = sentiment.getScore();
     float expected = -0.1f;
     
-    Assert.assertEquals(expected, actual, 0.05f);
+    Assert.assertEquals(expected, actual, TOLERANCE);
   }
 
   @Test
@@ -53,7 +52,7 @@ public final class AnalysisTest {
     float actual = sentiment.getMagnitude();
     float expected = 0.7f;
     
-    Assert.assertEquals(expected, actual, 0.05f);
+    Assert.assertEquals(expected, actual, TOLERANCE);
   }
 
   /**
