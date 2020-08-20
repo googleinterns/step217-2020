@@ -9,6 +9,10 @@ import com.google.alpollo.model.SongSentiment;
 import com.google.cloud.language.v1.Sentiment;
 import com.google.gson.Gson;
 
+/**
+ * Sending a POST request with the lyrics of the song as a parameter will give the Client
+ * the overall positivity of the song and how strong the sentiment of the song is.
+ */
 @WebServlet("/sentiment")
 public class SentimentServlet extends HttpServlet {
   private final Gson gson = new Gson();
