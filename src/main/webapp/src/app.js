@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import Navbar from "./components/navbar";
 import RatingList from "./components/ratingList";
+import SongInfo from "./components/songInfo";
 import axios from "axios";
+import {
+  HashRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 import "./app.css";
 
 class App extends Component {
@@ -20,7 +26,7 @@ class App extends Component {
 
     axios
       .get("/auth")
-      .then(result => result.data)
+      .then((result) => result.data)
       .then((loggedInInfo) =>
         this.setState({
           loggedInInfo: loggedInInfo,
@@ -47,10 +53,20 @@ class App extends Component {
     }
 
     return (
-      <div className="AppMain">
-        <Navbar loggedInInfo={loggedInInfo} />
-        <RatingList />
-      </div>
+      <Router>
+        <div className="AppMain">
+          <Navbar loggedInInfo={loggedInInfo} />
+
+          <Switch>
+            <Route path="/song">
+              <SongInfo />
+            </Route>
+            <Route path="/">
+              <RatingList />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
