@@ -26,15 +26,14 @@ public class EntityServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     LYRICS = request.getParameter("lyrics");
-    AnalysisHelper helper = new AnalysisHelper();
 
     // Get the Entity list from the API
-    List<Entity> entityList = new ArrayList<>(helper.getEntityList(LYRICS));
+    List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS));
 
     // Make a new list with simplified entities, they work better in the frontend
-    List<SongEntity> simplifiedEntityList = helper.getSimplifiedEntityList(entityList);
+    List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
     simplifiedEntityList.sort(Collections.reverseOrder(SongEntity.ORDER_BY_SALIENCE));
-    List<SongEntity> topSalientEntities = helper.getTopSalientEntities(simplifiedEntityList);
+    List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
 
     String json = gson.toJson(topSalientEntities);
     response.setContentType("application/json;");
