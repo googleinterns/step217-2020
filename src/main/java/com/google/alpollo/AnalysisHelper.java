@@ -9,13 +9,13 @@ import com.google.cloud.language.v1.Sentiment;
 
 /**
  * Helper class with methods that use the Natural Language API or use the data that comes
- * from the API
+ * from the API.
  */
 public class AnalysisHelper {
   /**
    * Based on the lyrics sent, the AI can extract the main "sentiment" of the text.
    * This sentiment has a score, showing the overall positivity of the text, ranging from -1.0 to 1.0
-   * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf
+   * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf.
    */
   public Sentiment getSentiment(String lyrics) throws IOException {
     LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
