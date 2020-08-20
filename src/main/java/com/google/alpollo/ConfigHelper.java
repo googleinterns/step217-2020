@@ -32,10 +32,18 @@ final public class ConfigHelper {
     throw new RuntimeException("Instantiation of ConfigHelper is not allowed!");
   }
 
-  public static String getProjectID() throws NullPointerException,
-      JsonIOException, JsonSyntaxException {
-    InputStream inputStream = ClassLoader.getSystemResourceAsStream(configFileName);
-    final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
-    return gson.fromJson(reader, ConfigInfo.class).getProjectID();
+  /**
+   * Retrieves projectID from configuration file.
+   * @return projectID; {@code null} if configuration file wasn't found
+   * or it was incorrect/didn't have projectID field
+   */
+  public static String getProjectID() {
+    try {
+      InputStream inputStream = ClassLoader.getSystemResourceAsStream(configFileName);
+      final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
+      return gson.fromJson(reader, ConfigInfo.class).getProjectID();
+    } catch (NullPointerException | JsonIOException | JsonSyntaxException parseException) {
+      return null;
+    }
   }
 }

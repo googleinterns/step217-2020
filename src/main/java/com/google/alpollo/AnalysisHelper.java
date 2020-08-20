@@ -6,8 +6,6 @@ import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.LanguageServiceSettings;
 import com.google.cloud.language.v1.Sentiment;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 
 /**
  * Helper class with methods that use the Natural Language API or use the data that comes
@@ -19,9 +17,11 @@ public class AnalysisHelper {
    * This sentiment has a score, showing the overall positivity of the text, ranging from -1.0 to 1.0
    * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf
    */
-  public Sentiment getSentiment(String lyrics) throws IOException, NullPointerException,
-      JsonIOException, JsonSyntaxException {
+  public Sentiment getSentiment(String lyrics) throws IllegalStateException, IOException {
     String projectID = ConfigHelper.getProjectID();
+    if (projectID == null) {
+      throw new IllegalStateException("Failed to obtain Project ID.");
+    }
 
     // Set the header manually so we can use the Natural Language API.
     LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(

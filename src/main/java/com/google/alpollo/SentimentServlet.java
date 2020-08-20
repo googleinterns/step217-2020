@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.alpollo.model.SongSentiment;
 import com.google.cloud.language.v1.Sentiment;
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 
 @WebServlet("/sentiment")
 public class SentimentServlet extends HttpServlet {
@@ -26,12 +24,9 @@ public class SentimentServlet extends HttpServlet {
       String json = gson.toJson(songSentiment);
       response.setContentType("application/json;");
       response.getWriter().println(json);
-    } catch (JsonIOException | JsonSyntaxException jsonException){
+    } catch (IllegalStateException | IOException sentimentException){
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-              "Json file with configuration info is invalid");
-    } catch (Exception e) {
-      response.sendError(HttpServletResponse.SC_NOT_FOUND,
-              "Internal error occurred or config.json file not found");
+              sentimentException.getMessage());
     }
   }
 }
