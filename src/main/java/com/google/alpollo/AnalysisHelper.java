@@ -12,7 +12,7 @@ import com.google.cloud.language.v1.Sentiment;
  * from the API.
  */
 public class AnalysisHelper {
-  private static LanguageServiceSettings SETTINGS;
+  private static LanguageServiceSettings settings;
 
   private AnalysisHelper() {};
   
@@ -22,11 +22,11 @@ public class AnalysisHelper {
    * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf.
    */
   public static Sentiment getSentiment(String lyrics) throws IOException {
-    if (SETTINGS == null) {
-      SETTINGS = LanguageServiceSettings.newBuilder().setHeaderProvider(
+    if (settings == null) {
+      settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
           FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
     }
-    try (LanguageServiceClient language = LanguageServiceClient.create(SETTINGS)) {
+    try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
       return sentiment;
