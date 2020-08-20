@@ -16,12 +16,12 @@ import com.google.gson.Gson;
 @WebServlet("/sentiment")
 public class SentimentServlet extends HttpServlet {
   private final Gson gson = new Gson();
-  private static String LYRICS;
+  private static final String LYRICS_PARAM = "lyrics";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    LYRICS = request.getParameter("lyrics");
-    Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS);
+    String lyrics = request.getParameter(LYRICS_PARAM);
+    Sentiment sentiment = AnalysisHelper.getSentiment(lyrics);
     SongSentiment songSentiment = new SongSentiment(sentiment.getScore(), sentiment.getMagnitude());
     
     String json = gson.toJson(songSentiment);
