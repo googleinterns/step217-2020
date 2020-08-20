@@ -20,8 +20,7 @@ public class SentimentServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String lyrics = request.getParameter("lyrics");
-    AnalysisHelper helper = new AnalysisHelper();
-    Sentiment sentiment = helper.getSentiment(lyrics);
+    Sentiment sentiment = AnalysisHelper.getSentiment(lyrics);
     SongSentiment songSentiment = new SongSentiment(sentiment.getScore(), sentiment.getMagnitude());
     
     String json = gson.toJson(songSentiment);

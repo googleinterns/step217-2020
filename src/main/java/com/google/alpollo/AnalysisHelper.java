@@ -17,7 +17,7 @@ public class AnalysisHelper {
    * This sentiment has a score, showing the overall positivity of the text, ranging from -1.0 to 1.0
    * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf.
    */
-  public Sentiment getSentiment(String lyrics) throws IOException {
+  public static Sentiment getSentiment(String lyrics) throws IOException {
     LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
         FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
