@@ -12,7 +12,7 @@ import java.util.Objects;
  * Helps to load configuration file and retrieve data from it.
  */
 final public class ConfigHelper {
-  private static final String configFileName = "config.json";
+  private static final String CONFIG_FILE_NAME = "config.json";
   private static final Gson gson = new Gson();
 
   /**
@@ -38,7 +38,7 @@ final public class ConfigHelper {
    */
   public static String getProjectID() {
     try {
-      InputStream inputStream = ClassLoader.getSystemResourceAsStream(configFileName);
+      InputStream inputStream = ClassLoader.getSystemResourceAsStream(CONFIG_FILE_NAME);
       final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
       return gson.fromJson(reader, ConfigInfo.class).getProjectID();
     } catch (Exception parseException) {
