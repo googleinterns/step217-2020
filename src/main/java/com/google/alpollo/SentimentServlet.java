@@ -28,7 +28,7 @@ public class SentimentServlet extends HttpServlet {
       String json = gson.toJson(songSentiment);
       response.setContentType("application/json;");
       response.getWriter().println(json);
-    } catch (IllegalStateException | IOException sentimentException){
+    } catch (IllegalStateException | IOException sentimentException) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
               sentimentException.getMessage());
     }
