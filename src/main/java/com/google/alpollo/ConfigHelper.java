@@ -41,7 +41,7 @@ final public class ConfigHelper {
       InputStream inputStream = ClassLoader.getSystemResourceAsStream(configFileName);
       final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
       return gson.fromJson(reader, ConfigInfo.class).getProjectID();
-    } catch (NullPointerException | JsonIOException | JsonSyntaxException parseException) {
+    } catch (Exception parseException) {
       return null;
     }
   }
