@@ -21,14 +21,15 @@ import com.google.gson.Gson;
 @WebServlet("/entity")
 public class EntityServlet extends HttpServlet {
   private final Gson gson = new Gson();
+  private static String LYRICS;
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String lyrics = request.getParameter("lyrics");
+    LYRICS = request.getParameter("lyrics");
     AnalysisHelper helper = new AnalysisHelper();
 
     // Get the Entity list from the API
-    List<Entity> entityList = new ArrayList<>(helper.getEntityList(lyrics));
+    List<Entity> entityList = new ArrayList<>(helper.getEntityList(LYRICS));
 
     // Make a new list with simplified entities, they work better in the frontend
     List<SongEntity> simplifiedEntityList = helper.getSimplifiedEntityList(entityList);
