@@ -37,8 +37,7 @@ final public class ConfigHelper {
    * or it was incorrect/didn't have projectID field
    */
   public static String getProjectID() {
-    try {
-      InputStream inputStream = ClassLoader.getSystemResourceAsStream(CONFIG_FILE_NAME);
+    try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(CONFIG_FILE_NAME)) {
       final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream));
       return gson.fromJson(reader, ConfigInfo.class).getProjectID();
     } catch (Exception parseException) {
