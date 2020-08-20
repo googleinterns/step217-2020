@@ -18,12 +18,12 @@ public class SongEntity {
   }
 
   /**
-   * A comparator for sorting song entities by their salience in ascending order.
+   * A comparator for sorting song entities by their salience in descending order.
    */
-  public static final Comparator<SongEntity> ORDER_BY_SALIENCE = new Comparator<SongEntity>() {
+  public static final Comparator<SongEntity> ORDER_BY_SALIENCE_DESCENDING = new Comparator<SongEntity>() {
     @Override
     public int compare(SongEntity a, SongEntity b) {
-      return Double.compare(a.salience, b.salience);
+      return Double.compare(b.salience, a.salience);
     }
   };
 }

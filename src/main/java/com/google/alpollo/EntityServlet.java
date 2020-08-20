@@ -27,10 +27,8 @@ public class EntityServlet extends HttpServlet {
 
     // Get the Entity list from the API
     List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS));
-
-    // Make a new list with simplified entities, they work better in the frontend
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
-    simplifiedEntityList.sort(Collections.reverseOrder(SongEntity.ORDER_BY_SALIENCE));
+    simplifiedEntityList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
     List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
 
     String json = gson.toJson(topSalientEntities);
