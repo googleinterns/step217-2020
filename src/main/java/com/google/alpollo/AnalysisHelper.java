@@ -94,10 +94,7 @@ public final class AnalysisHelper {
     if (simplifiedEntityList.size() <= MAX_ENTITIES) {
       return simplifiedEntityList;
     } else {
-      List<SongEntity> topSalientEntities = new ArrayList<>();
-      for (int i = 0; i < MAX_ENTITIES; i++) {
-        topSalientEntities.add(simplifiedEntityList.get(i));
-      }
+      List<SongEntity> topSalientEntities = simplifiedEntityList.subList(0, 10);
       return topSalientEntities;
     }
   }
