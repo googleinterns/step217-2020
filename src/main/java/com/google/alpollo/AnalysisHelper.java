@@ -20,7 +20,9 @@ import com.google.cloud.language.v1.Sentiment;
  */
 public final class AnalysisHelper {
   private static LanguageServiceSettings settings;
+  /** How many entities we want in our TopSalientEntities list. (Top 10, Top 15 etc.)*/
   private static final int MAX_ENTITIES = 10;
+  /** The index where we start our top list from. */
   private static final int FIRST_ENTITY = 0;
   private static String projectID;
 

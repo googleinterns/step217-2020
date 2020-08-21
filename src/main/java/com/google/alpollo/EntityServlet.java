@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 @WebServlet("/entity")
 public class EntityServlet extends HttpServlet {
   private final Gson gson = new Gson();
+  /** Parameter sent through the request which holds the song's lyrics. */
   private static String LYRICS = "lyrics";
 
   @Override
