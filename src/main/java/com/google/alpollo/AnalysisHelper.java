@@ -19,27 +19,39 @@ import com.google.cloud.language.v1.Sentiment;
  * from the API.
  */
 public final class AnalysisHelper {
-  private static LanguageServiceSettings SETTINGS;
+  private static LanguageServiceSettings settings;
+  private static String projectID;
 
   private AnalysisHelper() {};
+
+  private static void getLanguageServiceSettings() throws IOException {
+    if (projectID == null) {
+      projectID = ConfigHelper.getProjectID();
+      if (projectID == null) {
+        throw new IllegalStateException("Failed to obtain Project ID.");
+      }
+    }
+
+    if (settings == null) {
+      settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
+          FixedHeaderProvider.create("X-Goog-User-Project", projectID)).build();
+    }
+  }
 
   /**
    * Based on the lyrics sent, the AI can extract the main "sentiment" of the text.
    * This sentiment has a score, showing the overall positivity of the text, ranging from -1.0 to 1.0
    * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf.
    */
-  public static Sentiment getSentiment(String lyrics) throws IOException {
-    if (SETTINGS == null) {
-      SETTINGS = LanguageServiceSettings.newBuilder().setHeaderProvider(
-          FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
-    }
+  public static Sentiment getSentiment(String lyrics) throws IllegalStateException, IOException {
+    getLanguageServiceSettings();
 
-    try (LanguageServiceClient language = LanguageServiceClient.create(SETTINGS)) {
+    try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
       
       return sentiment;
-    } 
+    }
   }
 
   /**
@@ -49,12 +61,9 @@ public final class AnalysisHelper {
    * ranging from 0 to 1.0 .
    */
   public static List<Entity> getEntityList(String lyrics) throws IOException {
-    if (SETTINGS == null) {
-      SETTINGS = LanguageServiceSettings.newBuilder().setHeaderProvider(
-          FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
-    }
+    getLanguageServiceSettings();
 
-    try (LanguageServiceClient language = LanguageServiceClient.create(SETTINGS)) {
+    try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       AnalyzeEntitiesRequest request = AnalyzeEntitiesRequest.newBuilder().setDocument(doc)
           .setEncodingType(EncodingType.UTF16).build();
