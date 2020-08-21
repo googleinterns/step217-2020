@@ -20,6 +20,7 @@ import com.google.cloud.language.v1.Sentiment;
  */
 public final class AnalysisHelper {
   private static LanguageServiceSettings settings;
+  private static int MAX_ENTITIES = 10;
 
   private AnalysisHelper() {};
 
@@ -86,7 +87,7 @@ public final class AnalysisHelper {
     if (simplifiedEntityList.size() <= 10) {
       return simplifiedEntityList;
     } else {
-      for (int i = 0; i < 10; i++) {
+      for (int i = 0; i < MAX_ENTITIES; i++) {
         topSalientEntities.add(simplifiedEntityList.get(i));
       }
     }
