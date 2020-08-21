@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 public class EntityServlet extends HttpServlet {
   private final Gson gson = new Gson();
   /** Parameter sent through the request which holds the song's lyrics. */
-  private static String LYRICS = "lyrics";
+  private static final String LYRICS = "lyrics";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
