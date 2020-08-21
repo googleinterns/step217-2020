@@ -20,7 +20,7 @@ import com.google.cloud.language.v1.Sentiment;
  */
 public final class AnalysisHelper {
   private static LanguageServiceSettings settings;
-  private static int MAX_ENTITIES = 10;
+  private static final int MAX_ENTITIES = 10;
   private static String projectID;
 
   private AnalysisHelper() {};
