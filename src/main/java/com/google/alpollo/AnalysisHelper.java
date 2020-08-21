@@ -91,16 +91,14 @@ public final class AnalysisHelper {
   }
 
   public static List<SongEntity> getTopSalientEntities(List<SongEntity> simplifiedEntityList) {
-    List<SongEntity> topSalientEntities = new ArrayList<>();
-    
     if (simplifiedEntityList.size() <= MAX_ENTITIES) {
       return simplifiedEntityList;
     } else {
+      List<SongEntity> topSalientEntities = new ArrayList<>();
       for (int i = 0; i < MAX_ENTITIES; i++) {
         topSalientEntities.add(simplifiedEntityList.get(i));
       }
+      return topSalientEntities;
     }
-
-    return topSalientEntities;
   }
 }
