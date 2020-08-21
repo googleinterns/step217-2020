@@ -5,12 +5,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import com.google.alpollo.model.SongEntity;
+import com.google.cloud.language.v1.Entity;
 import com.google.cloud.language.v1.Sentiment;
+import com.google.gson.Gson;
 
 @RunWith(JUnit4.class)
 public final class AnalysisTest {
+  private final Gson gson = new Gson();
   private static final float TOLERANCE = 0.05f;
-  private static final String LYRICS = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
+  private static final String LYRICS_LONG = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
       + "All these nights I lie awake and on my own\n" + "My pale fire hardly burns\n"
       + "Never fell in love with the one who loves me\n" + "But with the ones who love me not\n"
       + "Are we doomed to live in grief and misery?\n" + "Is it everything we got?\n" + "I'm the mountain\n"
@@ -26,10 +33,13 @@ public final class AnalysisTest {
       + "For now I'm just a mountain\n" + "I'm the mountain\n" + "Down the road that takes me to the Headley Grange\n"
       + "I see a figure of a young man\n" + "He's torn with doubts, mistakes, his selfishness and rage\n"
       + "But doing all the best he can\n" + "I'm not so blind to see\n" + "That this young man is me";
+  private static final String LYRICS_SHORT = "I'm the mountain\n"
+      + "Rising high\n" + "It's the way that I survived\n" + "I'm the mountain\n" + "Tell my tale\n"
+      + "The greatest story's now for sale\n";
 
   @Test
   public void checkSentimentScore() throws IOException {
-    Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS);
+    Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS_LONG);
     float actual = sentiment.getScore();
     float expected = -0.1f;
     
@@ -38,10 +48,43 @@ public final class AnalysisTest {
 
   @Test
   public void checkSentimentMagnitude() throws IOException {
-    Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS);
+    Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS_LONG);
     float actual = sentiment.getMagnitude();
     float expected = 0.7f;
     
     Assert.assertEquals(expected, actual, TOLERANCE);
+  }
+
+  /**
+   * If the lyrics are too short, the API might find less than 10 entities.
+   */
+  @Test
+  public void top10SalientEntitiesWithLessThan10Entities() throws IOException {
+    List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS_SHORT));
+    List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
+
+    String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("mountain", 0.84), 
+        new SongEntity("mountain", 0.06), new SongEntity("story", 0.05), new SongEntity("sale", 0.03), 
+        new SongEntity("tale", 0.01)));
+        
+    Assert.assertEquals(expected, actual);
+  }
+
+  /**
+   * If the lyrics are very long, the API might find more than 10 entities. We only need the top 10.
+   */
+  @Test
+  public void top10SalientEntitiesWithMoreThan10Entities() throws IOException {
+    List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS_LONG));
+    List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
+
+    String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("seaside", 0.36), 
+        new SongEntity("source", 0.34), new SongEntity("mountain", 0.05), new SongEntity("ones", 0.03), 
+        new SongEntity("one", 0.03), new SongEntity("roundabout", 0.02), new SongEntity("love", 0.02),
+        new SongEntity("nights", 0.02), new SongEntity("fire", 0.02), new SongEntity("root", 0.01)));
+        
+    Assert.assertEquals(expected, actual);
   }
 }
