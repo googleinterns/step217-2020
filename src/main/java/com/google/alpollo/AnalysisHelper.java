@@ -25,7 +25,7 @@ public final class AnalysisHelper {
 
   private AnalysisHelper() {};
 
-  private static void getLanguageServiceSettings() throws IOException {
+  private static void createLanguageServiceSettings() throws IOException {
     if (projectID == null) {
       projectID = ConfigHelper.getProjectID();
       if (projectID == null) {
@@ -45,7 +45,7 @@ public final class AnalysisHelper {
    * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf.
    */
   public static Sentiment getSentiment(String lyrics) throws IllegalStateException, IOException {
-    getLanguageServiceSettings();
+    createLanguageServiceSettings();
 
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
@@ -62,7 +62,7 @@ public final class AnalysisHelper {
    * ranging from 0 to 1.0 .
    */
   public static List<Entity> getEntityList(String lyrics) throws IOException {
-    getLanguageServiceSettings();
+    createLanguageServiceSettings();
 
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
