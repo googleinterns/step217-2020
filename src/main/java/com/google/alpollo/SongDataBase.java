@@ -18,7 +18,7 @@ public class SongDataBase {
   private static final String COUNTER_PROPERTY = "counter";
   private static final String SONG_PROPERTY = "Song";
 
-  /** Increase the counter of song's requests if it in the database, otherwise store a new song. */
+  /** Save request song to database. */
   public static void saveSongRequest(Song song) {
     Entity songEntity = new Entity(SONG_PROPERTY);
     songEntity.setProperty(ARTIST_PROPERTY, song.getArtist());
