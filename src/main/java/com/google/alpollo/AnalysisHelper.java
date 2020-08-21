@@ -83,6 +83,7 @@ public final class AnalysisHelper {
     List<SongEntity> simplifiedEntityList = new ArrayList<>();
 
     for (Entity entity : entityList) {
+      // Use round() here to set the double to 2 decimals.
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
           Math.round(entity.getSalience() * 100.0) / 100.0);
       simplifiedEntityList.add(simplifiedEntity);
@@ -93,7 +94,7 @@ public final class AnalysisHelper {
 
   public static List<SongEntity> getTopSalientEntities(List<SongEntity> simplifiedEntityList) {
     simplifiedEntityList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
-    
+
     if (simplifiedEntityList.size() <= MAX_ENTITIES) {
       return simplifiedEntityList;
     } else {
