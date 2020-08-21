@@ -92,6 +92,8 @@ public final class AnalysisHelper {
   }
 
   public static List<SongEntity> getTopSalientEntities(List<SongEntity> simplifiedEntityList) {
+    simplifiedEntityList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
+    
     if (simplifiedEntityList.size() <= MAX_ENTITIES) {
       return simplifiedEntityList;
     } else {
