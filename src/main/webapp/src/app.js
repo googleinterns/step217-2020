@@ -10,6 +10,10 @@ import {
 } from "react-router-dom";
 import "./app.css";
 
+/**
+ * Application component, which contains routing 
+ * through all the web application.
+ */
 class App extends Component {
   constructor(props) {
     super(props);
@@ -52,6 +56,8 @@ class App extends Component {
       return <p>Loading ...</p>;
     }
 
+    // TODO: forbid unauthorized users access 
+    // all links except "/"
     return (
       <Router>
         <div className="AppMain">

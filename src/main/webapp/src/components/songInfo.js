@@ -47,6 +47,9 @@ const styles = (theme) => ({
   },
 });
 
+/**
+ * Displays information about song.
+ */
 class SongInfo extends React.Component {
   render() {
     const classes = this.props.classes;
