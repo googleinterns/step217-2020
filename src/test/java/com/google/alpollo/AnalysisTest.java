@@ -62,7 +62,6 @@ public final class AnalysisTest {
   public void top10SalientEntitiesWithLessThan10Entities() throws IOException {
     List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS_SHORT));
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
-    simplifiedEntityList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
 
     String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
     String expected = gson.toJson(Arrays.asList(new SongEntity("mountain", 0.84), 
@@ -79,7 +78,6 @@ public final class AnalysisTest {
   public void top10SalientEntitiesWithMoreThan10Entities() throws IOException {
     List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS_LONG));
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
-    simplifiedEntityList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
 
     String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
     String expected = gson.toJson(Arrays.asList(new SongEntity("seaside", 0.36), 
