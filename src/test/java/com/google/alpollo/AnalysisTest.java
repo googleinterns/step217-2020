@@ -1,7 +1,6 @@
 package com.google.alpollo;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -10,7 +9,6 @@ import com.google.cloud.language.v1.Sentiment;
 
 @RunWith(JUnit4.class)
 public final class AnalysisTest {
-  private AnalysisHelper helper;
   private static final float TOLERANCE = 0.05f;
   private static final String LYRICS = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
       + "All these nights I lie awake and on my own\n" + "My pale fire hardly burns\n"
@@ -29,14 +27,9 @@ public final class AnalysisTest {
       + "I see a figure of a young man\n" + "He's torn with doubts, mistakes, his selfishness and rage\n"
       + "But doing all the best he can\n" + "I'm not so blind to see\n" + "That this young man is me";
 
-  @Before
-  public void setUp() {
-    helper = new AnalysisHelper();
-  }
-
   @Test
   public void checkSentimentScore() throws IOException {
-    Sentiment sentiment = helper.getSentiment(LYRICS);
+    Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS);
     float actual = sentiment.getScore();
     float expected = -0.1f;
     
@@ -45,7 +38,7 @@ public final class AnalysisTest {
 
   @Test
   public void checkSentimentMagnitude() throws IOException {
-    Sentiment sentiment = helper.getSentiment(LYRICS);
+    Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS);
     float actual = sentiment.getMagnitude();
     float expected = 0.7f;
     

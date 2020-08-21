@@ -16,13 +16,13 @@ import com.google.gson.Gson;
 @WebServlet("/sentiment")
 public class SentimentServlet extends HttpServlet {
   private final Gson gson = new Gson();
-  private static String LYRICS;
+  private static final String LYRICS_PARAM = "lyrics";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    LYRICS = request.getParameter("lyrics");
+    final String lyrics = request.getParameter(LYRICS_PARAM);
     try {
-      Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS);
+      Sentiment sentiment = AnalysisHelper.getSentiment(lyrics);
       SongSentiment songSentiment = new SongSentiment(sentiment.getScore(), sentiment.getMagnitude());
 
       String json = gson.toJson(songSentiment);

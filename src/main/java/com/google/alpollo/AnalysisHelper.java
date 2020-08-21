@@ -12,6 +12,10 @@ import com.google.cloud.language.v1.Sentiment;
  * from the API.
  */
 public class AnalysisHelper {
+  private static LanguageServiceSettings settings;
+
+  private AnalysisHelper() {};
+  
   /**
    * Based on the lyrics sent, the AI can extract the main "sentiment" of the text.
    * This sentiment has a score, showing the overall positivity of the text, ranging from -1.0 to 1.0
@@ -23,9 +27,11 @@ public class AnalysisHelper {
       throw new IllegalStateException("Failed to obtain Project ID.");
     }
 
-    // Set the header manually so we can use the Natural Language API.
-    LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
-        FixedHeaderProvider.create("X-Goog-User-Project", projectID)).build();
+    if (settings == null) {
+      settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
+          FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+    }
+
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
       Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
