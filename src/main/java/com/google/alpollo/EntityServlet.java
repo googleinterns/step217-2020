@@ -18,15 +18,15 @@ import com.google.gson.Gson;
 @WebServlet("/entity")
 public class EntityServlet extends HttpServlet {
   private final Gson gson = new Gson();
-  private static String LYRICS;
+  private static String LYRICS = "lyrics";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
-      LYRICS = request.getParameter("lyrics");
+      String lyrics = request.getParameter(LYRICS);
 
       // Get the Entity list from the API
-      List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS));
+      List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(lyrics));
       List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
       simplifiedEntityList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
       List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
