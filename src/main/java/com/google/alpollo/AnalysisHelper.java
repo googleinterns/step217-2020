@@ -99,8 +99,7 @@ public final class AnalysisHelper {
     if (tempList.size() <= MAX_ENTITIES) {
       return tempList;
     } else {
-      List<SongEntity> topSalientEntities = tempList.subList(FIRST_ENTITY, MAX_ENTITIES);
-      return topSalientEntities;
+        return simplifiedEntityList.subList(FIRST_ENTITY, MAX_ENTITIES);
     }
   }
 }
