@@ -55,9 +55,14 @@ public final class AnalysisHelper {
    * ranging from 0 to 1.0 .
    */
   public static List<Entity> getEntityList(String lyrics) throws IOException {
+    String projectID = ConfigHelper.getProjectID();
+    if (projectID == null) {
+      throw new IllegalStateException("Failed to obtain Project ID.");
+    }
+
     if (settings == null) {
       settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
-          FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+          FixedHeaderProvider.create("X-Goog-User-Project", projectID)).build();
     }
 
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
