@@ -29,7 +29,7 @@ public class AnalysisHelper {
 
     if (settings == null) {
       settings = LanguageServiceSettings.newBuilder().setHeaderProvider(
-          FixedHeaderProvider.create("X-Goog-User-Project", "google.com:alpollo-step-2020")).build();
+          FixedHeaderProvider.create("X-Goog-User-Project", projectID)).build();
     }
 
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
