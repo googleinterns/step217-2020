@@ -2,7 +2,6 @@ package com.google.alpollo;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,16 +22,21 @@ public class EntityServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    LYRICS = request.getParameter("lyrics");
+    try {
+      LYRICS = request.getParameter("lyrics");
 
-    // Get the Entity list from the API
-    List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS));
-    List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
-    simplifiedEntityList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
-    List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
+      // Get the Entity list from the API
+      List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS));
+      List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
+      simplifiedEntityList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
+      List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
 
-    String json = gson.toJson(topSalientEntities);
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
+      String json = gson.toJson(topSalientEntities);
+      response.setContentType("application/json;");
+      response.getWriter().println(json);
+    } catch (IllegalStateException | IOException entityException) {
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            entityException.getMessage());
+    }
   }
 }
