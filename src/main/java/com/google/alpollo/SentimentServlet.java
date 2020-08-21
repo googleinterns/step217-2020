@@ -20,12 +20,17 @@ public class SentimentServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String lyrics = request.getParameter(LYRICS_PARAM);
-    Sentiment sentiment = AnalysisHelper.getSentiment(lyrics);
-    SongSentiment songSentiment = new SongSentiment(sentiment.getScore(), sentiment.getMagnitude());
-    
-    String json = gson.toJson(songSentiment);
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
+    final String lyrics = request.getParameter(LYRICS_PARAM);
+    try {
+      Sentiment sentiment = AnalysisHelper.getSentiment(lyrics);
+      SongSentiment songSentiment = new SongSentiment(sentiment.getScore(), sentiment.getMagnitude());
+
+      String json = gson.toJson(songSentiment);
+      response.setContentType("application/json;");
+      response.getWriter().println(json);
+    } catch (IllegalStateException | IOException sentimentException) {
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+              sentimentException.getMessage());
+    }
   }
 }
