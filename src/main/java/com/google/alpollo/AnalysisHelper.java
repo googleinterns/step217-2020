@@ -93,12 +93,13 @@ public final class AnalysisHelper {
   }
 
   public static List<SongEntity> getTopSalientEntities(List<SongEntity> simplifiedEntityList) {
-    simplifiedEntityList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
+    List<SongEntity> tempList = new ArrayList<>(simplifiedEntityList);
+    tempList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
 
-    if (simplifiedEntityList.size() <= MAX_ENTITIES) {
-      return simplifiedEntityList;
+    if (tempList.size() <= MAX_ENTITIES) {
+      return tempList;
     } else {
-      List<SongEntity> topSalientEntities = simplifiedEntityList.subList(FIRST_ENTITY, MAX_ENTITIES);
+      List<SongEntity> topSalientEntities = tempList.subList(FIRST_ENTITY, MAX_ENTITIES);
       return topSalientEntities;
     }
   }
