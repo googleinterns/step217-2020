@@ -154,7 +154,7 @@ class Search extends React.Component {
           if (this.state.isLoading)
             return (
               <div>
-                <CircularProgress color="#733F94"/>;
+                <CircularProgress style={{ color: "black" }} />;
               </div>
             );
         })()}
