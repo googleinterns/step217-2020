@@ -5,7 +5,6 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import axios from "axios";
 
 const styles = (theme) => ({
   root: {
@@ -54,44 +53,28 @@ const styles = (theme) => ({
 class SongInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      artistName: props.match.params.artistName, 
-      songName: props.match.params.songName,
-      lyrics: undefined,
-      isLyricsLoading: false,
-      error: null
-    };
+
+    if (props.location.state) {
+      this.state = {
+        artistName: props.location.state.artistName,
+        songName: props.location.state.songName,
+        lyrics: props.location.state.lyrics,
+      };
+    } else {
+      this.state = undefined;
+    }
   }
 
   componentDidMount() {
-    this.setState({ isLoading: true });
-
-    axios
-      .get(`https://api.lyrics.ovh/v1/${this.state.artistName}/${this.state.songName}`)
-      .then((result) => result.data)
-      .then((response) =>
-        this.setState({
-          lyrics: response.lyrics,
-          isLyricsLoading: false,
-        })
-      )
-      .catch((error) =>
-        this.setState({
-          error,
-          isLyricsLoading: false,
-        })
-      );
   }
 
   render() {
     const classes = this.props.classes;
 
-    if (this.state.error) {
-      return <p>{this.state.error.message}</p>;
-    }
-
-    if (this.state.isLyricsLoading) {
-      return <p>Loading ...</p>;
+    if (this.state == undefined) {
+      return <div className={classes.root}>
+        <p>State wasn't defined, please use search page.</p>
+      </div>
     }
 
     // TODO Fetch song information from database.
