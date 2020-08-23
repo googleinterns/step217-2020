@@ -54,18 +54,30 @@ class SongInfo extends React.Component {
   constructor(props) {
     super(props);
 
+    const json = localStorage.getItem("state");
+    const state = JSON.parse(json);
+
     if (props.location.state) {
       this.state = {
         artistName: props.location.state.artistName,
         songName: props.location.state.songName,
         lyrics: props.location.state.lyrics,
       };
+      const json = JSON.stringify(this.state);
+      localStorage.setItem("state", json);
+    } else if (state) {
+      this.state = state;
     } else {
       this.state = undefined;
     }
   }
 
   componentDidMount() {
+    const json = localStorage.getItem("state");
+    try {
+      const state = JSON.parse(json);
+      this.setState(() => state);
+    } catch (_) {}
   }
 
   render() {
@@ -73,7 +85,7 @@ class SongInfo extends React.Component {
 
     if (this.state == undefined) {
       return <div className={classes.root}>
-        <p>State wasn't defined, please use search page.</p>
+        <p>State wasn't defined, please, try use search page.</p>
       </div>
     }
 
