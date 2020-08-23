@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import axios from "axios";
 
 const styles = (theme) => ({
   root: {
@@ -51,54 +52,53 @@ const styles = (theme) => ({
  * Displays information about song.
  */
 class SongInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      artistName: props.match.params.artistName, 
+      songName: props.match.params.songName,
+      lyrics: undefined,
+      isLyricsLoading: false,
+      error: null
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ isLoading: true });
+
+    axios
+      .get(`https://api.lyrics.ovh/v1/${this.state.artistName}/${this.state.songName}`)
+      .then((result) => result.data)
+      .then((response) =>
+        this.setState({
+          lyrics: response.lyrics,
+          isLyricsLoading: false,
+        })
+      )
+      .catch((error) =>
+        this.setState({
+          error,
+          isLyricsLoading: false,
+        })
+      );
+  }
+
   render() {
     const classes = this.props.classes;
 
+    if (this.state.error) {
+      return <p>{this.state.error.message}</p>;
+    }
+
+    if (this.state.isLyricsLoading) {
+      return <p>Loading ...</p>;
+    }
+
     // TODO Fetch song information from database.
     const songInfo = {
-      bandName: "David Bowie",
-      songName: "Life On Mars?",
-      lyrics:
-        "It's a God-awful small affair\n" +
-        "To the girl with the mousy hair\n" +
-        "But her mummy is yelling no\n" +
-        "And her daddy has told her to go\n" +
-        "But her friend is nowhere to be seen\n" +
-        "Now she walks through her sunken dream\n" +
-        "To the seat with the clearest view\n" +
-        "And she's hooked to the silver screen\n" +
-        "But the film is a saddening bore\n" +
-        "For she's lived it ten times or more\n" +
-        "She could spit in the eyes of fools\n" +
-        "As they ask her to focus on\n" +
-        "Sailors fighting in the dance hall\n" +
-        "Oh man, look at those cavemen go\n" +
-        "It's the freakiest show\n" +
-        "Take a look at the lawman\n" +
-        "Beating up the wrong guy\n" +
-        "Oh man, wonder if he'll ever know\n" +
-        "He's in the best selling show\n" +
-        "Is there life on Mars?\n" +
-        "It's on America's tortured brow\n" +
-        "That Mickey Mouse has grown up a cow\n" +
-        "Now the workers have struck for fame\n" +
-        "'Cause Lennon's on sale again\n" +
-        "See the mice in their million hordes\n" +
-        "From Ibiza to the Norfolk Broads\n" +
-        "Rule Britannia is out of bounds\n" +
-        "To my mother, my dog, and clowns\n" +
-        "But the film is a saddening bore\n" +
-        "'Cause I wrote it ten times or more\n" +
-        "It's about to be writ again\n" +
-        "As I ask you to focus on\n" +
-        "Sailors fighting in the dance hall\n" +
-        "Oh man, look at those cavemen go\n" +
-        "It's the freakiest show\n" +
-        "Take a look at the lawman\n" +
-        "Beating up the wrong guy\n" +
-        "Oh man, wonder if he'll ever know\n" +
-        "He's in the best selling show\n" +
-        "Is there life on Mars?",
+      bandName: this.state.artistName.toUpperCase(),
+      songName: this.state.songName.toUpperCase(),
+      lyrics: this.state.lyrics,
       sentimentAnalysis: {
         score: "-0.6",
         magnitude: "1.3",
