@@ -3,6 +3,7 @@ package com.google.alpollo;
 import com.google.gson.Gson;
 import java.io.*;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Helps to load configuration file and retrieve data from it.
@@ -34,16 +35,15 @@ final public class ConfigHelper {
    * or it was incorrect/didn't have projectID field
    */
   public static String getProjectID() {
-    try (InputStream inputStream = new FileInputStream(new File(CONFIG_FILE_PATH));
+    File configFile = new File(CONFIG_FILE_PATH);
+
+    try (InputStream inputStream = (configFile.exists()) ? 
+           gnew FileInputStream(configFile) : 
+           ClassLoader.getSystemResourceAsStream(CONFIG_FILE_NAME);
          final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream))) {
       return gson.fromJson(reader, ConfigInfo.class).getProjectID();
     } catch (Exception parseException) {
-      try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(CONFIG_FILE_NAME);
-           final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream))) {
-        return gson.fromJson(reader, ConfigInfo.class).getProjectID();
-      } catch (Exception exception) {
         return null;
-      }
     }
   }
 }
