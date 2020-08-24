@@ -31,6 +31,10 @@ const styles = () => ({
     "&:hover": {
       background: "rgba(115, 63, 148, 0.5)",
     },
+    "&:disabled": {
+      background: "grey",
+      color: "white"
+    }
   },
 });
 
@@ -84,6 +88,8 @@ class Search extends React.Component {
 
   render() {
     const classes = this.props.classes;
+    /* Disable button if there's an empty field */
+    const isDisabled = !(this.state.artistName && this.state.songName);
 
     return (
       <div className={classes.root}>
@@ -113,7 +119,10 @@ class Search extends React.Component {
               value={this.state.songName}
               onChange={this.handleChange}
             />
-            <Button className={classes.submitButton} type="submit">
+            <Button
+              disabled={isDisabled}
+              className={classes.submitButton} 
+              type="submit">
               Submit
             </Button>
           </form>
