@@ -43,7 +43,7 @@ final public class ConfigHelper {
          final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream))) {
       return gson.fromJson(reader, ConfigInfo.class).getProjectID();
     } catch (Exception parseException) {
-        return null;
+      return null;
     }
   }
 }
