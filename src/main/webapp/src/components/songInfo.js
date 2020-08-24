@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import { Redirect } from "react-router";
 
 const styles = (theme) => ({
   root: {
@@ -84,9 +85,7 @@ class SongInfo extends React.Component {
     const classes = this.props.classes;
 
     if (this.state == undefined) {
-      return <div className={classes.root}>
-        <p>State wasn't defined, please, try use search page.</p>
-      </div>
+      return <Redirect to="/search" />
     }
 
     // TODO Fetch song information from database.
