@@ -13,7 +13,7 @@ public class SongDataBase {
     OfyService.ofy().save().entity(new SongHead(song)).now();
   }
 
-  /** Returns the list of the most requested songs. */
+  /** Returns the list of at most 10 songs. */
   public static List<Song> topSongs() {
     List<Song> songs = new ArrayList<>();
     OfyService.ofy().load().type(SongHead.class).limit(TOP_SIZE).list().forEach(song -> songs.add(song));
