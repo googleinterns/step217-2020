@@ -1,9 +1,7 @@
 package com.google.alpollo;
 
 import com.google.gson.Gson;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.Objects;
 
 /**
@@ -11,6 +9,7 @@ import java.util.Objects;
  */
 final public class ConfigHelper {
   private static final String CONFIG_FILE_NAME = "config.json";
+  private static final String CONFIG_FILE_PATH = "WEB-INF/config.json";
   private static final Gson gson = new Gson();
 
   /**
@@ -35,11 +34,16 @@ final public class ConfigHelper {
    * or it was incorrect/didn't have projectID field
    */
   public static String getProjectID() {
-    try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(CONFIG_FILE_NAME);
+    try (InputStream inputStream = new FileInputStream(new File(CONFIG_FILE_PATH));
          final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream))) {
       return gson.fromJson(reader, ConfigInfo.class).getProjectID();
     } catch (Exception parseException) {
-      return null;
+      try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(CONFIG_FILE_NAME);
+           final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream))) {
+        return gson.fromJson(reader, ConfigInfo.class).getProjectID();
+      } catch (Exception exception) {
+        return null;
+      }
     }
   }
 }
