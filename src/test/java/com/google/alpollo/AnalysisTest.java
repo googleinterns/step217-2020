@@ -100,7 +100,7 @@ public final class AnalysisTest {
 
   /** Some entities might have metadata attached to them. Let's see if they're shown correctly. */
   @Test
-  public void checkEntitiesWithMetadata() throws IOException{
+  public void checkEntitiesWithMetadata() throws IOException {
     List<Entity> entityList = AnalysisHelper.getEntityList(LYRICS_WITH_METADATA);
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
