@@ -34,6 +34,9 @@ const styles = () => ({
   },
 });
 
+/**
+ * Change TextField outline border default colors.
+ */
 const StyledTextField = withStyles({
   root: {
     "& label.Mui-focused": {
@@ -62,10 +65,18 @@ class Search extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Save printed text to state while printing.
+   * @param {Event} event 
+   */
   handleChange(event) {
     this.setState({[event.target.id]: event.target.value});
   }
 
+  /**
+   * Redirect to song page after submitting the search form.
+   * @param {Event} event 
+   */
   handleSubmit(event) {
     event.preventDefault();
     this.props.history.push(`/song/${this.state.artistName}/${this.state.songName}`);
