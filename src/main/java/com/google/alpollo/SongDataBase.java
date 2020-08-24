@@ -15,7 +15,8 @@ public class SongDataBase {
   private static final String ARTIST_PROPERTY = "artist";
   private static final String NAME_PROPERTY = "name";
   private static final String ALBUM_PROPERTY = "album";
-  private static final String COUNTER_PROPERTY = "counter";
+  /** Number of times users searched for this song in the system. */
+  private static final String SEARCH_COUNTER_PROPERTY = "search-counter";
   private static final String SONG_PROPERTY = "Song";
 
   /** Save request song to database. */
@@ -25,7 +26,7 @@ public class SongDataBase {
     songEntity.setProperty(NAME_PROPERTY, song.getName());
     songEntity.setProperty(ALBUM_PROPERTY, song.getAlbum());
     // Always put 1 to counter. TODO: increase.
-    songEntity.setProperty(COUNTER_PROPERTY, 1);
+    songEntity.setProperty(SEARCH_COUNTER_PROPERTY, 1);
 
     datastore.put(songEntity);
   }
@@ -33,7 +34,7 @@ public class SongDataBase {
   /** Returns the list of the most requested songs. */
   public static List<Song> topSongs() {
     // All songs. TODO: take only 10 the most requested.
-    final Query query = new Query(SONG_PROPERTY).addSort(COUNTER_PROPERTY, SortDirection.DESCENDING);
+    final Query query = new Query(SONG_PROPERTY).addSort(SEARCH_COUNTER_PROPERTY, SortDirection.DESCENDING);
     final PreparedQuery results = datastore.prepare(query);
 
     List<Song> songs = new ArrayList<>();
