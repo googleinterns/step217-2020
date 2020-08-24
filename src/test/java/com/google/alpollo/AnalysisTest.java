@@ -7,6 +7,7 @@ import org.junit.runners.JUnit4;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import com.google.alpollo.model.SongEntity;
 import com.google.cloud.language.v1.Entity;
@@ -64,9 +65,11 @@ public final class AnalysisTest {
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
     String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
-    String expected = gson.toJson(Arrays.asList(new SongEntity("mountain", 0.84), 
-        new SongEntity("mountain", 0.06), new SongEntity("story", 0.05), new SongEntity("sale", 0.03), 
-        new SongEntity("tale", 0.01)));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("mountain", 0.84, "OTHER", Collections.emptyMap()), 
+        new SongEntity("mountain", 0.06, "LOCATION", Collections.emptyMap()),
+        new SongEntity("story", 0.05, "WORK_OF_ART", Collections.emptyMap()),
+        new SongEntity("sale", 0.03, "OTHER", Collections.emptyMap()), 
+        new SongEntity("tale", 0.01, "WORK_OF_ART", Collections.emptyMap())));
         
     Assert.assertEquals(expected, actual);
   }
@@ -80,10 +83,16 @@ public final class AnalysisTest {
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
     String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
-    String expected = gson.toJson(Arrays.asList(new SongEntity("seaside", 0.36), 
-        new SongEntity("source", 0.34), new SongEntity("mountain", 0.05), new SongEntity("ones", 0.03), 
-        new SongEntity("one", 0.03), new SongEntity("roundabout", 0.02), new SongEntity("love", 0.02),
-        new SongEntity("nights", 0.02), new SongEntity("fire", 0.02), new SongEntity("root", 0.01)));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("seaside", 0.36, "LOCATION", Collections.emptyMap()), 
+        new SongEntity("source", 0.34, "PERSON", Collections.emptyMap()),
+        new SongEntity("mountain", 0.05, "OTHER", Collections.emptyMap()), 
+        new SongEntity("ones", 0.03, "PERSON", Collections.emptyMap()), 
+        new SongEntity("one", 0.03, "PERSON", Collections.emptyMap()), 
+        new SongEntity("roundabout", 0.02, "OTHER", Collections.emptyMap()), 
+        new SongEntity("love", 0.02, "OTHER", Collections.emptyMap()),
+        new SongEntity("nights", 0.02, "EVENT", Collections.emptyMap()), 
+        new SongEntity("fire", 0.02, "OTHER", Collections.emptyMap()), 
+        new SongEntity("root", 0.01, "OTHER", Collections.emptyMap())));
         
     Assert.assertEquals(expected, actual);
   }
