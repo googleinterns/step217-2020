@@ -7,7 +7,10 @@ import org.junit.runners.JUnit4;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.google.alpollo.model.SongEntity;
 import com.google.cloud.language.v1.Entity;
 import com.google.cloud.language.v1.Sentiment;
@@ -36,7 +39,7 @@ public final class AnalysisTest {
   private static final String LYRICS_SHORT = "I'm the mountain\n"
       + "Rising high\n" + "It's the way that I survived\n" + "I'm the mountain\n" + "Tell my tale\n"
       + "The greatest story's now for sale\n";
-  
+  private static final String LYRICS_WITH_METADATA = "Google has found me some nice results!";
   @Test
   public void checkSentimentScore() throws IOException {
     Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS_LONG);
@@ -93,6 +96,23 @@ public final class AnalysisTest {
         new SongEntity("fire", 0.02, "OTHER", Collections.emptyMap()), 
         new SongEntity("root", 0.01, "OTHER", Collections.emptyMap())));
         
+    Assert.assertEquals(expected, actual);
+  }
+
+  /** Some entities might have metadata attached to them. Let's see if they're shown correctly. */
+  @Test
+  public void checkEntitiesWithMetadata() throws IOException{
+    List<Entity> entityList = AnalysisHelper.getEntityList(LYRICS_WITH_METADATA);
+    List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
+
+    Map<String, String> metadata = new HashMap<>();
+    metadata.put("mid", "/m/045c7b");
+    metadata.put("wikipedia_url", "https://en.wikipedia.org/wiki/Google");
+
+    String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("Google", 0.88, "ORGANIZATION", metadata),
+        new SongEntity("results", 0.12, "OTHER", Collections.emptyMap())));
+
     Assert.assertEquals(expected, actual);
   }
 }
