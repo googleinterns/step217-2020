@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +36,7 @@ public final class AnalysisTest {
   private static final String LYRICS_SHORT = "I'm the mountain\n"
       + "Rising high\n" + "It's the way that I survived\n" + "I'm the mountain\n" + "Tell my tale\n"
       + "The greatest story's now for sale\n";
-
+  
   @Test
   public void checkSentimentScore() throws IOException {
     Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS_LONG);
@@ -61,7 +60,7 @@ public final class AnalysisTest {
    */
   @Test
   public void top10SalientEntitiesWithLessThan10Entities() throws IOException {
-    List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS_SHORT));
+    List<Entity> entityList = AnalysisHelper.getEntityList(LYRICS_SHORT);
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
     String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
@@ -79,7 +78,7 @@ public final class AnalysisTest {
    */
   @Test
   public void top10SalientEntitiesWithMoreThan10Entities() throws IOException {
-    List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(LYRICS_LONG));
+    List<Entity> entityList = AnalysisHelper.getEntityList(LYRICS_LONG);
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
     String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
