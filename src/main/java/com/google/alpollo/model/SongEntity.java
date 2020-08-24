@@ -1,7 +1,8 @@
 package com.google.alpollo.model;
 
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class created to store only entity name and salience, leaving the other useless properties
@@ -20,9 +21,9 @@ public class SongEntity {
    * For most entity types, the metadata is a Wikipedia URL. Other times, it can be extra info.
    * An object containing a list of "key": value pairs. Example: { "name": "wrench", "mass": "1.3kg", "count": "3" }.
   */
-  private final HashMap<String, String> metadata;
+  private final Map<String, String> metadata;
 
-  public SongEntity(String name, double salience, String type, HashMap<String, String> metadata) {
+  public SongEntity(String name, double salience, String type, Map<String, String> metadata) {
     this.name = name;
     this.salience = salience;
     this.type = type;
