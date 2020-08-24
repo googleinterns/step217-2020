@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.google.alpollo.model.SongEntity;
 import com.google.cloud.language.v1.Entity;
 import com.google.cloud.language.v1.Sentiment;
