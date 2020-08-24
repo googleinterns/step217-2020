@@ -10,6 +10,7 @@ import com.google.cloud.language.v1.AnalyzeEntitiesResponse;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.EncodingType;
 import com.google.cloud.language.v1.Entity;
+import com.google.cloud.language.v1.EntityMention;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.LanguageServiceSettings;
 import com.google.cloud.language.v1.Sentiment;
@@ -87,7 +88,8 @@ public final class AnalysisHelper {
     for (Entity entity : entityList) {
       // Use round() here to set the double to 2 decimals.
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
-          Math.round(entity.getSalience() * 100.0) / 100.0);
+          Math.round(entity.getSalience() * 100.0) / 100.0, entity.getType().toString(),
+          entity.getMetadataMap());
       simplifiedEntityList.add(simplifiedEntity);
     }
 
