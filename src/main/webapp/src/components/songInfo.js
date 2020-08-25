@@ -155,9 +155,9 @@ class SongInfo extends React.Component {
       });
 
       const options = {
-        'title': 'Most important words',
-        'width':600,
-        'height':500
+        title : 'Most important words',
+        width : 600,
+        height : 500
       };
 
       const entityChart = new google.visualization.PieChart(document.getElementById('chart-container'));
