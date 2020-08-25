@@ -191,8 +191,7 @@ class SongInfo extends React.Component {
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
-              <button onClick={loadChartAPI}>Get Entity Analysis results</button>
-              <div id="chart-container"></div>
+              <div id="chart-container" ref={() => loadChartAPI()}></div>
             </div>
           </div>
         </div>
