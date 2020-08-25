@@ -33,16 +33,9 @@ const styles = () => ({
     "&:hover": {
       background: "rgba(115, 63, 148, 0.5)",
     },
-    "&:disabled": {
-      background: "grey",
-      color: "white"
-    }
   },
 });
 
-/**
- * Change TextField outline border default colors.
- */
 const StyledTextField = withStyles({
   root: {
     "& label.Mui-focused": {
@@ -76,19 +69,11 @@ class Search extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  /**
-   * Save printed text to state while printing.
-   * @param {Event} event 
-   */
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
     this.setState({ error: null, isLoading: false });
   }
 
-  /**
-   * Redirect to song page after submitting the search form.
-   * @param {Event} event 
-   */
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ isLoading: true });
@@ -125,8 +110,6 @@ class Search extends React.Component {
 
   render() {
     const classes = this.props.classes;
-    /* Disable button if there's an empty field */
-    const isDisabled = !(this.state.artistName && this.state.songName);
 
     return (
       <div className={classes.root}>
@@ -156,10 +139,7 @@ class Search extends React.Component {
               value={this.state.songName}
               onChange={this.handleChange}
             />
-            <Button
-              disabled={isDisabled}
-              className={classes.submitButton} 
-              type="submit">
+            <Button className={classes.submitButton} type="submit">
               Submit
             </Button>
           </form>
@@ -174,7 +154,7 @@ class Search extends React.Component {
           if (this.state.isLoading)
             return (
               <div>
-                <CircularProgress style={{ color: "black" }} />
+                <CircularProgress style={{ color: "black" }} />;
               </div>
             );
         })()}
