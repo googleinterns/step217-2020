@@ -48,13 +48,8 @@ public class SongEntity {
 
     SongEntity entity = (SongEntity) obj;
     return salience == entity.salience
-        && (name == entity.name || (name != null && name.equals(entity.getName())))
-        && (type == entity.type || (type != null && type .equals(entity.getType())))
-        && (wikiLink == entity.wikiLink || (wikiLink != null && wikiLink .equals(entity.getWikiLink())));
+        && (name.equals(entity.name))
+        && (type.equals(entity.type))
+        && (wikiLink.equals(entity.wikiLink));
   }
-
-  public String getName() { return name; }
-  public double getSalience() { return salience; }
-  public String getType() { return type; }
-  public String getWikiLink() { return wikiLink; }
 }
