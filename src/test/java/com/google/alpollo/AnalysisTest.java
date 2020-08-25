@@ -39,6 +39,10 @@ public final class AnalysisTest {
       + "Rising high\n" + "It's the way that I survived\n" + "I'm the mountain\n" + "Tell my tale\n"
       + "The greatest story's now for sale\n";
   private static final String LYRICS_WITH_METADATA = "Google has found me some nice results!";
+  private static final String EMPTY_STRING = "";
+  private static final String WIKI_LINK_GOOGLE = "https://en.wikipedia.org/wiki/Google";
+
+
   @Test
   public void checkSentimentScore() throws IOException {
     Sentiment sentiment = AnalysisHelper.getSentiment(LYRICS_LONG);
@@ -66,11 +70,11 @@ public final class AnalysisTest {
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
     String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
-    String expected = gson.toJson(Arrays.asList(new SongEntity("mountain", 0.84, "OTHER", Collections.emptyMap()), 
-        new SongEntity("mountain", 0.06, "LOCATION", Collections.emptyMap()),
-        new SongEntity("story", 0.05, "WORK_OF_ART", Collections.emptyMap()),
-        new SongEntity("sale", 0.03, "OTHER", Collections.emptyMap()), 
-        new SongEntity("tale", 0.01, "WORK_OF_ART", Collections.emptyMap())));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("mountain", 0.84, "OTHER", EMPTY_STRING), 
+        new SongEntity("mountain", 0.06, "LOCATION", EMPTY_STRING),
+        new SongEntity("story", 0.05, "WORK_OF_ART", EMPTY_STRING),
+        new SongEntity("sale", 0.03, "OTHER", EMPTY_STRING), 
+        new SongEntity("tale", 0.01, "WORK_OF_ART", EMPTY_STRING)));
         
     Assert.assertEquals(expected, actual);
   }
@@ -84,16 +88,16 @@ public final class AnalysisTest {
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
     String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
-    String expected = gson.toJson(Arrays.asList(new SongEntity("seaside", 0.36, "LOCATION", Collections.emptyMap()), 
-        new SongEntity("source", 0.34, "PERSON", Collections.emptyMap()),
-        new SongEntity("mountain", 0.05, "OTHER", Collections.emptyMap()), 
-        new SongEntity("ones", 0.03, "PERSON", Collections.emptyMap()), 
-        new SongEntity("one", 0.03, "PERSON", Collections.emptyMap()), 
-        new SongEntity("roundabout", 0.02, "OTHER", Collections.emptyMap()), 
-        new SongEntity("love", 0.02, "OTHER", Collections.emptyMap()),
-        new SongEntity("nights", 0.02, "EVENT", Collections.emptyMap()), 
-        new SongEntity("fire", 0.02, "OTHER", Collections.emptyMap()), 
-        new SongEntity("root", 0.01, "OTHER", Collections.emptyMap())));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("seaside", 0.36, "LOCATION", EMPTY_STRING), 
+        new SongEntity("source", 0.34, "PERSON", EMPTY_STRING),
+        new SongEntity("mountain", 0.05, "OTHER", EMPTY_STRING), 
+        new SongEntity("ones", 0.03, "PERSON", EMPTY_STRING), 
+        new SongEntity("one", 0.03, "PERSON", EMPTY_STRING), 
+        new SongEntity("roundabout", 0.02, "OTHER", EMPTY_STRING), 
+        new SongEntity("love", 0.02, "OTHER", EMPTY_STRING),
+        new SongEntity("nights", 0.02, "EVENT", EMPTY_STRING), 
+        new SongEntity("fire", 0.02, "OTHER", EMPTY_STRING), 
+        new SongEntity("root", 0.01, "OTHER", EMPTY_STRING)));
         
     Assert.assertEquals(expected, actual);
   }
@@ -104,13 +108,9 @@ public final class AnalysisTest {
     List<Entity> entityList = AnalysisHelper.getEntityList(LYRICS_WITH_METADATA);
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
-    Map<String, String> metadata = new HashMap<>();
-    metadata.put("mid", "/m/045c7b");
-    metadata.put("wikipedia_url", "https://en.wikipedia.org/wiki/Google");
-
     String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
-    String expected = gson.toJson(Arrays.asList(new SongEntity("Google", 0.88, "ORGANIZATION", metadata),
-        new SongEntity("results", 0.12, "OTHER", Collections.emptyMap())));
+    String expected = gson.toJson(Arrays.asList(new SongEntity("Google", 0.88, "ORGANIZATION", WIKI_LINK_GOOGLE),
+        new SongEntity("results", 0.12, "OTHER", EMPTY_STRING)));
 
     Assert.assertEquals(expected, actual);
   }
