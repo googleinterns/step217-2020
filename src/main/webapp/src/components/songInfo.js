@@ -144,6 +144,24 @@ class SongInfo extends React.Component {
       ],
     };
 
+    function drawChart() {
+      const data = new google.visualization.DataTable();
+      data.addColumn('string', 'Name');
+      data.addColumn('number', 'Salience');
+      songInfo.entityAnalysis.forEach((entity) => {
+        data.addRow([entity.word, entity.salience]);
+      });
+
+      const options = {
+        'title': 'Most important words',
+        'width':600,
+        'height':500
+      };
+
+      const entityChart = new google.visualization.PieChart(document.getElementById('chart-container'));
+      entityChart.draw(data, options);
+    }
+
     // TODO display entities with charts
     return (
       <div className={classes.root}>
