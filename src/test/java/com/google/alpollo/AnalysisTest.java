@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.hamcrest.CoreMatchers;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,14 +70,14 @@ public final class AnalysisTest {
     List<Entity> entityList = AnalysisHelper.getEntityList(LYRICS_SHORT);
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
-    String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
-    String expected = gson.toJson(Arrays.asList(new SongEntity("mountain", 0.84, "OTHER", EMPTY_STRING), 
+    List<SongEntity> actual = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
+    List<SongEntity> expected = Arrays.asList(new SongEntity("mountain", 0.84, "OTHER", EMPTY_STRING), 
         new SongEntity("mountain", 0.06, "LOCATION", EMPTY_STRING),
         new SongEntity("story", 0.05, "WORK_OF_ART", EMPTY_STRING),
         new SongEntity("sale", 0.03, "OTHER", EMPTY_STRING), 
-        new SongEntity("tale", 0.01, "WORK_OF_ART", EMPTY_STRING)));
+        new SongEntity("tale", 0.01, "WORK_OF_ART", EMPTY_STRING));
         
-    Assert.assertEquals(expected, actual);
+    Assert.assertThat(actual, CoreMatchers.is(expected));
   }
 
   /**
@@ -87,8 +88,8 @@ public final class AnalysisTest {
     List<Entity> entityList = AnalysisHelper.getEntityList(LYRICS_LONG);
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
-    String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
-    String expected = gson.toJson(Arrays.asList(new SongEntity("seaside", 0.36, "LOCATION", EMPTY_STRING), 
+    List<SongEntity> actual = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
+    List<SongEntity> expected = Arrays.asList(new SongEntity("seaside", 0.36, "LOCATION", EMPTY_STRING), 
         new SongEntity("source", 0.34, "PERSON", EMPTY_STRING),
         new SongEntity("mountain", 0.05, "OTHER", EMPTY_STRING), 
         new SongEntity("ones", 0.03, "PERSON", EMPTY_STRING), 
@@ -97,9 +98,9 @@ public final class AnalysisTest {
         new SongEntity("love", 0.02, "OTHER", EMPTY_STRING),
         new SongEntity("nights", 0.02, "EVENT", EMPTY_STRING), 
         new SongEntity("fire", 0.02, "OTHER", EMPTY_STRING), 
-        new SongEntity("root", 0.01, "OTHER", EMPTY_STRING)));
+        new SongEntity("root", 0.01, "OTHER", EMPTY_STRING));
         
-    Assert.assertEquals(expected, actual);
+      Assert.assertThat(actual, CoreMatchers.is(expected));
   }
 
   /** Some entities might have metadata attached to them. Let's see if they're shown correctly. */
@@ -108,10 +109,10 @@ public final class AnalysisTest {
     List<Entity> entityList = AnalysisHelper.getEntityList(LYRICS_WITH_METADATA);
     List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
 
-    String actual = gson.toJson(AnalysisHelper.getTopSalientEntities(simplifiedEntityList));
-    String expected = gson.toJson(Arrays.asList(new SongEntity("Google", 0.88, "ORGANIZATION", WIKI_LINK_GOOGLE),
-        new SongEntity("results", 0.12, "OTHER", EMPTY_STRING)));
+    List<SongEntity> actual = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
+    List<SongEntity> expected = Arrays.asList(new SongEntity("Google", 0.88, "ORGANIZATION", WIKI_LINK_GOOGLE),
+        new SongEntity("results", 0.12, "OTHER", EMPTY_STRING));
 
-    Assert.assertEquals(expected, actual);
+      Assert.assertThat(actual, CoreMatchers.is(expected));
   }
 }
