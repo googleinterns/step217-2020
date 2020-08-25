@@ -65,7 +65,7 @@ class App extends Component {
           <Navbar loggedInInfo={loggedInInfo} />
 
           <Switch>
-            <Route exact path="/song/:artistName/:songName" component={SongInfo}/>
+            <Route exact path="/song" component={SongInfo}/>
             <Route path="/search">
               <Search />
             </Route>
