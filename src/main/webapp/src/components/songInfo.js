@@ -106,32 +106,32 @@ class SongInfo extends React.Component {
       entityAnalysis: [
         {
           word: "affair",
-          salience: "0.51",
+          salience: 0.51,
           category: "work of art",
         },
         {
           word: "girl",
-          salience: "0.09",
+          salience: 0.09,
           category: "person",
         },
         {
           word: "film",
-          salience: "0.06",
+          salience: 0.06,
           category: "work of art",
         },
         {
           word: "selling show",
-          salience: "0.04",
+          salience: 0.04,
           category: "work of art",
         },
         {
           word: "God",
-          salience: "0.01",
+          salience: 0.01,
           category: "person",
         },
         {
           word: "Mars",
-          salience: "0.01",
+          salience: 0.01,
           category: "location",
         },
       ],
