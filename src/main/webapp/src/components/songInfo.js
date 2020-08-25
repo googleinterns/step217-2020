@@ -162,6 +162,14 @@ class SongInfo extends React.Component {
       entityChart.draw(data, options);
     }
 
+    function loadChartAPI() {
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawChart);
+    }
+
     // TODO display entities with charts
     return (
       <div className={classes.root}>
