@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Lyrics from "./lyrics";
+import SentimentAnalysisInfo from "./sentimentAnalysisInfo";
 
 const styles = (theme) => ({
   root: {
@@ -151,9 +152,7 @@ class SongInfo extends React.Component {
           </div>
           <div>
             <div class="song-sentiment-analysis">
-              <Typography variant="h4">Sentiment Analysis</Typography>
-              <p>Score: {songInfo.sentimentAnalysis.score}</p>
-              <p>Magnitude: {songInfo.sentimentAnalysis.magnitude}</p>
+              <SentimentAnalysisInfo lyrics={this.state.lyrics} />
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
