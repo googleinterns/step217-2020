@@ -38,7 +38,7 @@ final public class ConfigHelper {
     File configFile = new File(CONFIG_FILE_PATH);
 
     try (InputStream inputStream = (configFile.exists()) ? 
-           gnew FileInputStream(configFile) : 
+           new FileInputStream(configFile) : 
            ClassLoader.getSystemResourceAsStream(CONFIG_FILE_NAME);
          final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream))) {
       return gson.fromJson(reader, ConfigInfo.class).getProjectID();
