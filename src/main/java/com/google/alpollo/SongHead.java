@@ -15,6 +15,9 @@ public class SongHead {
   @Index
   private String album;
 
+  public SongHead() {
+  }
+
   public SongHead(String artist, String name, String album) {
     this.artist = artist;
     this.name = name;
