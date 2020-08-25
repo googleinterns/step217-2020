@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
 
 const styles = (theme) => ({
