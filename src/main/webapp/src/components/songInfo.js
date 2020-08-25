@@ -189,17 +189,8 @@ class SongInfo extends React.Component {
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
-              <List>
-                {songInfo.entityAnalysis.map((wordInfo, index) => (
-                  <ListItem key={index + 1}>
-                    {wordInfo.word +
-                      " - " +
-                      wordInfo.salience +
-                      " - " +
-                      wordInfo.category}
-                  </ListItem>
-                ))}
-              </List>
+              <button onClick={loadChartAPI}>Submit</button>
+              <div id="chart-container"></div>
             </div>
           </div>
         </div>
