@@ -18,17 +18,14 @@ public class SongEntity {
    * e.g. PERSON, LOCATION, WORK_OF_ART
    */ 
   private final String type;
-  /** 
-   * For most entity types, the metadata is a Wikipedia URL. Other times, it can be extra info.
-   * An object containing a list of "key": "value" pairs. Example: { "name": "wrench", "mass": "1.3kg", "count": "3" }.
-   */
-  private final Map<String, String> metadata;
+  /** Some entities might have a wikipedia link attached to them. */
+  private final String wikiLink;
 
-  public SongEntity(String name, double salience, String type, Map<String, String> metadata) {
+  public SongEntity(String name, double salience, String type, String wikiLink) {
     this.name = name;
     this.salience = salience;
     this.type = type;
-    this.metadata = metadata;
+    this.wikiLink = wikiLink;
   }
 
   /**
