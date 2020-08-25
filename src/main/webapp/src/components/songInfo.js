@@ -47,6 +47,8 @@ const styles = (theme) => ({
   },
 });
 
+const google = window.google;
+
 /**
  * Displays information about song.
  */
