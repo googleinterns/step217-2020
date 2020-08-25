@@ -1,8 +1,6 @@
 package com.google.alpollo.model;
 
 import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Class created to store only entity name and salience, leaving the other useless properties

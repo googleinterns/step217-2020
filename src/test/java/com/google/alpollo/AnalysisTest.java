@@ -11,11 +11,9 @@ import java.util.List;
 import com.google.alpollo.model.SongEntity;
 import com.google.cloud.language.v1.Entity;
 import com.google.cloud.language.v1.Sentiment;
-import com.google.gson.Gson;
 
 @RunWith(JUnit4.class)
 public final class AnalysisTest {
-  private final Gson gson = new Gson();
   private static final float TOLERANCE = 0.05f;
   private static final String LYRICS_LONG = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
       + "All these nights I lie awake and on my own\n" + "My pale fire hardly burns\n"
