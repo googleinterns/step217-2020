@@ -37,4 +37,26 @@ public class SongEntity {
       return Double.compare(b.salience, a.salience);
     }
   };
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) {
+      return true;
+    }
+
+    if (!(obj instanceof SongEntity)) { 
+      return false; 
+  } 
+
+    SongEntity entity = (SongEntity) obj;
+    return salience == entity.salience
+        && (name == entity.name || (name != null && name.equals(entity.getName())))
+        && (type == entity.type || (type != null && type .equals(entity.getType())))
+        && (wikiLink == entity.wikiLink || (wikiLink != null && wikiLink .equals(entity.getWikiLink())));
+  }
+
+  public String getName() { return name; }
+  public double getSalience() { return salience; }
+  public String getType() { return type; }
+  public String getWikiLink() { return wikiLink; }
 }
