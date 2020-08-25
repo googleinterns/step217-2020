@@ -146,7 +146,7 @@ class SongInfo extends React.Component {
       ],
     };
 
-    function drawChart() {
+    function drawChart(element) {
       const data = new google.visualization.DataTable();
       data.addColumn('string', 'Name');
       data.addColumn('number', 'Salience');
@@ -160,19 +160,18 @@ class SongInfo extends React.Component {
         height: 500
       };
 
-      const entityChart = new google.visualization.PieChart(document.getElementById('chart-container'));
+      const entityChart = new google.visualization.PieChart(element);
       entityChart.draw(data, options);
     }
 
-    function loadChartAPI() {
+    function loadChartAPI(element) {
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(function() { drawChart(element) });
     }
 
-    // TODO display entities with charts
     return (
       <div className={classes.root}>
         <Typography variant="h3" className={classes.songName}>
@@ -191,7 +190,7 @@ class SongInfo extends React.Component {
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
-              <div id="chart-container" ref={() => loadChartAPI()}></div>
+              <div ref={(elem) => { if (elem) loadChartAPI(elem); }}></div>
             </div>
           </div>
         </div>
