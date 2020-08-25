@@ -15,12 +15,13 @@ public class SongEntity {
   private final double salience;
   /** 
    * The API sets each entity to a category.
-   * e.g. PERSON, LOCATION, WORK_OF_ART*/ 
+   * e.g. PERSON, LOCATION, WORK_OF_ART
+   */ 
   private final String type;
   /** 
    * For most entity types, the metadata is a Wikipedia URL. Other times, it can be extra info.
-   * An object containing a list of "key": value pairs. Example: { "name": "wrench", "mass": "1.3kg", "count": "3" }.
-  */
+   * An object containing a list of "key": "value" pairs. Example: { "name": "wrench", "mass": "1.3kg", "count": "3" }.
+   */
   private final Map<String, String> metadata;
 
   public SongEntity(String name, double salience, String type, Map<String, String> metadata) {
