@@ -5,35 +5,19 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Id;
 
 @Entity
-public class SongHead {
+public class SongHead extends Song {
   @Id
   private String id;
-  @Index
-  private String artist;
-  @Index
-  private String name;
-  @Index
-  private String album;
 
-  public SongHead() {
+  public SongHead() { }
+
+  public SongHead(Song song) {
+    super(song);
+    id = song.getArtist() + song.getName() + song.getAlbum();
   }
 
   public SongHead(String artist, String name, String album) {
-    this.artist = artist;
-    this.name = name;
-    this.album = album;
-    id = artist + name + album;
+    this(new Song(artist, name, album));
   }
 
-  public String getArtist() {
-    return artist;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getAlbum() {
-    return album;
-  }
 }

@@ -1,15 +1,26 @@
 package com.google.alpollo;
 
+import com.googlecode.objectify.annotation.Index;
+
 /** Represents the structure of the song. */
 public class Song {
-  private final String artist;
-  private final String name;
-  private final String album;
+  @Index
+  private String artist;
+  @Index
+  private String name;
+  @Index
+  private String album;
+
+  public Song() { }
 
   public Song(String artist, String name, String album) {
     this.artist = artist;
     this.name = name;
     this.album = album;
+  }
+
+  public Song(SongHead song) {
+    this(song.getArtist(), song.getName(), song.getAlbum());
   }
 
   public Song(Song song) {

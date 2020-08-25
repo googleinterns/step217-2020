@@ -10,13 +10,14 @@ public class SongDataBase {
 
   /** Save request song to database. */
   public static void saveSongRequest(Song song) {
-    OfyService.ofy().save().entity(new SongHead(song.getArtist(), song.getName(), song.getAlbum())).now();
+    OfyService.ofy().save().entity(new SongHead(song)).now();
   }
 
   /** Returns the list of at most 10 songs. */
   public static List<Song> topSongs() {
     List<Song> songs = new ArrayList<>();
-    OfyService.ofy().load().type(SongHead.class).limit(TOP_SIZE).list().forEach(song -> songs.add(new Song(song.getArtist(), song.getName(), song.getAlbum())));
+    OfyService.ofy().load().type(SongHead.class).limit(TOP_SIZE).list()
+        .forEach(song -> songs.add(song));
     return songs;
   }
 }
