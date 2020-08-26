@@ -1,6 +1,7 @@
 package com.google.alpollo;
 
 import com.google.alpollo.model.SongSentiment;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,6 +50,10 @@ public final class AnalysisTest {
   private SentimentServlet sentimentServletUnderTest;
   private EntityServlet entityServletUnderTest;
   private StringWriter responseWriter;
+
+  private static final String LYRICS_WITH_METADATA = "Google has found me some nice results!";
+  private static final String EMPTY_STRING = "";
+  private static final String WIKI_LINK_GOOGLE = "https://en.wikipedia.org/wiki/Google";
 
 
   @Before
@@ -107,14 +112,15 @@ public final class AnalysisTest {
   public void top10SalientEntitiesWithLessThan10Entities() throws IOException {
     when(request.getParameter("lyrics")).thenReturn(LYRICS_SHORT);
     entityServletUnderTest.doPost(request, response);
-
     String responseString = responseWriter.toString();
-    List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
 
-    List<SongEntity> expected = Arrays.asList(new SongEntity("mountain", 0.84), 
-        new SongEntity("mountain", 0.06), new SongEntity("story", 0.05), new SongEntity("sale", 0.03), 
-        new SongEntity("tale", 0.01));
-    Assert.assertEquals(expected, actual);
+    List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
+    List<SongEntity> expected = Arrays.asList(new SongEntity("mountain", 0.84, "OTHER", EMPTY_STRING),
+        new SongEntity("mountain", 0.06, "LOCATION", EMPTY_STRING),
+        new SongEntity("story", 0.05, "WORK_OF_ART", EMPTY_STRING),
+        new SongEntity("sale", 0.03, "OTHER", EMPTY_STRING),
+        new SongEntity("tale", 0.01, "WORK_OF_ART", EMPTY_STRING));
+    Assert.assertThat(actual, CoreMatchers.is(expected));
   }
 
   /**
@@ -122,16 +128,36 @@ public final class AnalysisTest {
    */
   @Test
   public void top10SalientEntitiesWithMoreThan10Entities() throws IOException {
-      when(request.getParameter("lyrics")).thenReturn(LYRICS_LONG);
+    when(request.getParameter("lyrics")).thenReturn(LYRICS_LONG);
     entityServletUnderTest.doPost(request, response);
-
     String responseString = responseWriter.toString();
+
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
-    List<SongEntity> expected = Arrays.asList(new SongEntity("seaside", 0.36), 
-        new SongEntity("source", 0.34), new SongEntity("mountain", 0.05), new SongEntity("ones", 0.03), 
-        new SongEntity("one", 0.03), new SongEntity("roundabout", 0.02), new SongEntity("love", 0.02),
-        new SongEntity("nights", 0.02), new SongEntity("fire", 0.02), new SongEntity("root", 0.01));
+    List<SongEntity> expected = Arrays.asList(new SongEntity("seaside", 0.36, "LOCATION", EMPTY_STRING),
+        new SongEntity("source", 0.34, "PERSON", EMPTY_STRING),
+        new SongEntity("mountain", 0.05, "OTHER", EMPTY_STRING),
+        new SongEntity("ones", 0.03, "PERSON", EMPTY_STRING),
+        new SongEntity("one", 0.03, "PERSON", EMPTY_STRING),
+        new SongEntity("roundabout", 0.02, "OTHER", EMPTY_STRING),
+        new SongEntity("love", 0.02, "OTHER", EMPTY_STRING),
+        new SongEntity("nights", 0.02, "EVENT", EMPTY_STRING),
+        new SongEntity("fire", 0.02, "OTHER", EMPTY_STRING),
+        new SongEntity("root", 0.01, "OTHER", EMPTY_STRING));
         
-    Assert.assertEquals(expected, actual);
+      Assert.assertThat(actual, CoreMatchers.is(expected));
+  }
+
+  /** Some entities might have metadata attached to them. Let's see if they're shown correctly. */
+  @Test
+  public void checkEntitiesWithMetadata() throws IOException {
+    when(request.getParameter("lyrics")).thenReturn(LYRICS_WITH_METADATA);
+    entityServletUnderTest.doPost(request, response);
+    String responseString = responseWriter.toString();
+
+    List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
+    List<SongEntity> expected = Arrays.asList(new SongEntity("Google", 0.88, "ORGANIZATION", WIKI_LINK_GOOGLE),
+        new SongEntity("results", 0.12, "OTHER", EMPTY_STRING));
+
+      Assert.assertThat(actual, CoreMatchers.is(expected));
   }
 }

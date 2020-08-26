@@ -1,7 +1,6 @@
 package com.google.alpollo;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +26,7 @@ public class EntityServlet extends HttpServlet {
       String lyrics = request.getParameter(LYRICS);
       String projectID = ConfigHelper.getProjectID(this.getServletContext());
       // Get the Entity list from the API
-      List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(projectID, lyrics));
+      List<Entity> entityList = AnalysisHelper.getEntityList(projectID, lyrics);
       List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
       List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
 
