@@ -146,7 +146,12 @@ class SongInfo extends React.Component {
       ],
     };
 
-    function drawChart(element) {
+    /** 
+     * Function will draw a pie chart with static data representing the most important words in
+     * our song's context.
+     * TODO fetch data from EntityServlet.
+     */
+    function drawTop10WordsChart(element) {
       const data = new google.visualization.DataTable();
       data.addColumn('string', 'Name');
       data.addColumn('number', 'Salience');
@@ -169,7 +174,7 @@ class SongInfo extends React.Component {
       google.charts.load('current', {'packages':['corechart']});
 
       // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(function() { drawChart(element) });
+      google.charts.setOnLoadCallback(function() { drawTop10WordsChart(element) });
     }
 
     return (
