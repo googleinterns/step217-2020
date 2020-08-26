@@ -22,7 +22,7 @@ public class SentimentServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     final String lyrics = request.getParameter(LYRICS_PARAM);
     try {
-      Sentiment sentiment = AnalysisHelper.getSentiment(lyrics);
+      Sentiment sentiment = AnalysisHelper.getSentiment(lyrics, this.getServletContext());
       SongSentiment songSentiment = new SongSentiment(sentiment.getScore(), sentiment.getMagnitude());
 
       String json = gson.toJson(songSentiment);

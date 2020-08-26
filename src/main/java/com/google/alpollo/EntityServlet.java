@@ -27,7 +27,7 @@ public class EntityServlet extends HttpServlet {
       String lyrics = request.getParameter(LYRICS);
 
       // Get the Entity list from the API
-      List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(lyrics));
+      List<Entity> entityList = new ArrayList<>(AnalysisHelper.getEntityList(lyrics, this.getServletContext()));
       List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
       List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
 

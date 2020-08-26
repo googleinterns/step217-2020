@@ -1,6 +1,7 @@
 package com.google.alpollo.model;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * Class created to store only entity name and salience, leaving the other useless properties
@@ -15,6 +16,21 @@ public class SongEntity {
   public SongEntity(String name, double salience) {
     this.name = name;
     this.salience = salience;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) {
+      return true;
+    }
+
+    if (!(obj instanceof SongEntity)) {
+      return false;
+    }
+
+    SongEntity entity = (SongEntity) obj;
+    return Objects.equals(salience, entity.salience)
+        && Objects.equals(name, entity.name);
   }
 
   /**
