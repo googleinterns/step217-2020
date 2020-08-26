@@ -1,16 +1,15 @@
 package com.google.alpollo;
 
 import com.google.gson.Gson;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.Objects;
+import javax.servlet.ServletContext;
 
 /**
  * Helps to load configuration file and retrieve data from it.
  */
 final public class ConfigHelper {
-  private static final String CONFIG_FILE_NAME = "config.json";
+  private static final String CONFIG_FILE_PATH = "/WEB-INF/config.json";
   private static final Gson gson = new Gson();
 
   /**
@@ -34,8 +33,8 @@ final public class ConfigHelper {
    * @return projectID; {@code null} if configuration file wasn't found
    * or it was incorrect/didn't have projectID field
    */
-  public static String getProjectID() {
-    try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(CONFIG_FILE_NAME);
+  public static String getProjectID(ServletContext servletContext) {
+    try (InputStream inputStream = servletContext.getResourceAsStream(CONFIG_FILE_PATH);
          final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream))) {
       return gson.fromJson(reader, ConfigInfo.class).getProjectID();
     } catch (Exception parseException) {

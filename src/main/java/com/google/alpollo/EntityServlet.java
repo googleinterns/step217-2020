@@ -24,9 +24,9 @@ public class EntityServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
       String lyrics = request.getParameter(LYRICS);
-
+      String projectID = ConfigHelper.getProjectID(this.getServletContext());
       // Get the Entity list from the API
-      List<Entity> entityList = AnalysisHelper.getEntityList(lyrics);
+      List<Entity> entityList = AnalysisHelper.getEntityList(projectID, lyrics);
       List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
       List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
 
