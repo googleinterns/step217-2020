@@ -59,7 +59,7 @@ public class SongEntity {
   public int hashCode() {
     int hash = 7;
     hash = 31 * hash + (int) salience;
-    hash = 31 * hash + (name == null ? 0 : Objects.hashCode(name);
+    hash = 31 * hash + (name == null ? 0 : Objects.hashCode(name));
     hash = 31 * hash + (type == null ? 0 : Objects.hashCode(type));
     hash = 31 * hash + (wikiLink == null ? 0 : Objects.hashCode(wikiLink));
     return hash;
