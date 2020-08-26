@@ -52,7 +52,7 @@ public class SongEntity {
     return salience == entity.salience
         && (Objects.equal(name,entity.name))
         && (Objects.equal(type, entity.type))
-        && (Objects.equal(wikiLink,entity.wikiLink));
+        && (Objects.equal(wikiLink, entity.wikiLink));
   }
 
   @Override
