@@ -13,7 +13,6 @@ import java.util.List;
 import com.google.alpollo.model.SongEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.mockito.stubbing.Answer;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,8 +71,8 @@ public final class AnalysisTest {
       }
     };
 
-    when(mockServletContext.getResourceAsStream(anyString())).thenAnswer(
-        (Answer<InputStream>) invocation -> new FileInputStream(CONFIG_FILE_PATH));
+    when(mockServletContext.getResourceAsStream(anyString()))
+      .thenReturn(new FileInputStream(CONFIG_FILE_PATH));
 
     responseWriter = new StringWriter();
     when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));
