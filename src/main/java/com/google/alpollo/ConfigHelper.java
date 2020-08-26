@@ -9,7 +9,6 @@ import javax.servlet.ServletContext;
  * Helps to load configuration file and retrieve data from it.
  */
 final public class ConfigHelper {
-  private static final String CONFIG_FILE_NAME = "config.json";
   private static final String CONFIG_FILE_PATH = "/WEB-INF/config.json";
   private static final Gson gson = new Gson();
 
