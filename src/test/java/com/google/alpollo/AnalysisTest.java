@@ -47,6 +47,7 @@ public final class AnalysisTest {
       + "Rising high\n" + "It's the way that I survived\n" + "I'm the mountain\n" + "Tell my tale\n"
       + "The greatest story's now for sale\n";
   
+  private ServletContext mockServletContext = mock(ServletContext.class);
   private HttpServletRequest request = mock(HttpServletRequest.class);
   private HttpServletResponse response = mock(HttpServletResponse.class);
   private SentimentServlet sentimentServletUnderTest;
@@ -56,8 +57,31 @@ public final class AnalysisTest {
 
   @Before
   public void setUp() throws Exception {
-    sentimentServletUnderTest = new SentimentServlet();
-    entityServletUnderTest = new EntityServlet();
+    sentimentServletUnderTest = new SentimentServlet() {
+      @Override
+      public ServletContext getServletContext() {
+        return mockServletContext;
+      }
+    };
+
+    entityServletUnderTest = new EntityServlet() {
+      @Override
+      public ServletContext getServletContext() {
+        return mockServletContext;
+      }
+    };
+
+    when(mockServletContext.getResourceAsStream(anyString())).thenAnswer(new Answer<InputStream>() {
+        String path = System.getProperty("user.dir") + "/src/main/webapp";
+
+        @Override
+        public InputStream answer(InvocationOnMock invocation) throws Throwable {
+            Object[] args = invocation.getArguments();
+            String relativePath = "/WEB-INF/config.json";
+            InputStream is = new FileInputStream(path + relativePath);
+            return is;
+        }
+    });
 
     responseWriter = new StringWriter();
     when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));
@@ -66,23 +90,17 @@ public final class AnalysisTest {
   @Test
   public void checkSentimentScore() throws Exception {
     when(request.getParameter("lyrics")).thenReturn(LYRICS_LONG);
-    SentimentServlet servlet = new SentimentServlet();
-    servlet.init();
-    servlet.doPost(request, response);
+    sentimentServletUnderTest.doPost(request, response);
 
     String responseString = responseWriter.toString();
-    verify(response).sendError(HttpServletResponse.SC_FORBIDDEN,
-            "You are not allowed to access the server!");
-            
-    /*System.out.println(responseString);
     SongSentiment sentiment = gson.fromJson(responseString, SongSentiment.class);
     float actual = sentiment.getScore();
     float expected = -0.1f;
     
-    Assert.assertEquals(expected, actual, TOLERANCE);*/
+    Assert.assertEquals(expected, actual, TOLERANCE);
   }
 
-  @Test@Ignore
+  @Test
   public void checkSentimentMagnitude() throws IOException {
     when(request.getParameter("lyrics")).thenReturn(LYRICS_LONG);
     sentimentServletUnderTest.doPost(request, response);
@@ -98,7 +116,7 @@ public final class AnalysisTest {
   /**
    * If the lyrics are too short, the API might find less than 10 entities.
    */
-  @Test@Ignore
+  @Test
   public void top10SalientEntitiesWithLessThan10Entities() throws IOException {
     when(request.getParameter("lyrics")).thenReturn(LYRICS_SHORT);
     entityServletUnderTest.doPost(request, response);
@@ -115,7 +133,7 @@ public final class AnalysisTest {
   /**
    * If the lyrics are very long, the API might find more than 10 entities. We only need the top 10.
    */
-  @Test@Ignore
+  @Test
   public void top10SalientEntitiesWithMoreThan10Entities() throws IOException {
       when(request.getParameter("lyrics")).thenReturn(LYRICS_LONG);
     entityServletUnderTest.doPost(request, response);

@@ -31,7 +31,6 @@ public final class AnalysisHelper {
 
   private static void createLanguageServiceSettings(ServletContext servletContext) throws IOException {
     if (projectID == null) {
-      System.out.println("here");
       projectID = ConfigHelper.getProjectID(servletContext);
       if (projectID == null) {
         throw new IllegalStateException("Failed to obtain Project ID.");

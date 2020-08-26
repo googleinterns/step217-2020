@@ -36,10 +36,8 @@ final public class ConfigHelper {
    * or it was incorrect/didn't have projectID field
    */
   public static String getProjectID(ServletContext servletContext) {
-    System.out.println("kek");
     try (InputStream inputStream = servletContext.getResourceAsStream(CONFIG_FILE_PATH);
          final Reader reader = new InputStreamReader(Objects.requireNonNull(inputStream))) {
-             System.out.println(gson.fromJson(reader, ConfigInfo.class).getProjectID());
       return gson.fromJson(reader, ConfigInfo.class).getProjectID();
     } catch (Exception parseException) {
       return null;
