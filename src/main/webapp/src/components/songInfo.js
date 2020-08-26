@@ -48,6 +48,8 @@ const styles = (theme) => ({
   },
 });
 
+const google = window.google;
+
 /**
  * Displays information about song.
  */
@@ -100,32 +102,32 @@ class SongInfo extends React.Component {
       entityAnalysis: [
         {
           word: "affair",
-          salience: "0.51",
+          salience: 0.51,
           category: "work of art",
         },
         {
           word: "girl",
-          salience: "0.09",
+          salience: 0.09,
           category: "person",
         },
         {
           word: "film",
-          salience: "0.06",
+          salience: 0.06,
           category: "work of art",
         },
         {
           word: "selling show",
-          salience: "0.04",
+          salience: 0.04,
           category: "work of art",
         },
         {
           word: "God",
-          salience: "0.01",
+          salience: 0.01,
           category: "person",
         },
         {
           word: "Mars",
-          salience: "0.01",
+          salience: 0.01,
           category: "location",
         },
       ],
@@ -138,7 +140,37 @@ class SongInfo extends React.Component {
       ],
     };
 
-    // TODO display entities with charts
+    /** 
+     * Function will draw a pie chart with static data representing the most important words in
+     * our song's context.
+     * TODO fetch data from EntityServlet.
+     */
+    function drawTop10WordsChart(element) {
+      const data = new google.visualization.DataTable();
+      data.addColumn('string', 'Name');
+      data.addColumn('number', 'Salience');
+      songInfo.entityAnalysis.forEach((entity) => {
+        data.addRow([entity.word, entity.salience]);
+      });
+
+      const options = {
+        title: 'Most important words',
+        width: 600,
+        height: 500
+      };
+
+      const entityChart = new google.visualization.PieChart(element);
+      entityChart.draw(data, options);
+    }
+
+    function loadChartAPI(element) {
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(function() { drawTop10WordsChart(element) });
+    }
+
     return (
       <div className={classes.root}>
         <Typography variant="h3" className={classes.songName}>
@@ -157,17 +189,7 @@ class SongInfo extends React.Component {
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
-              <List>
-                {songInfo.entityAnalysis.map((wordInfo, index) => (
-                  <ListItem key={index + 1}>
-                    {wordInfo.word +
-                      " - " +
-                      wordInfo.salience +
-                      " - " +
-                      wordInfo.category}
-                  </ListItem>
-                ))}
-              </List>
+              <div ref={(elem) => { if (elem) loadChartAPI(elem); }}></div>
             </div>
           </div>
         </div>
