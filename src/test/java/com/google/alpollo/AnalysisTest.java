@@ -13,6 +13,7 @@ import java.util.List;
 import com.google.alpollo.model.SongEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.mockito.stubbing.Answer;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public final class AnalysisTest {
-  private static final String CONFIG_FILE_PATH = System.getProperty("user.dir") + "/src/main/webapp/WEB-INF/config.json";
+  private static final String TEST_RESOURCE_PATH = System.getProperty("user.dir") + "/src/main/webapp";
   private final Gson gson = new Gson();
   private static final float TOLERANCE = 0.05f;
   private static final String LYRICS_LONG = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
@@ -71,8 +72,8 @@ public final class AnalysisTest {
       }
     };
 
-    when(mockServletContext.getResourceAsStream(anyString()))
-      .thenReturn(new FileInputStream(CONFIG_FILE_PATH));
+    when(mockServletContext.getResourceAsStream(anyString())).thenAnswer(
+        (Answer<InputStream>) invocation -> new FileInputStream(TEST_RESOURCE_PATH + invocation.getArgument(0)));
 
     responseWriter = new StringWriter();
     when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));
