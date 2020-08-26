@@ -1,6 +1,7 @@
 package com.google.alpollo.model;
 
 import java.util.Comparator;
+import com.google.api.client.util.Objects;
 
 /**
  * Class created to store only entity name and salience, leaving the other useless properties
@@ -48,8 +49,8 @@ public class SongEntity {
 
     SongEntity entity = (SongEntity) obj;
     return salience == entity.salience
-        && (name.equals(entity.name))
-        && (type.equals(entity.type))
-        && (wikiLink.equals(entity.wikiLink));
+        && (Objects.equal(name,entity.name))
+        && (Objects.equal(type, entity.type))
+        && (Objects.equal(wikiLink,entity.wikiLink));
   }
 }
