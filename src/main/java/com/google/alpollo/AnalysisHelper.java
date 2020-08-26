@@ -87,7 +87,8 @@ public final class AnalysisHelper {
     for (Entity entity : entityList) {
       // Use round() here to set the double to 2 decimals.
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
-          Math.round(entity.getSalience() * 100.0) / 100.0);
+          Math.round(entity.getSalience() * 100.0) / 100.0, entity.getType().toString(),
+          entity.getMetadataMap().getOrDefault("wikipedia_url", ""));
       simplifiedEntityList.add(simplifiedEntity);
     }
 
