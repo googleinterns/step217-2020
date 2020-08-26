@@ -53,4 +53,14 @@ public class SongEntity {
         && (Objects.equal(type, entity.type))
         && (Objects.equal(wikiLink,entity.wikiLink));
   }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 31 * hash + (int) salience;
+    hash = 31 * hash + (name == null ? 0 : name.hashCode());
+    hash = 31 * hash + (type == null ? 0 : type.hashCode());
+    hash = 31 * hash + (wikiLink == null ? 0 : wikiLink.hashCode());
+    return hash;
+  }
 }
