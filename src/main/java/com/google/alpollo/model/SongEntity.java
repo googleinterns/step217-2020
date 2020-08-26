@@ -33,6 +33,14 @@ public class SongEntity {
         && Objects.equals(name, entity.name);
   }
 
+  @Override
+  public int hashCode() {
+    int result = 17;
+    result = 31 * result + Objects.hashCode(name);
+    result = 31 * result + Objects.hashCode(salience);
+    return result;
+  }
+
   /**
    * A comparator for sorting song entities by their salience in descending order.
    */
