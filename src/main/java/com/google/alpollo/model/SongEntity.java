@@ -34,9 +34,9 @@ public class SongEntity {
       return true;
     }
 
-    if (!(obj instanceof SongEntity)) {
-      return false;
-    }
+    if (!(obj instanceof SongEntity)) { 
+      return false; 
+  } 
 
     SongEntity entity = (SongEntity) obj;
     return Objects.equals(salience, entity.salience)
