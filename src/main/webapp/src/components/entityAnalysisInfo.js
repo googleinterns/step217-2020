@@ -21,7 +21,7 @@ class EntityAnalysisInfo extends React.Component {
     super(props);
 
     this.state = {
-      entityAnalysisInfo: {},
+      entityAnalysisInfo: [],
       isLoading: false,
       error: null,
     };
@@ -78,12 +78,16 @@ class EntityAnalysisInfo extends React.Component {
       );
     }
 
+    if (this.state.entityAnalysisInfo.length == 0) {
+      return <p>No entities was found.</p>;
+    }
+
     /**
      * Function will draw a pie chart with static data representing the most important words in
      * our song's context.
      * TODO fetch data from EntityServlet.
      */
-    function drawTop10WordsChart(element) {
+    const drawTop10WordsChart = (element) => {
       const data = new google.visualization.DataTable();
       data.addColumn("string", "Name");
       data.addColumn("number", "Salience");
@@ -101,7 +105,7 @@ class EntityAnalysisInfo extends React.Component {
       entityChart.draw(data, options);
     }
 
-    function loadChartAPI(element) {
+    const loadChartAPI = (element) => {
       // Load the Visualization API and the corechart package.
       google.charts.load("current", { packages: ["corechart"] });
 
