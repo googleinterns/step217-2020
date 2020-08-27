@@ -18,8 +18,8 @@ class Lyrics extends React.Component {
      * look better.
      */
     const lyrics = this.props.lyrics
-      .replace("\r\n", "\n")
-      .replace("\n\n\n", "\n\n");
+      .replace(/\r\n/g, "\n")
+      .replace(/\n\n\n/g, "\n\n");
 
     return (
       <div>
