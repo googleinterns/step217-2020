@@ -189,7 +189,9 @@ class SongInfo extends React.Component {
       })
     }
  
-    
+    function getYouTubeRecommendations() {
+      authenticate().then(loadClient).then(execute);
+    }
 
     return (
       <div className={classes.root}>
@@ -214,6 +216,7 @@ class SongInfo extends React.Component {
         </div>
         <div className={classes.youTubeRecommendationsSection}>
           <Typography variant="h4">YouTube Recommendations</Typography>
+          <button onClick={getYouTubeRecommendations}>Get Recs</button>
           <List className={classes.youTubeRecommendationsList}>
             {songInfo.youTubeRecommendations.map((videoId, index) => (
               <ListItem key={index + 1} className={classes.youTubeRecommendationsListItem}>
