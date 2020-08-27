@@ -2,7 +2,6 @@ package com.google.alpollo;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.googlecode.objectify.ObjectifyService;
 
 /** Class that provides methods to work with the database. */
 public class SongDataBase {

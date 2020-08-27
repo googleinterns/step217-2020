@@ -1,7 +1,6 @@
 package com.google.alpollo;
 
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Id;
 
 @Entity

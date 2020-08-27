@@ -16,5 +16,4 @@ public class OfyService {
   public static ObjectifyFactory factory() {
     return ObjectifyService.factory();
   }
-
 }
