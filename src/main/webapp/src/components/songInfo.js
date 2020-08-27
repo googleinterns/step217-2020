@@ -146,7 +146,7 @@ class SongInfo extends React.Component {
     * First authenticate the Client.
     */
     gapi.load("client:auth2", function() {
-      gapi.auth2.init({client_id: "310004903687-0ig0pfra3f8l2llrg9s6fj1899doqbmq.apps.googleusercontent.com"});
+      gapi.auth2.init({client_id: "YOUR_CLIENT_ID"});
     });
   
     /** 
@@ -162,7 +162,7 @@ class SongInfo extends React.Component {
   
     /** Set the API Key and load the client for later use */
     function loadClient() {
-      gapi.client.setApiKey("AIzaSyBqp8v-9-wXAqHwNAa_xrv2o43783h3vQc");
+      gapi.client.setApiKey("YOUR_API_KEY");
       return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
           .then(function() { console.log("GAPI client loaded for API"); },
               function(err) { console.error("Error loading GAPI client for API", err); });
