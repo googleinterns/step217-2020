@@ -79,13 +79,12 @@ class EntityAnalysisInfo extends React.Component {
     }
 
     if (this.state.entityAnalysisInfo.length == 0) {
-      return <p>No entities was found.</p>;
+      return <p>No entities were found.</p>;
     }
 
     /**
      * Function will draw a pie chart with static data representing the most important words in
      * our song's context.
-     * TODO fetch data from EntityServlet.
      */
     const drawTop10WordsChart = (element) => {
       const data = new google.visualization.DataTable();
