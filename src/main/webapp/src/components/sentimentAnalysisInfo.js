@@ -23,13 +23,13 @@ const styles = (theme) => ({
 });
 
 const LargeTextTooltip = withStyles({
-    tooltip: {
-      fontSize: "14px",
-    }
-  })(Tooltip);
+  tooltip: {
+    fontSize: "14px",
+  }
+})(Tooltip);
 
 /**
- * Displays search component for song lyrics.
+ * Displays sentiment analysis info for the lyrics.
  */
 class SentimentAnalysisInfo extends React.Component {
   constructor(props) {
