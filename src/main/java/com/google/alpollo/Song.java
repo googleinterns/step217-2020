@@ -11,16 +11,12 @@ public class Song {
   @Index
   private String album;
 
-  public Song() { }
+  Song() { }
 
   public Song(String artist, String name, String album) {
     this.artist = artist;
     this.name = name;
     this.album = album;
-  }
-
-  public Song(SongHead song) {
-    this(song.getArtist(), song.getName(), song.getAlbum());
   }
 
   public Song(Song song) {

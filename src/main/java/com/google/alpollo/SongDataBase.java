@@ -17,7 +17,7 @@ public class SongDataBase {
   public static List<Song> topSongs() {
     List<Song> songs = new ArrayList<>();
     OfyService.ofy().load().type(SongHead.class).limit(TOP_SIZE).list()
-        .forEach(song -> songs.add(song));
+        .forEach(song -> songs.add((Song) song));
     return songs;
   }
 }

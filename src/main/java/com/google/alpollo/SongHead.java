@@ -9,15 +9,12 @@ public class SongHead extends Song {
   @Id
   private String id;
 
-  public SongHead() { }
+  SongHead() { }
 
   public SongHead(Song song) {
     super(song);
+    // TODO: add hashcode instead of concatenation
     id = song.getArtist() + song.getName() + song.getAlbum();
-  }
-
-  public SongHead(String artist, String name, String album) {
-    this(new Song(artist, name, album));
   }
 
 }
