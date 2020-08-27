@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
 
 const styles = (theme) => ({
@@ -19,7 +20,6 @@ const styles = (theme) => ({
   },
   songLyrics: {
     paddingRight: "100px",
-    whiteSpace: "pre-wrap",
   },
   youTubeVideo: {
     playerVars: {
@@ -178,8 +178,7 @@ class SongInfo extends React.Component {
         </Typography>
         <div className={classes.languageAnalysisSection}>
           <div className={classes.songLyrics}>
-            <Typography variant="h4">Lyrics</Typography>
-            <p>{songInfo.lyrics}</p>
+            <Lyrics lyrics={this.state.lyrics} />
           </div>
           <div>
             <div class="song-sentiment-analysis">
