@@ -47,6 +47,8 @@ const styles = (theme) => ({
   },
 });
 
+const gapi = window.gapi;
+
 /**
  * Displays information about song.
  */
@@ -106,45 +108,60 @@ class SongInfo extends React.Component {
       entityAnalysis: [
         {
           word: "affair",
-          salience: "0.51",
+          salience: 0.51,
           category: "work of art",
         },
         {
           word: "girl",
-          salience: "0.09",
+          salience: 0.09,
           category: "person",
         },
         {
           word: "film",
-          salience: "0.06",
+          salience: 0.06,
           category: "work of art",
         },
         {
           word: "selling show",
-          salience: "0.04",
+          salience: 0.04,
           category: "work of art",
         },
         {
           word: "God",
-          salience: "0.01",
+          salience: 0.01,
           category: "person",
         },
         {
           word: "Mars",
-          salience: "0.01",
+          salience: 0.01,
           category: "location",
         },
       ],
       youTubeRecommendations: [
-        "AZKcl4-tcuo",
-        "2zX0lxiM8Xo",
-        "kJ095S0MmnA",
-        "slIG7Aes7DM",
-        "uqeH76RLpO8",
       ],
     };
 
-    // TODO display entities with charts
+  
+   /** 
+    * First authenticate the Client.
+    */
+    gapi.load("client:auth2", function() {
+      gapi.auth2.init({client_id: "310004903687-0ig0pfra3f8l2llrg9s6fj1899doqbmq.apps.googleusercontent.com"});
+    });
+  
+    /** 
+     * Authenticate the user to YouTube services.
+     * Might be redundant as user is already authenticated.
+     */
+    function authenticate() {
+      return gapi.auth2.getAuthInstance()
+          .signIn({scope: "https://www.googleapis.com/auth/youtube.force-ssl"})
+          .then(function() { console.log("Sign-in successful"); },
+                function(err) { console.error("Error signing in", err); });
+    }
+  
+   
+
     return (
       <div className={classes.root}>
         <Typography variant="h3" className={classes.songName}>
@@ -163,17 +180,6 @@ class SongInfo extends React.Component {
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
-              <List>
-                {songInfo.entityAnalysis.map((wordInfo, index) => (
-                  <ListItem key={index + 1}>
-                    {wordInfo.word +
-                      " - " +
-                      wordInfo.salience +
-                      " - " +
-                      wordInfo.category}
-                  </ListItem>
-                ))}
-              </List>
             </div>
           </div>
         </div>
