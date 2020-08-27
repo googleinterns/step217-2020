@@ -84,7 +84,7 @@ class SentimentAnalysisInfo extends React.Component {
     if (this.state.isLoading) {
       return (
         <div>
-          <CircularProgress style={{ color: "black" }} />;
+          <CircularProgress style={{ color: "black" }} />
         </div>
       );
     }
