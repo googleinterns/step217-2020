@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import SentimentAnalysisInfo from "./sentimentAnalysisInfo";
+import EntityAnalysisInfo from "./entityAnalysisInfo";
 import { Redirect } from "react-router";
 
 const styles = (theme) => ({
@@ -48,8 +49,6 @@ const styles = (theme) => ({
     display: "flex",
   },
 });
-
-const google = window.google;
 
 /**
  * Displays information about song.
@@ -141,37 +140,6 @@ class SongInfo extends React.Component {
       ],
     };
 
-    /** 
-     * Function will draw a pie chart with static data representing the most important words in
-     * our song's context.
-     * TODO fetch data from EntityServlet.
-     */
-    function drawTop10WordsChart(element) {
-      const data = new google.visualization.DataTable();
-      data.addColumn('string', 'Name');
-      data.addColumn('number', 'Salience');
-      songInfo.entityAnalysis.forEach((entity) => {
-        data.addRow([entity.word, entity.salience]);
-      });
-
-      const options = {
-        title: 'Most important words',
-        width: 600,
-        height: 500
-      };
-
-      const entityChart = new google.visualization.PieChart(element);
-      entityChart.draw(data, options);
-    }
-
-    function loadChartAPI(element) {
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(function() { drawTop10WordsChart(element) });
-    }
-
     return (
       <div className={classes.root}>
         <Typography variant="h3" className={classes.songName}>
@@ -188,7 +156,7 @@ class SongInfo extends React.Component {
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
-              <div ref={(elem) => { if (elem) loadChartAPI(elem); }}></div>
+              <EntityAnalysisInfo lyrics={this.state.lyrics} />
             </div>
           </div>
         </div>
