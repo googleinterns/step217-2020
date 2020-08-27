@@ -91,7 +91,6 @@ class SentimentAnalysisInfo extends React.Component {
 
     return (
       <div>
-        <Typography variant="h4">Sentiment Analysis</Typography>
         <div className={classes.sentimentVariableInfo}>
           <p>Score: {this.state.sentimentAnalysisInfo.score}</p>
           <LargeTextTooltip
