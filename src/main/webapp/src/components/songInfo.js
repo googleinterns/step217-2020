@@ -168,7 +168,28 @@ class SongInfo extends React.Component {
               function(err) { console.error("Error loading GAPI client for API", err); });
     }
   
-   
+    /** 
+     * Make sure the client is loaded and sign-in is complete before calling this method.
+     * Function makes a search on YouTube by the most salient word, then stores the first 5 
+     * results in an array.
+     */
+    function execute() {
+      return gapi.client.youtube.search.list({
+        "part": [
+          "snippet"
+        ],
+        "maxResults": 5,
+        "q": songInfo.entityAnalysis[0].word
+      })
+      .then(function(response) {
+        response.result.items.forEach((videoResult) => {
+          songInfo.youTubeRecommendations.push(videoResult.id.videoId);
+        });
+        console.log(songInfo.youTubeRecommendations);
+      })
+    }
+ 
+    
 
     return (
       <div className={classes.root}>
