@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public final class AnalysisTest {
-  private static final String CONFIG_FILE_PATH = System.getProperty("user.dir") + "/src/main/webapp/WEB-INF/config.json";
+  private static final String TEST_RESOURCE_PATH = System.getProperty("user.dir") + "/src/main/webapp";
   private final Gson gson = new Gson();
   private static final float TOLERANCE = 0.05f;
   private static final String LYRICS_LONG = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
@@ -73,7 +73,7 @@ public final class AnalysisTest {
     };
 
     when(mockServletContext.getResourceAsStream(anyString())).thenAnswer(
-        (Answer<InputStream>) invocation -> new FileInputStream(CONFIG_FILE_PATH));
+        (Answer<InputStream>) invocation -> new FileInputStream(TEST_RESOURCE_PATH + invocation.getArgument(0)));
 
     responseWriter = new StringWriter();
     when(response.getWriter()).thenReturn(new PrintWriter(responseWriter));

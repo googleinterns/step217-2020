@@ -28,19 +28,31 @@ public class SongEntity {
     this.wikiLink = wikiLink;
   }
 
+  /**
+   * A comparator for sorting song entities by their salience in descending order.
+   */
+  public static final Comparator<SongEntity> ORDER_BY_SALIENCE_DESCENDING = new Comparator<SongEntity>() {
+    @Override
+    public int compare(SongEntity a, SongEntity b) {
+      return Double.compare(b.salience, a.salience);
+    }
+  };
+
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {
       return true;
     }
 
-    if (!(obj instanceof SongEntity)) {
-      return false;
-    }
+    if (!(obj instanceof SongEntity)) { 
+      return false; 
+  } 
 
     SongEntity entity = (SongEntity) obj;
-    return Objects.equals(salience, entity.salience)
-        && Objects.equals(name, entity.name);
+    return salience == entity.salience
+        && (Objects.equals(name,entity.name))
+        && (Objects.equals(type, entity.type))
+        && (Objects.equals(wikiLink, entity.wikiLink));
   }
 
   @Override
@@ -52,14 +64,4 @@ public class SongEntity {
     hash = 31 * hash + (wikiLink == null ? 0 : Objects.hashCode(wikiLink));
     return hash;
   }
-
-  /**
-   * A comparator for sorting song entities by their salience in descending order.
-   */
-  public static final Comparator<SongEntity> ORDER_BY_SALIENCE_DESCENDING = new Comparator<SongEntity>() {
-    @Override
-    public int compare(SongEntity a, SongEntity b) {
-      return Double.compare(b.salience, a.salience);
-    }
-  };
 }
