@@ -11,16 +11,15 @@ class Lyrics extends React.Component {
 
   render() {
     /**
-     * Lyrics, returned by lyrics.ovh has `\n\n`
+     * Lyrics, returned by lyrics.ovh has `\n\n\n`
      * and `\r\n`.
-     * We replace this with one `\n` to
-     * make it look better.
+     * We replace `\n\n\n` with `\n\n`
+     * and `\r\n` with `\n` to make it
+     * look better.
      */
     const lyrics = this.props.lyrics
-      .split("\r\n")
-      .join("\n")
-      .split("\n\n")
-      .join("\n");
+      .replace("\r\n", "\n")
+      .replace("\n\n\n", "\n\n");
 
     return (
       <div>
