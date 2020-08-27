@@ -15,5 +15,4 @@ public class SongHead extends Song {
     // TODO: add hashcode instead of concatenation
     id = song.getArtist() + song.getName() + song.getAlbum();
   }
-
 }

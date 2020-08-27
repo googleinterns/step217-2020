@@ -5,6 +5,7 @@ import java.util.List;
 
 /** Class that provides methods to work with the database. */
 public class SongDataBase {
+  /** Number of the songs that will be shown to the user. */
   private static final int TOP_SIZE = 10;
 
   /** Save request song to database. */
