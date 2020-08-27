@@ -160,7 +160,7 @@ class SongInfo extends React.Component {
                 function(err) { console.error("Error signing in", err); });
     }
   
-   
+    
 
     return (
       <div className={classes.root}>
