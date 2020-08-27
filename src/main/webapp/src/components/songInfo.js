@@ -151,6 +151,7 @@ class SongInfo extends React.Component {
           </div>
           <div>
             <div class="song-sentiment-analysis">
+              <Typography variant="h4">Sentiment Analysis</Typography>
               <SentimentAnalysisInfo lyrics={this.state.lyrics} />
             </div>
             <div class="song-entity-analysis">

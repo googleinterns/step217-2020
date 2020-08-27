@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/styles";
+import { createMuiTheme, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -19,8 +19,14 @@ const styles = (theme) => ({
   },
   sentimentVariableInfoIcon: {
     paddingLeft: "15px",
-  }
+  },
 });
+
+const LargeTextTooltip = withStyles({
+    tooltip: {
+      fontSize: "14px",
+    }
+  })(Tooltip);
 
 /**
  * Displays search component for song lyrics.
@@ -85,24 +91,23 @@ class SentimentAnalysisInfo extends React.Component {
 
     return (
       <div>
-        <Typography variant="h4">Sentiment Analysis</Typography>
         <div className={classes.sentimentVariableInfo}>
           <p>Score: {this.state.sentimentAnalysisInfo.score}</p>
-          <Tooltip
+          <LargeTextTooltip
             className={classes.sentimentVariableInfoIcon} 
             title="Shows the overall positivity of the text, ranging from -1.0 to 1.0." 
             placement="right">
-            <InfoIcon/>
-          </Tooltip>
+            <InfoIcon fontSize="inherit" />
+          </LargeTextTooltip>
         </div>
         <div className={classes.sentimentVariableInfo}>
           <p>Magnitude: {this.state.sentimentAnalysisInfo.magnitude}</p>
-          <Tooltip 
+          <LargeTextTooltip
             className={classes.sentimentVariableInfoIcon} 
             title="Represents how strong the sentiment is, ranging from 0.0 to +inf." 
             placement="right">
-            <InfoIcon/>
-          </Tooltip>
+            <InfoIcon fontSize="inherit" />
+          </LargeTextTooltip>
         </div>
       </div>
     );
