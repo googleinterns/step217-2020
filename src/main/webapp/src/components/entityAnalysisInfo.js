@@ -94,8 +94,8 @@ class EntityAnalysisInfo extends React.Component {
      return (
        <div style={{ display: 'flex', maxWidth: 900 }}>
          <Chart
-           width={600}
-           height={600}
+           width={800}
+           height={400}
            chartType="PieChart"
            loader={<div>Loading Chart</div>}
            data={top10WordsData}
