@@ -5,8 +5,12 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import SentimentAnalysisInfo from "./sentimentAnalysisInfo";
+import EntityAnalysisInfo from "./entityAnalysisInfo";
 import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
+
+const gapi = window.gapi;
 
 const styles = (theme) => ({
   root: {
@@ -47,8 +51,6 @@ const styles = (theme) => ({
     display: "flex",
   },
 });
-
-const gapi = window.gapi;
 
 /**
  * Displays information about song.
@@ -199,11 +201,11 @@ class SongInfo extends React.Component {
           <div>
             <div class="song-sentiment-analysis">
               <Typography variant="h4">Sentiment Analysis</Typography>
-              <p>Score: {songInfo.sentimentAnalysis.score}</p>
-              <p>Magnitude: {songInfo.sentimentAnalysis.magnitude}</p>
+              <SentimentAnalysisInfo lyrics={this.state.lyrics} />
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
+              <EntityAnalysisInfo lyrics={this.state.lyrics} />
             </div>
           </div>
         </div>
