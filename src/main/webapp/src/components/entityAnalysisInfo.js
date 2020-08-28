@@ -84,11 +84,11 @@ class EntityAnalysisInfo extends React.Component {
     }
 
        /** Gather the most important words in a simple array */
-       var top10WordsData = [];
-       top10WordsData.push(['Word and Type', 'Importance'])
-       this.state.entityAnalysisInfo.forEach((entity) => {
-           top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience]);
-       })
+      var top10WordsData = [];
+      top10WordsData.push(['Word and Type', 'Importance'])
+      this.state.entityAnalysisInfo.forEach((entity) => {
+        top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience]);
+      })
      
  
      return (
