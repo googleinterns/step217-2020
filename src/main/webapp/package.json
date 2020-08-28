@@ -13,7 +13,8 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "react-router-dom": "5.2.0",
-    "react-youtube": "7.11.3"
+    "react-youtube": "7.11.3",
+    "react-google-charts": "3.0.15"
   },
   "scripts": {
     "start": "react-scripts start",
