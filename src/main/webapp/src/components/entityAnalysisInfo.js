@@ -83,31 +83,31 @@ class EntityAnalysisInfo extends React.Component {
       return <p>No entities were found.</p>;
     }
 
-       /** Gather the most important words in a simple array */
-      var top10WordsData = [];
-      top10WordsData.push(['Word and Type', 'Importance'])
-      this.state.entityAnalysisInfo.forEach((entity) => {
-        top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience]);
-      })
+    /** Gather the most important words in a simple array */
+    var top10WordsData = [];
+    top10WordsData.push(['Word and Type', 'Importance'])
+    this.state.entityAnalysisInfo.forEach((entity) => {
+      top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience]);
+    })
      
  
-     return (
-       <div style={{ display: 'flex', maxWidth: 900 }}>
-         <Chart
-           width={800}
-           height={400}
-           chartType="PieChart"
-           loader={<div>Loading Chart</div>}
-           data={top10WordsData}
-           options={{
-             title: 'Most Important Words',
-           }}
-           legendToggle
-         />
-       </div>
-     );
-   }
- }
+    return (
+      <div style={{ display: 'flex', maxWidth: 900 }}>
+        <Chart
+          width={800}
+          height={400}
+          chartType="PieChart"
+          loader={<div>Loading Chart</div>}
+          data={top10WordsData}
+          options={{
+            title: 'Most Important Words',
+          }}
+          legendToggle
+        />
+      </div>
+    );
+  }
+}
 
 EntityAnalysisInfo.propTypes = {
   classes: PropTypes.object.isRequired,
