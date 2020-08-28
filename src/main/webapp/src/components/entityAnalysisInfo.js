@@ -6,8 +6,6 @@ import axios from "axios";
 import Chart from "react-google-charts";
 import Typography from "@material-ui/core/Typography";
 
-const google = window.google;
-
 const styles = (theme) => ({
   root: {
     display: "flex",
