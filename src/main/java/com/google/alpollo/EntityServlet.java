@@ -31,7 +31,7 @@ public class EntityServlet extends HttpServlet {
       List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
 
       String json = gson.toJson(topSalientEntities);
-      response.setContentType("application/json;");
+      response.setContentType("application/json; charset=UTF-8");
       response.getWriter().println(json);
     } catch (IllegalStateException | IOException entityException) {
         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
