@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
+import Chart from "react-google-charts";
 
 const google = window.google;
 
@@ -82,47 +83,31 @@ class EntityAnalysisInfo extends React.Component {
       return <p>No entities were found.</p>;
     }
 
-    /**
-     * Function will draw a pie chart with static data representing the most important words in
-     * our song's context.
-     */
-    const drawTop10WordsChart = (element) => {
-      const data = new google.visualization.DataTable();
-      data.addColumn("string", "Name");
-      data.addColumn("number", "Salience");
-      this.state.entityAnalysisInfo.forEach((entity) => {
-        data.addRow([entity.name, entity.salience]);
-      });
-
-      const options = {
-        title: "Most important words",
-        width: 600,
-        height: 500,
-      };
-
-      const entityChart = new google.visualization.PieChart(element);
-      entityChart.draw(data, options);
-    }
-
-    const loadChartAPI = (element) => {
-      // Load the Visualization API and the corechart package.
-      google.charts.load("current", { packages: ["corechart"] });
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(function () {
-        drawTop10WordsChart(element);
-      });
-    }
-
-    return (
-      <div
-        ref={(elem) => {
-          if (elem) loadChartAPI(elem);
-        }}
-      ></div>
-    );
-  }
-}
+       /** Gather the most important words in a simple array */
+       var top10WordsData = [];
+       top10WordsData.push(['Word and Type', 'Importance'])
+       this.state.entityAnalysisInfo.forEach((entity) => {
+           top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience]);
+       })
+     
+ 
+     return (
+       <div style={{ display: 'flex', maxWidth: 900 }}>
+         <Chart
+           width={600}
+           height={600}
+           chartType="PieChart"
+           loader={<div>Loading Chart</div>}
+           data={top10WordsData}
+           options={{
+             title: 'Most Important Words',
+           }}
+           legendToggle
+         />
+       </div>
+     );
+   }
+ }
 
 EntityAnalysisInfo.propTypes = {
   classes: PropTypes.object.isRequired,
