@@ -12,7 +12,7 @@ public class Song {
     this.album = album;
   }
 
-  /** Returns artists's name of the song. */
+  /** Returns the name of the song's artist. */
   public String getArtist() {
     return artist;
   }

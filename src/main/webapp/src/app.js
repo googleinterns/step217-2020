@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "./components/navbar";
 import RatingList from "./components/ratingList";
 import SongInfo from "./components/songInfo";
+import Search from "./components/search";
 import axios from "axios";
 import {
   HashRouter as Router,
@@ -64,8 +65,9 @@ class App extends Component {
           <Navbar loggedInInfo={loggedInInfo} />
 
           <Switch>
-            <Route path="/song">
-              <SongInfo />
+            <Route exact path="/song" component={SongInfo}/>
+            <Route path="/search">
+              <Search />
             </Route>
             <Route path="/">
               <RatingList />

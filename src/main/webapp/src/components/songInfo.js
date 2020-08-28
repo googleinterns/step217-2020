@@ -5,6 +5,8 @@ import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import Lyrics from "./lyrics";
+import { Redirect } from "react-router";
 
 const styles = (theme) => ({
   root: {
@@ -18,7 +20,6 @@ const styles = (theme) => ({
   },
   songLyrics: {
     paddingRight: "100px",
-    whiteSpace: "pre-wrap",
   },
   youTubeVideo: {
     playerVars: {
@@ -53,54 +54,47 @@ const gapi = window.gapi;
  * Displays information about song.
  */
 class SongInfo extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const json = localStorage.getItem("state");
+    const state = JSON.parse(json);
+
+    if (props.location.state) {
+      this.state = {
+        artistName: props.location.state.artistName,
+        songName: props.location.state.songName,
+        lyrics: props.location.state.lyrics,
+      };
+      const json = JSON.stringify(this.state);
+      localStorage.setItem("state", json);
+    } else if (state) {
+      this.state = state;
+    } else {
+      this.state = undefined;
+    }
+  }
+
+  componentDidMount() {
+    const json = localStorage.getItem("state");
+    try {
+      const state = JSON.parse(json);
+      this.setState(() => state);
+    } catch (_) {}
+  }
+
   render() {
     const classes = this.props.classes;
 
+    if (this.state == undefined) {
+      return <Redirect to="/search" />
+    }
+
     // TODO Fetch song information from database.
     const songInfo = {
-      bandName: "David Bowie",
-      songName: "Life On Mars?",
-      lyrics:
-        "It's a God-awful small affair\n" +
-        "To the girl with the mousy hair\n" +
-        "But her mummy is yelling no\n" +
-        "And her daddy has told her to go\n" +
-        "But her friend is nowhere to be seen\n" +
-        "Now she walks through her sunken dream\n" +
-        "To the seat with the clearest view\n" +
-        "And she's hooked to the silver screen\n" +
-        "But the film is a saddening bore\n" +
-        "For she's lived it ten times or more\n" +
-        "She could spit in the eyes of fools\n" +
-        "As they ask her to focus on\n" +
-        "Sailors fighting in the dance hall\n" +
-        "Oh man, look at those cavemen go\n" +
-        "It's the freakiest show\n" +
-        "Take a look at the lawman\n" +
-        "Beating up the wrong guy\n" +
-        "Oh man, wonder if he'll ever know\n" +
-        "He's in the best selling show\n" +
-        "Is there life on Mars?\n" +
-        "It's on America's tortured brow\n" +
-        "That Mickey Mouse has grown up a cow\n" +
-        "Now the workers have struck for fame\n" +
-        "'Cause Lennon's on sale again\n" +
-        "See the mice in their million hordes\n" +
-        "From Ibiza to the Norfolk Broads\n" +
-        "Rule Britannia is out of bounds\n" +
-        "To my mother, my dog, and clowns\n" +
-        "But the film is a saddening bore\n" +
-        "'Cause I wrote it ten times or more\n" +
-        "It's about to be writ again\n" +
-        "As I ask you to focus on\n" +
-        "Sailors fighting in the dance hall\n" +
-        "Oh man, look at those cavemen go\n" +
-        "It's the freakiest show\n" +
-        "Take a look at the lawman\n" +
-        "Beating up the wrong guy\n" +
-        "Oh man, wonder if he'll ever know\n" +
-        "He's in the best selling show\n" +
-        "Is there life on Mars?",
+      bandName: this.state.artistName.toUpperCase(),
+      songName: this.state.songName.toUpperCase(),
+      lyrics: this.state.lyrics,
       sentimentAnalysis: {
         score: "-0.6",
         magnitude: "1.3",
@@ -140,7 +134,6 @@ class SongInfo extends React.Component {
       youTubeRecommendations: [
       ],
     };
-
   
    /** 
     * First authenticate the Client.
@@ -191,6 +184,7 @@ class SongInfo extends React.Component {
  
     function getYouTubeRecommendations() {
       authenticate().then(loadClient).then(execute);
+
     }
 
     return (
@@ -200,8 +194,7 @@ class SongInfo extends React.Component {
         </Typography>
         <div className={classes.languageAnalysisSection}>
           <div className={classes.songLyrics}>
-            <Typography variant="h4">Lyrics</Typography>
-            <p>{songInfo.lyrics}</p>
+            <Lyrics lyrics={this.state.lyrics} />
           </div>
           <div>
             <div class="song-sentiment-analysis">

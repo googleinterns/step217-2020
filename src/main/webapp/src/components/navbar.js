@@ -46,7 +46,7 @@ class Navbar extends Component {
               Alpollo
             </Button>
             <div>
-              <Button color="inherit">
+              <Button color="inherit" to="/search" component={Link}>
                 Search
               </Button>
               <Button color="inherit" href={loggedInInfo.authUrl}>

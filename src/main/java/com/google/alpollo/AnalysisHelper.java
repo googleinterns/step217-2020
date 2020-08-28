@@ -24,16 +24,12 @@ public final class AnalysisHelper {
   private static final int MAX_ENTITIES = 10;
   /** The index where we start our top list from. */
   private static final int FIRST_ENTITY = 0;
-  private static String projectID;
 
   private AnalysisHelper() {};
 
-  private static void createLanguageServiceSettings() throws IOException {
+  private static void createLanguageServiceSettings(String projectID) throws IOException {
     if (projectID == null) {
-      projectID = ConfigHelper.getProjectID();
-      if (projectID == null) {
-        throw new IllegalStateException("Failed to obtain Project ID.");
-      }
+      throw new IllegalStateException("Project ID wasn't defined.");
     }
 
     if (settings == null) {
@@ -47,8 +43,8 @@ public final class AnalysisHelper {
    * This sentiment has a score, showing the overall positivity of the text, ranging from -1.0 to 1.0
    * and a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf.
    */
-  public static Sentiment getSentiment(String lyrics) throws IllegalStateException, IOException {
-    createLanguageServiceSettings();
+  public static Sentiment getSentiment(String projectID, String lyrics) throws IllegalStateException, IOException {
+    createLanguageServiceSettings(projectID);
 
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
@@ -64,8 +60,8 @@ public final class AnalysisHelper {
    * Each entity object has a name and a salience score, telling us how important the word is,
    * ranging from 0 to 1.0 .
    */
-  public static List<Entity> getEntityList(String lyrics) throws IOException {
-    createLanguageServiceSettings();
+  public static List<Entity> getEntityList(String projectID, String lyrics) throws IOException {
+    createLanguageServiceSettings(projectID);
 
     try (LanguageServiceClient language = LanguageServiceClient.create(settings)) {
       Document doc = Document.newBuilder().setContent(lyrics).setType(Document.Type.PLAIN_TEXT).build();
@@ -87,7 +83,8 @@ public final class AnalysisHelper {
     for (Entity entity : entityList) {
       // Use round() here to set the double to 2 decimals.
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
-          Math.round(entity.getSalience() * 100.0) / 100.0);
+          Math.round(entity.getSalience() * 100.0) / 100.0, entity.getType().toString(),
+          entity.getMetadataMap().getOrDefault("wikipedia_url", ""));
       simplifiedEntityList.add(simplifiedEntity);
     }
 
