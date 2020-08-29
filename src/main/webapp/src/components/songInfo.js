@@ -10,8 +10,6 @@ import EntityAnalysisInfo from "./entityAnalysisInfo";
 import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
 
-const gapi = window.gapi;
-
 const styles = (theme) => ({
   root: {
     margin: "50px",
@@ -51,6 +49,10 @@ const styles = (theme) => ({
     display: "flex",
   },
 });
+
+function getYouTubeRecommendations(query, maxResults) {
+  fetch(`/api/youtube?q=${query}&maxResults=${maxResults}`, {method: "GET"});
+}
 
 /**
  * Displays information about song.
@@ -136,58 +138,6 @@ class SongInfo extends React.Component {
       youTubeRecommendations: [
       ],
     };
-  
-   /** 
-    * First authenticate the Client.
-    */
-    gapi.load("client:auth2", function() {
-      gapi.auth2.init({client_id: "YOUR_CLIENT_ID"});
-    });
-  
-    /** 
-     * Authenticate the user to YouTube services.
-     * Might be redundant as user is already authenticated.
-     */
-    function authenticate() {
-      return gapi.auth2.getAuthInstance()
-          .signIn({scope: "https://www.googleapis.com/auth/youtube.force-ssl"})
-          .then(function() { console.log("Sign-in successful"); },
-                function(err) { console.error("Error signing in", err); });
-    }
-  
-    /** Set the API Key and load the client for later use */
-    function loadClient() {
-      gapi.client.setApiKey("YOUR_API_KEY");
-      return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-          .then(function() { console.log("GAPI client loaded for API"); },
-              function(err) { console.error("Error loading GAPI client for API", err); });
-    }
-  
-    /** 
-     * Make sure the client is loaded and sign-in is complete before calling this method.
-     * Function makes a search on YouTube by the most salient word, then stores the first 5 
-     * results in an array.
-     */
-    function execute() {
-      return gapi.client.youtube.search.list({
-        "part": [
-          "snippet"
-        ],
-        "maxResults": 5,
-        "q": songInfo.entityAnalysis[0].word
-      })
-      .then(function(response) {
-        response.result.items.forEach((videoResult) => {
-          songInfo.youTubeRecommendations.push(videoResult.id.videoId);
-        });
-        console.log(songInfo.youTubeRecommendations);
-      })
-    }
- 
-    function getYouTubeRecommendations() {
-      authenticate().then(loadClient).then(execute);
-
-    }
 
     return (
       <div className={classes.root}>
