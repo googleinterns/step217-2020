@@ -161,7 +161,7 @@ class SongInfo extends React.Component {
         </div>
         <div className={classes.youTubeRecommendationsSection}>
           <Typography variant="h4">YouTube Recommendations</Typography>
-          <button onClick={getYouTubeRecommendations}>Get Recs</button>
+          <button onClick={getYouTubeRecommendations("affair", 10)}>Get Recs</button>
           <List className={classes.youTubeRecommendationsList}>
             {songInfo.youTubeRecommendations.map((videoId, index) => (
               <ListItem key={index + 1} className={classes.youTubeRecommendationsListItem}>

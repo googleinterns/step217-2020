@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev:console": "concurrently 'cd src/main/webapp && npm run server' 'mvn package appengine:run -DskipTests'",
+    "dev:console": "concurrently 'cd src/main/webapp && npm run start' 'mvn package appengine:run -DskipTests'",
     "dev:shell": "concurrently 'cd src/main/webapp && npm run server' 'mvn package appengine:run'"
   },
   "dependencies": {

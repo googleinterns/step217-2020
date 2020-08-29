@@ -12,7 +12,7 @@ app.get("/", (req, res) => res.send("Hello Worldв!"));
 app.get("/api/youtube", async (req, res) => {
     try {
         const queryForSearch = req.query.q;
-        const maxResults = req.query.maxResult;
+        const maxResults = req.query.maxResults;
 
         axios.get("https://www.googleapis.com/youtube/v3/search?" +
             "&q=" + queryForSearch + "&maxResults=" + maxResults +
