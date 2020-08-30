@@ -5,7 +5,7 @@ const app = express();
 const axios = require("axios");
 const port = 5000;
 
-// Test route, visit localhost:3000 to confirm it's working
+// Test route, visit localhost:5000 to confirm it's working
 // should show 'Hello World!' in the browser
 app.get("/", (req, res) => res.send("Hello Worldв!"));
 
