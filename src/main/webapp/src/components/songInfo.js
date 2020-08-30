@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import YouTube from "react-youtube";
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import SentimentAnalysisInfo from "./sentimentAnalysisInfo";
 import EntityAnalysisInfo from "./entityAnalysisInfo";
+import YouTubeRecommendations from "./youTubeRecommendations";
 import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
+
 
 const styles = (theme) => ({
   root: {
@@ -23,36 +22,15 @@ const styles = (theme) => ({
   songLyrics: {
     paddingRight: "100px",
   },
-  youTubeVideo: {
-    playerVars: {
-      autoplay: 1,
-    },
+  languageAnalysisSection: {
+    display: "flex",
   },
   youTubeRecommendationsSection: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-  youTubeRecommendationsList: {
-    padding: 0,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    flexWrap: "wrap",
-  },
-  youTubeRecommendationsListItem: {
-    width: "640px",
-    margin: "10px",
-    listStyleType: "none",
-  },
-  languageAnalysisSection: {
-    display: "flex",
-  },
 });
-
-function getYouTubeRecommendations(query, maxResults) {
-  fetch(`/api/youtube?q=${query}&maxResults=${maxResults}`, {method: "GET"});
-}
 
 /**
  * Displays information about song.
@@ -155,32 +133,16 @@ class SongInfo extends React.Component {
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
-              <EntityAnalysisInfo lyrics={this.state.lyrics} />
+              <EntityAnalysisInfo lyrics={this.state.lyrics} ref={}/>
             </div>
           </div>
         </div>
         <div className={classes.youTubeRecommendationsSection}>
           <Typography variant="h4">YouTube Recommendations</Typography>
-          <button onClick={() => getYouTubeRecommendations("affair", 10)}>Get Recs</button>
-          <List className={classes.youTubeRecommendationsList}>
-            {songInfo.youTubeRecommendations.map((videoId, index) => (
-              <ListItem key={index + 1} className={classes.youTubeRecommendationsListItem}>
-                <YouTube
-                  className={classes.youTubeVideo}
-                  videoId={videoId}
-                  onReady={this._onReady}
-                />
-              </ListItem>
-            ))}
-          </List>
+          <YouTubeRecommendations q={songInfo.entityAnalysis[0]} maxResults={5}/>
         </div>
       </div>
     );
-  }
-
-  _onReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
   }
 }
 
