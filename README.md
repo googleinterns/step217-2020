@@ -14,18 +14,10 @@ In case you did this fatal mistake: change API-key/Client ID in GCP and inform o
 
 ## Run locally
 
-Use the next commands (start from the project folder) to run the application locally:
+Use the next command (from the project folder) to run the application locally:
 
 ```
-npm install
-# build react application
-cd src/main/webapp
-npm install
-npm run build
-# go back to the project folder
-cd ../../../
-# run java and node servers and react app concurrently
-npm run dev:console
+make console
 ```
 
 For running Node and Java servers and React app at the same time we use `concurrently`, which will separate this three processes to three threads.
@@ -43,26 +35,18 @@ kill -9 <PID>
 
 ## Run in Cloud Shell
 
-Do the same command as above, but the last command will be `npm run dev:shell` instead of `npm run dev:console` (The only difference is that the first one runs tests and the second skips them)
+Use the next command (from the project folder) to run the application in the Cloud Shell:
+
+```
+make shell
+```
 
 ## Deploy
 
 Use the next commands (start from the project folder) to deploy the application:
 
 ```
-gcloud init
-gcloud config set project [Project_ID]
-npm install
-# Deploy Node JS and build frontend
-cd src/main/webapp
-npm install
-npm run build
-gcloud app deploy
-# Deploy Java backend
-cd ../../../
-mvn package appengine:deploy -Dapp.deploy.projectId=[Project_ID]
-# Configurate routing (send some requests to Node server and others to Java server)
-gcloud app deploy dispatch.yaml
+make deploy projectID=[Project id]
 ```
 
 ### Why so many servers?
