@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import objectsEqual from '../helpers/objectEquals';
 import axios from "axios";
 
 const google = window.google;
@@ -27,6 +28,13 @@ class EntityAnalysisInfo extends React.Component {
     };
   }
 
+  /* If state has changed, send it to songInfo component */
+  componentDidUpdate(prevProps, prevState) {
+    if (!objectsEqual(prevState, this.state)) {
+      this.props.onChangeState(this.state);
+    }
+  }
+
   componentDidMount() {
     this.setState({ isLoading: true });
 
@@ -49,6 +57,7 @@ class EntityAnalysisInfo extends React.Component {
         this.setState({
           entityAnalysisInfo: entityAnalysisInfo,
           isLoading: false,
+          error: null
         })
       )
       .catch((error) =>

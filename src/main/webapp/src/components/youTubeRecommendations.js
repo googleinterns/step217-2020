@@ -4,7 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import YouTube from "react-youtube";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import objectsEqual from "../helpers/objectEquals";
 import axios from "axios";
 
 const styles = (theme) => ({
@@ -41,26 +42,67 @@ class YouTubeRecommendations extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({ isLoading: true });
+  /**
+   * Load component if entity component still loading.
+   * Show error if entity component rendered with error.
+   * Find videos based on the most salient word if 
+   * entities were found.
+   * @param {Object} entityState 
+   */
+  getVideos = (entityState) => {
+    if (entityState != undefined) {
+      if (entityState.errorMsg) {
+        this.setState({
+          error: new Error(entityState.errorMsg),
+          isLoading: false,
+        });
+      } else if (!entityState.isLoading) {
+        if (entityState.entityAnalysisInfo.length == 0) {
+          this.setState({
+            error: new Error(
+              "No YouTube videos were found, because no entities were found"
+            ),
+            isLoading: false,
+          });
+        } else {
+          axios
+            .get(
+              `/api/youtube?q=${entityState.entityAnalysisInfo[0].name}&maxResults=${this.props.maxResults}`
+            )
+            .then((result) => result.data)
+            .then((resultObject) => {
+              if (!resultObject.success) throw new Error(resultObject.message);
+              this.setState({
+                videoIds: resultObject.videoIds,
+                isLoading: false,
+              });
+            })
+            .catch((error) =>
+              this.setState({
+                error,
+                isLoading: false,
+              })
+            );
+        }
+      }
+    } else {
+      this.setState({ isLoading: true });
+    }
+  };
 
-    axios
-      .get(`/api/youtube?q=${this.props.q}&maxResults=${this.props.maxResults}`)
-      .then((result) => result.data)
-      .then((resultObject) => {
-        if (!resultObject.success)
-          throw new Error(resultObject.message);
-        this.setState({
-          videoIds: resultObject.videoIds,
-          isLoading: false,
-        })
-      })
-      .catch((error) =>
-        this.setState({
-          error,
-          isLoading: false,
-        })
-      );
+  componentDidUpdate(prevProps, prevState) {
+    /* If state has changed, send it to songInfo component */
+    if (!objectsEqual(prevState, this.state)) {
+      this.props.onChangeState(this.state);
+    }
+    /* If entityState has changed, change the component state based on new entityState */
+    if (!objectsEqual(prevProps.entityState, this.props.entityState)) {
+        this.getVideos(this.props.entityState);
+    }
+  }
+
+  componentDidMount() {
+    this.getVideos(this.props.entityState);
   }
 
   render() {
@@ -86,7 +128,10 @@ class YouTubeRecommendations extends React.Component {
       <div>
         <List className={classes.youTubeRecommendationsList}>
           {this.state.videoIds.map((videoId, index) => (
-            <ListItem key={index + 1} className={classes.youTubeRecommendationsListItem}>
+            <ListItem
+              key={index + 1}
+              className={classes.youTubeRecommendationsListItem}
+            >
               <YouTube
                 className={classes.youTubeVideo}
                 videoId={videoId}
