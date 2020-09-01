@@ -8,12 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.alpollo.model.SongEntity;
 import com.google.alpollo.model.SongInfo;
 import com.google.gson.Gson;
-import java.lang.reflect.Type;
-import com.google.gson.reflect.TypeToken;
 
 /** Servlet created to deal with songInfo related operations. */
 @WebServlet("/song-info")
 public class SongInfoServlet extends HttpServlet {
+  private static final String SONG_ID = "id";
   private static final String SONG_INFO = "songInfo";
   private final Gson gson = new Gson();
 
