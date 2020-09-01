@@ -4,13 +4,19 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
-/** Represents the structure of the song. */
+/** 
+  * Represents the structure of the song. 
+  * Please do not add fields because they will be saved in the search counter database. 
+  */
 @Entity
 public class Song {
   @Id private String id;
   @Index private String artist;
   @Index private String name;
   @Index private String album;
+
+  /** Objectify requires no arguments constructor. Do not use it. */
+  private Song() { }
 
   public Song(String artist, String name, String album) {
     // TODO: add hashcode instead of concatenation
