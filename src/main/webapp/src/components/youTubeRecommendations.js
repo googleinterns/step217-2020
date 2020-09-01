@@ -5,6 +5,7 @@ import YouTube from "react-youtube";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import objectEquals from "../helpers/objectEquals";
 import axios from "axios";
 
 const styles = (theme) => ({
@@ -41,24 +42,66 @@ class YouTubeRecommendations extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({ isLoading: true });
+  /**
+   * Load component if entity component still loading.
+   * Show error if entity component rendered with error.
+   * Find videos based on the most salient word if 
+   * entities were found.
+   * @param {Object} entityState 
+   */
+  getVideos = (entityState) => {
+    if (entityState != undefined) {
+      if (entityState.errorMsg) {
+        this.setState({
+          error: new Error(entityState.errorMsg),
+          isLoading: false,
+        });
+      } else if (!entityState.isLoading) {
+        if (entityState.entityAnalysisInfo.length == 0) {
+          this.setState({
+            error: new Error(
+              "No YouTube videos were found, because no entities were found"
+            ),
+            isLoading: false,
+          });
+        } else {
+          axios
+            .get(
+              `/youtube?query=${entityState.entityAnalysisInfo[0].name}`
+            )
+            .then((result) => result.data)
+            .then((videoIds) => {
+              this.setState({
+                videoIds: videoIds,
+                isLoading: false,
+              });
+            })
+            .catch((error) =>
+              this.setState({
+                error,
+                isLoading: false,
+              })
+            );
+        }
+      }
+    } else {
+      this.setState({ isLoading: true });
+    }
+  };
 
-    axios
-      .get(`/youtube?query=${this.props.q}`)
-      .then((result) => result.data)
-      .then((videoIds) => {
-        this.setState({
-          videoIds: videoIds,
-          isLoading: false,
-        })
-      })
-      .catch((error) =>
-        this.setState({
-          error,
-          isLoading: false,
-        })
-      );
+  componentDidUpdate(prevProps, prevState) {
+    /* If state has changed, send it to songInfo component */
+    if (!objectEquals(prevState, this.state)) {
+      this.props.onChangeState(this.state);
+    }
+    /* If entityState has changed, change the component state based on new entityState */
+    if (!objectEquals(prevProps.entityState, this.props.entityState)) {
+        this.getVideos(this.props.entityState);
+    }
+  }
+
+  componentDidMount() {
+    this.getVideos(this.props.entityState);
   }
 
   render() {

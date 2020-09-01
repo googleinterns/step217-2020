@@ -7,7 +7,7 @@ import EntityAnalysisInfo from "./entityAnalysisInfo";
 import YouTubeRecommendations from "./youTubeRecommendations";
 import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
-
+import objectEquals from "../helpers/objectEquals";
 
 const styles = (theme) => ({
   root: {
@@ -42,6 +42,10 @@ class SongInfo extends React.Component {
     const json = localStorage.getItem("state");
     const state = JSON.parse(json);
 
+    this.handleSentimentChange = this.handleSentimentChange.bind(this);
+    this.handleEntityChange = this.handleEntityChange.bind(this);
+    this.handleYouTubeChange = this.handleYouTubeChange.bind(this);
+
     if (props.location.state) {
       this.state = {
         artistName: props.location.state.artistName,
@@ -54,6 +58,46 @@ class SongInfo extends React.Component {
       this.state = state;
     } else {
       this.state = undefined;
+    }
+  }
+
+  /* Save new sentiment component state */
+  handleSentimentChange(state) {
+    this.setState({
+      sentimentState: {
+        sentimentAnalysisInfo: state.sentimentAnalysisInfo,
+        isLoading: state.isLoading,
+        errorMsg: state.error ? state.error.message : null,
+      }
+    });
+  }
+
+  /* Save new entity component state */
+  handleEntityChange(state) {
+    this.setState({
+      entityState: {
+        entityAnalysisInfo: state.entityAnalysisInfo,
+        isLoading: state.isLoading,
+        errorMsg: state.error ? state.error.message : null,
+      }
+    });
+  }
+
+  /* Save new YouTube component state */
+  handleYouTubeChange(state) {
+    this.setState({
+      youTubeState: {
+        videoIds: state.videoIds,
+        isLoading: state.isLoading,
+        errorMsg: state.error ? state.error.message : null,
+      }
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!objectEquals(prevState.entityState, this.state)) {
+      const json = JSON.stringify(this.state);
+      localStorage.setItem("state", json);
     }
   }
 
@@ -77,44 +121,9 @@ class SongInfo extends React.Component {
       bandName: this.state.artistName.toUpperCase(),
       songName: this.state.songName.toUpperCase(),
       lyrics: this.state.lyrics,
-      sentimentAnalysis: {
-        score: "-0.6",
-        magnitude: "1.3",
-      },
-      entityAnalysis: [
-        {
-          word: "affair",
-          salience: 0.51,
-          category: "work of art",
-        },
-        {
-          word: "girl",
-          salience: 0.09,
-          category: "person",
-        },
-        {
-          word: "film",
-          salience: 0.06,
-          category: "work of art",
-        },
-        {
-          word: "selling show",
-          salience: 0.04,
-          category: "work of art",
-        },
-        {
-          word: "God",
-          salience: 0.01,
-          category: "person",
-        },
-        {
-          word: "Mars",
-          salience: 0.01,
-          category: "location",
-        },
-      ],
-      youTubeRecommendations: [
-      ],
+      sentimentAnalysis: this.state.sentimentState ? this.state.sentimentState.sentimentAnalysisInfo : undefined,
+      entityAnalysis: this.state.entityState ? this.state.entityState.entityAnalysisInfo : undefined,
+      youTubeRecommendations: this.state.youTubeState ? this.state.youTubeState.videoIds : undefined,
     };
 
     return (
@@ -129,17 +138,17 @@ class SongInfo extends React.Component {
           <div>
             <div class="song-sentiment-analysis">
               <Typography variant="h4">Sentiment Analysis</Typography>
-              <SentimentAnalysisInfo lyrics={this.state.lyrics} />
+              <SentimentAnalysisInfo lyrics={this.state.lyrics} onChangeState={this.handleSentimentChange} />
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
-              <EntityAnalysisInfo lyrics={this.state.lyrics} />
+              <EntityAnalysisInfo lyrics={this.state.lyrics} onChangeState={this.handleEntityChange} />
             </div>
           </div>
         </div>
         <div className={classes.youTubeRecommendationsSection}>
           <Typography variant="h4">YouTube Recommendations</Typography>
-          <YouTubeRecommendations q={songInfo.entityAnalysis[0].word} maxResults={5}/>
+          <YouTubeRecommendations entityState={this.state.entityState} onChangeState={this.handleYouTubeChange}/>
         </div>
       </div>
     );
