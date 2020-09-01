@@ -1,9 +1,14 @@
 package com.google.alpollo;
 
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 /** Represents the structure of the song. */
+@Entity
 public class Song {
+  @Id
+  private String id;
   @Index
   private String artist;
   @Index
@@ -14,16 +19,19 @@ public class Song {
   Song() { }
 
   public Song(String artist, String name, String album) {
+    // TODO: add hashcode instead of concatenation
+    this.id = artist + name + album;
     this.artist = artist;
     this.name = name;
     this.album = album;
   }
 
-  public Song(Song song) {
-    this(song.artist, song.name, song.album);
+  /** Returns the song's id. */
+  public String getId() {
+    return id;
   }
 
-  /** Returns artists's name of the song. */
+  /** Returns the name of the song's artist. */
   public String getArtist() {
     return artist;
   }
