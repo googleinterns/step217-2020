@@ -33,7 +33,6 @@ public class YouTubeServlet extends HttpServlet {
       youtubeService = YouTubeService.getService(ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.API_KEY));
     } catch (Exception e) {
       response.getWriter().println(gson.toJson(e));
-      e.printStackTrace();
     }
     if (youtubeService == null) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "YouTube service is null.");
