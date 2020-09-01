@@ -118,30 +118,30 @@ class SongInfo extends React.Component {
     };
 
     return (
-        <div className={classes.root}>
-          <Typography variant="h3" className={classes.songName}>
-            "{songInfo.songName}"
-          </Typography>
-          <div className={classes.languageAnalysisSection}>
-            <div className={classes.songLyrics}>
-              <Lyrics lyrics={this.state.lyrics} />
-            </div>
-            <div>
-              <div class="song-sentiment-analysis">
-                <Typography variant="h4">Sentiment Analysis</Typography>
-                <SentimentAnalysisInfo lyrics={this.state.lyrics} />
-              </div>
-              <div class="song-entity-analysis">
-                <Typography variant="h4">Entity Analysis</Typography>
-                <EntityAnalysisInfo lyrics={this.state.lyrics} />
-              </div>
-            </div>
+      <div className={classes.root}>
+        <Typography variant="h3" className={classes.songName}>
+          "{songInfo.songName}"
+        </Typography>
+        <div className={classes.languageAnalysisSection}>
+          <div className={classes.songLyrics}>
+            <Lyrics lyrics={this.state.lyrics} />
           </div>
-          <div className={classes.youTubeRecommendationsSection}>
-            <Typography variant="h4">YouTube Recommendations</Typography>
-            <YouTubeRecommendations q={songInfo.entityAnalysis[0].word} maxResults={5}/>
+          <div>
+            <div class="song-sentiment-analysis">
+              <Typography variant="h4">Sentiment Analysis</Typography>
+              <SentimentAnalysisInfo lyrics={this.state.lyrics} />
+            </div>
+            <div class="song-entity-analysis">
+              <Typography variant="h4">Entity Analysis</Typography>
+              <EntityAnalysisInfo lyrics={this.state.lyrics} />
+            </div>
           </div>
         </div>
+        <div className={classes.youTubeRecommendationsSection}>
+          <Typography variant="h4">YouTube Recommendations</Typography>
+          <YouTubeRecommendations q={songInfo.entityAnalysis[0].word} maxResults={5}/>
+        </div>
+      </div>
     );
   }
 }
