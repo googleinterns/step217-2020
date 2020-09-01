@@ -1,21 +1,28 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from '@material-ui/styles';
+import { Link } from "react-router-dom";
+import { withStyles } from "@material-ui/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
 const styles = (theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    flexGrow: 1,
+  navBar: {
+    display: "flex",
+    justifyContent: "space-between"
   },
+  title: {
+    fontFamily: "ABeeZee",
+    fontSize: "20px",
+    textTransform: "none",
+    fontWeight: 500
+  }
 });
 
 class Navbar extends Component {
@@ -29,14 +36,23 @@ class Navbar extends Component {
     return (
       <div className={classes.root}>
         <AppBar style={{ background: "#733F94" }} position="static">
-          <Toolbar>
-            <Typography variant="h6" className={classes.title}>
+          <Toolbar className={classes.navBar}>
+            <Button
+              className={classes.title}
+              color="inherit"
+              to="/"
+              component={Link}
+            >
               Alpollo
-            </Typography>
-            <Button color="inherit">Search</Button>
-            <Button color="inherit" href={loggedInInfo.authUrl}>
-              {loggedInInfo.isLoggedIn ? "Logout" : "Login"}
             </Button>
+            <div>
+              <Button color="inherit" to="/search" component={Link}>
+                Search
+              </Button>
+              <Button color="inherit" href={loggedInInfo.authUrl}>
+                {loggedInInfo.isLoggedIn ? "Logout" : "Login"}
+              </Button>
+            </div>
           </Toolbar>
         </AppBar>
       </div>

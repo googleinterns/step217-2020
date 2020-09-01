@@ -1,9 +1,20 @@
 import React, { Component } from "react";
 import Navbar from "./components/navbar";
 import RatingList from "./components/ratingList";
+import SongInfo from "./components/songInfo";
+import Search from "./components/search";
 import axios from "axios";
+import {
+  HashRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 import "./app.css";
 
+/**
+ * Application component, which contains routing 
+ * through all the web application.
+ */
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +31,7 @@ class App extends Component {
 
     axios
       .get("/auth")
-      .then(result => result.data)
+      .then((result) => result.data)
       .then((loggedInInfo) =>
         this.setState({
           loggedInInfo: loggedInInfo,
@@ -46,11 +57,24 @@ class App extends Component {
       return <p>Loading ...</p>;
     }
 
+    // TODO: forbid unauthorized users access 
+    // all links except "/"
     return (
-      <div className="AppMain">
-        <Navbar loggedInInfo={loggedInInfo} />
-        <RatingList />
-      </div>
+      <Router>
+        <div className="AppMain">
+          <Navbar loggedInInfo={loggedInInfo} />
+
+          <Switch>
+            <Route exact path="/song" component={SongInfo}/>
+            <Route path="/search">
+              <Search />
+            </Route>
+            <Route path="/">
+              <RatingList />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
