@@ -6,15 +6,11 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeRequestInitializer;
-
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 public class YouTubeService {
   private static final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
-
-  public YouTubeService() {
-  }
 
   /**
    * Build and return an authorized API client service.
