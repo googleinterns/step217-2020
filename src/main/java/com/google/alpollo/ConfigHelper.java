@@ -24,7 +24,9 @@ final public class ConfigHelper {
     public String getProjectID() {
       return projectID;
     }
-    public String getApiKey() { return apiKey; }
+    public String getApiKey() {
+      return apiKey;
+    }
   }
 
   private ConfigHelper() {
@@ -32,9 +34,9 @@ final public class ConfigHelper {
   }
 
   /**
-   * Retrieves sensitive from configuration file.
+   * Retrieves sensitive data from configuration file.
    * @return String; {@code null} if configuration file wasn't found
-   * or it was incorrect/didn't have this field
+   * or it was incorrect/didn't have this field.
    */
   public static String getSensitiveData(ServletContext servletContext, SENSITIVE_DATA typeOfData) {
     try (InputStream inputStream = servletContext.getResourceAsStream(CONFIG_FILE_PATH);
