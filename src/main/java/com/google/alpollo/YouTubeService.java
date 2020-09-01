@@ -12,7 +12,7 @@ import java.security.GeneralSecurityException;
 /**
  * Class for creating YouTube service.
  */
-public class YouTubeService {
+public final class YouTubeService {
   private static final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
 
   private YouTubeService() {}
