@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
 
-/** Servlet created to deal with songInfo related operations */
+/** Servlet created to deal with songInfo related operations. */
 @WebServlet("/song-info")
 public class SongInfoServlet extends HttpServlet {
   private static final String SONG_INFO = "songInfo";
@@ -30,6 +30,10 @@ public class SongInfoServlet extends HttpServlet {
     response.getWriter().println(gson.toJson(songInfo));
   }
 
+  /**
+   * Making a POST request to the server with the songInfo object as a parameter (object containing
+   * all the info related to our song) will send the song to the storage layer. 
+   */
   @Override 
   public void doPost(HttpServletRequest request, HttpServletResponse response) {
     SongInfo songInfo = gson.fromJson(request.getParameter(SONG_INFO), SongInfo.class);
