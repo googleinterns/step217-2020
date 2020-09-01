@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+/**
+ * Servlet that returns 5 the most popular videos for the query.
+ */
 @WebServlet("/youtube")
 public class YouTubeServlet extends HttpServlet {
   /**

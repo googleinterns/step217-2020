@@ -9,8 +9,13 @@ import com.google.api.services.youtube.YouTubeRequestInitializer;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+/**
+ * Class for creating YouTube service.
+ */
 public class YouTubeService {
   private static final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+
+  private YouTubeService() {}
 
   /**
    * Build and return an authorized API client service.
