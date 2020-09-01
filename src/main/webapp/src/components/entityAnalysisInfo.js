@@ -82,7 +82,7 @@ class EntityAnalysisInfo extends React.Component {
       return <p>No entities were found.</p>;
     }
 
-    /** Gather the most important words and their data in simple arrays */
+    /** Gather the most important words and their data in simple arrays. */
     var top10WordsData = [];
     var top10WordsLinks = [];
     top10WordsData.push(['Word and Type', 'Importance'])
@@ -99,7 +99,6 @@ class EntityAnalysisInfo extends React.Component {
       </li>
     );
      
- 
     return (
       <div>
         <div style={{ display: 'flex', maxWidth: 900 }}>
