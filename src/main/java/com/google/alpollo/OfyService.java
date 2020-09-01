@@ -4,16 +4,20 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 
+/** Helper class to start running Objectify. */
 public class OfyService {
+  /** Registers Song class in Objectify. */
   static {
-    ObjectifyService.register(SongHead.class);
+    ObjectifyService.register(SongCounter.class);
   }
 
-  public static Objectify ofy() {
+  /** Overrides the ofy method. */
+  static Objectify ofy() {
     return ObjectifyService.ofy();
   }
 
-  public static ObjectifyFactory factory() {
+  /** Overrides the factory method. */
+  static ObjectifyFactory factory() {
     return ObjectifyService.factory();
   }
 }

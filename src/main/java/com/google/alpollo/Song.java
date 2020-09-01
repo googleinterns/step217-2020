@@ -1,19 +1,24 @@
 package com.google.alpollo;
 
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Id;
 
-/** Represents the structure of the song. */
+/** 
+  * Represents the structure of the song. 
+  * Please do not add fields because they will be saved in the search counter database. 
+  */
 public class Song {
-  @Index
-  private String artist;
-  @Index
-  private String name;
-  @Index
-  private String album;
+  @Id private String id;
+  @Index private String artist;
+  @Index private String name;
+  @Index private String album;
 
-  Song() { }
+  /** Objectify requires no arguments constructor. Do not use it. */
+  protected Song() { }
 
   public Song(String artist, String name, String album) {
+    // TODO: add hashcode instead of concatenation
+    this.id = artist + name + album;
     this.artist = artist;
     this.name = name;
     this.album = album;
@@ -23,7 +28,12 @@ public class Song {
     this(song.artist, song.name, song.album);
   }
 
-  /** Returns artists's name of the song. */
+  /** Returns the song's id. */
+  public String getId() {
+    return id;
+  }
+
+  /** Returns the name of the song's artist. */
   public String getArtist() {
     return artist;
   }

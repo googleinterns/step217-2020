@@ -15,4 +15,12 @@ public class SongSentiment {
     this.score = score;
     this.magnitude = magnitude;
   }
+
+  public float getScore() {
+    return score;
+  }
+
+  public float getMagnitude() {
+    return magnitude;
+  }
 }
