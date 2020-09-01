@@ -11,12 +11,12 @@ public class OfyService {
     ObjectifyService.register(Song.class);
   }
 
-  /** Redefines the ofy method. */
+  /** Overrides the ofy method. */
   static Objectify ofy() {
     return ObjectifyService.ofy();
   }
 
-  /** Redefines the factory method. */
+  /** Overrides the factory method. */
   static ObjectifyFactory factory() {
     return ObjectifyService.factory();
   }
