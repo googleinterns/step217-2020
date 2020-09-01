@@ -3,7 +3,7 @@ package com.google.alpollo;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeRequestInitializer;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 public class YouTubeService {
-  private static final JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+  private static final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
 
   public YouTubeService() {
   }
