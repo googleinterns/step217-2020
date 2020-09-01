@@ -19,24 +19,17 @@ public class SongInfo extends Song {
   private final float magnitude;
   /** TopSalientEntities is a list containing the 10 most important words, given the song context. */
   private final List<SongEntity> topSalientEntities;
+  private final String lyrics;
+  /** After analyzing the entities, we'll have a list of recommended YouTube links. */
+  private final List<String> youTubeLinks;
 
   public SongInfo(String artist, String name, String album, float score, float magnitude,
-      List<SongEntity> topSalientEntities) {
+      List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeLinks) {
     super(artist, name, album);
     this.score = score;
     this.magnitude = magnitude;
     this.topSalientEntities = topSalientEntities;
-  }
-
-  public float getScore() {
-    return score;
-  }
-
-  public float getMagnitude() {
-    return magnitude;
-  }
-
-  public List<SongEntity> getTopSalientEntities() {
-    return topSalientEntities;
+    this.lyrics = lyrics;
+    this.youTubeLinks = youTubeLinks;
   }
 }
