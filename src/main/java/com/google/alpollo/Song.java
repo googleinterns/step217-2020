@@ -7,16 +7,10 @@ import com.googlecode.objectify.annotation.Id;
 /** Represents the structure of the song. */
 @Entity
 public class Song {
-  @Id
-  private String id;
-  @Index
-  private String artist;
-  @Index
-  private String name;
-  @Index
-  private String album;
-
-  Song() { }
+  @Id private String id;
+  @Index private String artist;
+  @Index private String name;
+  @Index private String album;
 
   public Song(String artist, String name, String album) {
     // TODO: add hashcode instead of concatenation
