@@ -32,16 +32,4 @@ public class SongInfo extends Song {
     this.lyrics = lyrics;
     this.youTubeLinks = youTubeLinks;
   }
-
-  public float getScore() {
-    return score;
-  }
-
-  public float getMagnitude() {
-    return magnitude;
-  }
-
-  public List<SongEntity> getTopSalientEntities() {
-    return topSalientEntities;
-  }
 }
