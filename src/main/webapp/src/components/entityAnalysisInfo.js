@@ -103,7 +103,7 @@ class EntityAnalysisInfo extends React.Component {
       <div>
         <div style={{ display: 'flex', maxWidth: 900 }}>
           <Chart
-            width={800}
+            width={1200}
             height={400}
             chartType="PieChart"
             loader={<div>Loading Chart</div>}
