@@ -65,9 +65,10 @@ class YouTubeRecommendations extends React.Component {
     const classes = this.props.classes;
 
     if (this.state.error) {
+      console.log(this.state.error.message)
       return (
         <div>
-          <p>{this.state.error.message}</p>
+          <p>{`Something went wrong, please try again later.`}</p>
         </div>
       );
     }

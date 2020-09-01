@@ -8,7 +8,6 @@ import YouTubeRecommendations from "./youTubeRecommendations";
 import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
 
-
 const styles = (theme) => ({
   root: {
     margin: "50px",
