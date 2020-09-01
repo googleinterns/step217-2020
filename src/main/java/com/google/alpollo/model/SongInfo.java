@@ -19,16 +19,13 @@ public class SongInfo extends Song {
   private final float magnitude;
   /** TopSalientEntities is a list containing the 10 most important words, given the song context. */
   private final List<SongEntity> topSalientEntities;
-  /** Some entites might have a wikipedia link attached to them. */
-  private final List<String> wikiLinks;
 
   public SongInfo(String artist, String name, String album, float score, float magnitude,
-      List<SongEntity> topSalientEntities, List<String> wikiLinks) {
+      List<SongEntity> topSalientEntities) {
     super(artist, name, album);
     this.score = score;
     this.magnitude = magnitude;
     this.topSalientEntities = topSalientEntities;
-    this.wikiLinks = wikiLinks;
   }
 
   public float getScore() {
@@ -41,9 +38,5 @@ public class SongInfo extends Song {
 
   public List<SongEntity> getTopSalientEntities() {
     return topSalientEntities;
-  }
-
-  public List<String> getWikiLinks() {
-    return wikiLinks;
   }
 }
