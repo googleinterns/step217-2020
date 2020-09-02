@@ -22,7 +22,7 @@ public class SentimentServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
       final String lyrics = request.getParameter(LYRICS_PARAM);
-      String projectID = ConfigHelper.getProjectID(this.getServletContext());
+      String projectID = ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.PROJECT_ID);
 
       Sentiment sentiment = AnalysisHelper.getSentiment(projectID, lyrics);
       SongSentiment songSentiment = new SongSentiment(sentiment.getScore(), sentiment.getMagnitude());
