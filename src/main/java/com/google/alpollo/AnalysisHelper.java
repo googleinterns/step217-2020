@@ -28,9 +28,9 @@ public final class AnalysisHelper {
   private static final String NEGATIVE = "This song is predominantly negative.";
   private static final String POSITIVE = "This song is predominantly positive";
   private static final String MIXED = "This song has a lot of mixed feelings";
-  private static final double NEUTRAL_THRESHOLD = 5;
-  private static final double NEGATIVE_THRESHOLD = -0.15;
-  private static final double POSITIVE_THRESHOLD = 0.15;
+  private static final double NEUTRAL_MAGNITUDE_THRESHOLD = 5;
+  private static final double NEGATIVE_SCORE_THRESHOLD = -0.15;
+  private static final double POSITIVE_SCORE_THRESHOLD = 0.15;
 
   private AnalysisHelper() {};
 
@@ -114,15 +114,15 @@ public final class AnalysisHelper {
    * telling the user what the values mean.
    */
   public static String getInterpretation(double score, double magnitude) {
-    if (magnitude < NEUTRAL_THRESHOLD) {
+    if (magnitude < NEUTRAL_MAGNITUDE_THRESHOLD) {
       return NEUTRAL;
     }
 
-    if (score < NEGATIVE_THRESHOLD) {
+    if (score < NEGATIVE_SCORE_THRESHOLD) {
       return NEGATIVE;
     }
 
-    if (score > POSITIVE_THRESHOLD) {
+    if (score > POSITIVE_SCORE_THRESHOLD) {
       return POSITIVE;
     }
 
