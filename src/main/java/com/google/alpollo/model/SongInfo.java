@@ -3,6 +3,8 @@ package com.google.alpollo.model;
 import java.util.List;
 import com.google.alpollo.Song;
 import com.google.alpollo.model.SongEntity;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Entity;
 
 /**
  * Class used for storing data related to the Natural Language API analysis.
@@ -12,16 +14,17 @@ import com.google.alpollo.model.SongEntity;
  * needs to work with the "superficial" data (artist name, song name etc.) while Budi has to 
  * work with the analysis results.
  */
+@Entity
 public class SongInfo extends Song {
   /** Score tells us the overall positivty of the song, ranging from -1.0 to 1.0. */
-  private final float score;
+  @Index private float score;
   /** Magnitude tells us how strong the main sentiment of the song is, ranging from 0.0 to +inf. */
-  private final float magnitude;
+  @Index private float magnitude;
   /** TopSalientEntities is a list containing the 10 most important words, given the song context. */
-  private final List<SongEntity> topSalientEntities;
-  private final String lyrics;
+  @Index private List<SongEntity> topSalientEntities;
+  @Index private String lyrics;
   /** After analyzing the entities, we'll have a list of recommended YouTube links. */
-  private final List<String> youTubeLinks;
+  @Index private List<String> youTubeLinks;
 
   public SongInfo(String artist, String name, String album, float score, float magnitude,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeLinks) {
