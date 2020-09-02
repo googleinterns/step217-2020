@@ -27,6 +27,7 @@ public class YouTubeServlet extends HttpServlet {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Empty query.");
       return;
     }
+
     YouTube youtubeService = null;
     try {
       youtubeService = YouTubeService.getService(ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.API_KEY));
@@ -38,11 +39,13 @@ public class YouTubeServlet extends HttpServlet {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "YouTube service is null.");
       return;
     }
+
     // Define and execute the API request
     YouTube.Search.List vidRequest = youtubeService.search().list("snippet");
     SearchListResponse vidResponse =
         vidRequest.setMaxResults(5L).setQ(query).setOrder("viewCount").setType("video").execute();
     List<String> videoIds = vidResponse.getItems().stream().map(searchResult -> searchResult.getId().getVideoId()).collect(Collectors.toList());
+
     response.getWriter().println(gson.toJson(videoIds));
   }
 }

@@ -6,26 +6,28 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeRequestInitializer;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 public class YouTubeService {
-    private static final JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+  private static final JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
-    public YouTubeService() {}
+  public YouTubeService() {
+  }
 
-    /**
-     * Build and return an authorized API client service.
-     *
-     * @return an authorized API client service
-     * @throws GeneralSecurityException, IOException
-     */
-    public static YouTube getService(String apiKey) throws GeneralSecurityException, IOException {
-      final YouTubeRequestInitializer keyInitializer = new YouTubeRequestInitializer(apiKey);
-      final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-      return new YouTube.Builder(httpTransport, jsonFactory, null)
-          .setApplicationName("YouTube Alpollo")
-          .setYouTubeRequestInitializer(keyInitializer)
-          .build();
-    }
+  /**
+   * Build and return an authorized API client service.
+   *
+   * @return an authorized API client service
+   * @throws GeneralSecurityException, IOException
+   */
+  public static YouTube getService(String apiKey) throws GeneralSecurityException, IOException {
+    final YouTubeRequestInitializer keyInitializer = new YouTubeRequestInitializer(apiKey);
+    final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+    return new YouTube.Builder(httpTransport, jsonFactory, null)
+        .setApplicationName("YouTube Alpollo")
+        .setYouTubeRequestInitializer(keyInitializer)
+        .build();
+  }
 }
