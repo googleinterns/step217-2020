@@ -56,9 +56,12 @@ public final class AnalysisTest {
   private static final String WIKI_LINK_GOOGLE = "https://en.wikipedia.org/wiki/Google";
 
   private static final double NEUTRAL_MAGNITUDE = 0;
+  private static final double NON_NEUTRAL_MAGNITUDE = 5;
   private static final double NEUTRAL_SENTIMENT = 0.1;
+  private static final double NEGATIVE_SENTIMENT = -2;
 
   private static final String NEUTRAL_INTERPRETATION = "There isn't much going in this song.";
+  private static final String NEGATIVE_INTERPRETATION = "This song is predominantly negative.";
 
 
   @Before
@@ -170,6 +173,14 @@ public final class AnalysisTest {
   public void sentimentIsNeutral() {
     String actual = AnalysisHelper.getInterpretation(NEUTRAL_SENTIMENT, NEUTRAL_MAGNITUDE);
     String expected = NEUTRAL_INTERPRETATION;
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void sentimentIsNegative() {
+    String actual = AnalysisHelper.getInterpretation(NEGATIVE_SENTIMENT, NON_NEUTRAL_MAGNITUDE);
+    String expected = NEGATIVE_INTERPRETATION;
 
     Assert.assertEquals(expected, actual);
   }
