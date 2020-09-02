@@ -24,7 +24,7 @@ public final class AnalysisHelper {
   private static final int MAX_ENTITIES = 10;
   /** The index where we start our top list from. */
   private static final int FIRST_ENTITY = 0;
-  private static final String NEUTRAL = "There isn't much going in this song.";
+  private static final String NEUTRAL = "This song doesn't convey any positive or negative feelings.";
   private static final String NEGATIVE = "This song is predominantly negative.";
   private static final String POSITIVE = "This song is predominantly positive";
   private static final String MIXED = "This song has a lot of mixed feelings";
