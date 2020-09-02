@@ -107,6 +107,15 @@ public final class AnalysisHelper {
     if(sentiment.getMagnitude() < 1) {
       return "Neutral";
     }
-    
+
+    if(sentiment.getScore() < -0.15f) {
+      return "Negative";
+    }
+
+    if(sentiment.getScore() > 0.15f) {
+      return "Positive";
+    }
+
+    return "Mixed";
   }
 }
