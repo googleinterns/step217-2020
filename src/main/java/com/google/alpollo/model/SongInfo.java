@@ -9,10 +9,6 @@ import com.googlecode.objectify.annotation.Entity;
 /**
  * Class used for storing data related to the Natural Language API analysis.
  * Extending the Song class, it provides all the info related to a specific song.
- * 
- * We extend from Song because we do not always need the entire song data. Sasha mostly
- * needs to work with the "superficial" data (artist name, song name etc.) while Budi has to 
- * work with the analysis results.
  */
 @Entity
 public class SongInfo extends Song {
@@ -23,16 +19,16 @@ public class SongInfo extends Song {
   /** TopSalientEntities is a list containing the 10 most important words, given the song context. */
   @Index private List<SongEntity> topSalientEntities;
   @Index private String lyrics;
-  /** After analyzing the entities, we'll have a list of recommended YouTube links. */
-  @Index private List<String> youTubeLinks;
+  /** List of YouTube video IDs based on the most salient entity */
+  @Index private List<String> youTubeIds;
 
   public SongInfo(String artist, String name, String album, float score, float magnitude,
-      List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeLinks) {
+      List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
     super(artist, name, album);
     this.score = score;
     this.magnitude = magnitude;
     this.topSalientEntities = topSalientEntities;
     this.lyrics = lyrics;
-    this.youTubeLinks = youTubeLinks;
+    this.youTubeIds = youTubeIds;
   }
 }

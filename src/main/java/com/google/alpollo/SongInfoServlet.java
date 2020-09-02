@@ -21,7 +21,7 @@ public class SongInfoServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    int songId = gson.fromJson(request.getParameter(SONG_ID), int.class);
+    long songId = gson.fromJson(request.getParameter(SONG_ID), long.class);
     SongInfo songInfo = SongDataBase.getSongInfo(songId);
 
     response.setContentType("application/json;");
