@@ -57,11 +57,14 @@ public final class AnalysisTest {
 
   private static final double NEUTRAL_MAGNITUDE = 0;
   private static final double NON_NEUTRAL_MAGNITUDE = 5;
-  private static final double NEUTRAL_SENTIMENT = 0.1;
-  private static final double NEGATIVE_SENTIMENT = -2;
+  private static final double NEUTRAL_SCORE = 0.1;
+  private static final double NEGATIVE_SCORE = -2;
+  private static final double POSITIVE_SCORE = 2;
 
   private static final String NEUTRAL_INTERPRETATION = "There isn't much going in this song.";
   private static final String NEGATIVE_INTERPRETATION = "This song is predominantly negative.";
+  private static final String POSITIVE_INTERPRETATION = "This song is predominantly positive";
+  private static final String MIXED_INTERPRETATION = "This song has a lot of mixed feelings";
 
 
   @Before
@@ -171,7 +174,7 @@ public final class AnalysisTest {
 
   @Test
   public void sentimentIsNeutral() {
-    String actual = AnalysisHelper.getInterpretation(NEUTRAL_SENTIMENT, NEUTRAL_MAGNITUDE);
+    String actual = AnalysisHelper.getInterpretation(NEUTRAL_SCORE, NEUTRAL_MAGNITUDE);
     String expected = NEUTRAL_INTERPRETATION;
 
     Assert.assertEquals(expected, actual);
@@ -179,8 +182,24 @@ public final class AnalysisTest {
 
   @Test
   public void sentimentIsNegative() {
-    String actual = AnalysisHelper.getInterpretation(NEGATIVE_SENTIMENT, NON_NEUTRAL_MAGNITUDE);
+    String actual = AnalysisHelper.getInterpretation(NEGATIVE_SCORE, NON_NEUTRAL_MAGNITUDE);
     String expected = NEGATIVE_INTERPRETATION;
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void sentimentIsPositive() {
+    String actual = AnalysisHelper.getInterpretation(POSITIVE_SCORE, NON_NEUTRAL_MAGNITUDE);
+    String expected = POSITIVE_INTERPRETATION;
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void sentimentIsMixed() {
+    String actual = AnalysisHelper.getInterpretation(NEUTRAL_SCORE, NON_NEUTRAL_MAGNITUDE);
+    String expected = MIXED_INTERPRETATION;
 
     Assert.assertEquals(expected, actual);
   }
