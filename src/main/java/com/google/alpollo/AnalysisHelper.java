@@ -114,15 +114,15 @@ public final class AnalysisHelper {
    * telling the user what the values mean.
    */
   public static String getInterpretation(double score, double magnitude) {
-    if(magnitude < NEUTRAL_THRESHOLD) {
+    if (magnitude < NEUTRAL_THRESHOLD) {
       return NEUTRAL;
     }
 
-    if(score < NEGATIVE_THRESHOLD) {
+    if (score < NEGATIVE_THRESHOLD) {
       return NEGATIVE;
     }
 
-    if(score > POSITIVE_THRESHOLD) {
+    if (score > POSITIVE_THRESHOLD) {
       return POSITIVE;
     }
 
