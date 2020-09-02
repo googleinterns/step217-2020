@@ -13,7 +13,7 @@ import java.security.GeneralSecurityException;
  * Class for creating YouTube service.
  */
 public final class YouTubeService {
-  private static final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+  private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
   private YouTubeService() {}
 
@@ -26,7 +26,7 @@ public final class YouTubeService {
   public static YouTube getService(String apiKey) throws GeneralSecurityException, IOException {
     final YouTubeRequestInitializer keyInitializer = new YouTubeRequestInitializer(apiKey);
     final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-    return new YouTube.Builder(httpTransport, jsonFactory, null)
+    return new YouTube.Builder(httpTransport, JSON_FACTORY, null)
         .setApplicationName("YouTube Alpollo")
         .setYouTubeRequestInitializer(keyInitializer)
         .build();
