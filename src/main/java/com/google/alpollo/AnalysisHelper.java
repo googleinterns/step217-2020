@@ -28,7 +28,7 @@ public final class AnalysisHelper {
   private static final String NEGATIVE = "This song is predominantly negative.";
   private static final String POSITIVE = "This song is predominantly positive";
   private static final String MIXED = "This song has a lot of mixed feelings";
-  private static final double NEUTRAL_MAGNITUDE_THRESHOLD = 5;
+  private static final double NEUTRAL_MAGNITUDE_THRESHOLD = 2;
   private static final double NEGATIVE_SCORE_THRESHOLD = -0.15;
   private static final double POSITIVE_SCORE_THRESHOLD = 0.15;
 
