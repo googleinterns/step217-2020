@@ -110,16 +110,16 @@ public final class AnalysisHelper {
     }
   }
 
-  public static String interpretSentiment(SongSentiment sentiment) {
-    if(sentiment.getMagnitude() < NEUTRAL_THRESHOLD) {
+  public static String interpretSentiment(double score, double magnitude) {
+    if(magnitude < NEUTRAL_THRESHOLD) {
       return NEUTRAL;
     }
 
-    if(sentiment.getScore() < NEGATIVE_THRESHOLD) {
+    if(score < NEGATIVE_THRESHOLD) {
       return NEGATIVE;
     }
 
-    if(sentiment.getScore() > POSITIVE_THRESHOLD) {
+    if(score > POSITIVE_THRESHOLD) {
       return POSITIVE;
     }
 
