@@ -25,6 +25,13 @@ public final class AnalysisHelper {
   private static final int MAX_ENTITIES = 10;
   /** The index where we start our top list from. */
   private static final int FIRST_ENTITY = 0;
+  private static final String NEUTRAL = "There isn't much going in this song.";
+  private static final String NEGATIVE = "This song is predominantly negative.";
+  private static final String POSITIVE = "This song is predominantly positive";
+  private static final String MIXED = "This song has a lot of mixed feelings";
+  private static final double NEUTRAL_THRESHOLD = 1;
+  private static final double NEGATIVE_THRESHOLD = -0.15;
+  private static final double POSITIVE_THRESHOLD = 0.15;
 
   private AnalysisHelper() {};
 
@@ -104,18 +111,18 @@ public final class AnalysisHelper {
   }
 
   public static String interpretSentiment(SongSentiment sentiment) {
-    if(sentiment.getMagnitude() < 1) {
-      return "Neutral";
+    if(sentiment.getMagnitude() < NEUTRAL_THRESHOLD) {
+      return NEUTRAL;
     }
 
-    if(sentiment.getScore() < -0.15f) {
-      return "Negative";
+    if(sentiment.getScore() < NEGATIVE_THRESHOLD) {
+      return NEGATIVE;
     }
 
-    if(sentiment.getScore() > 0.15f) {
-      return "Positive";
+    if(sentiment.getScore() > POSITIVE_THRESHOLD) {
+      return POSITIVE;
     }
 
-    return "Mixed";
+    return MIXED;
   }
 }
