@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.alpollo.model.SongEntity;
-import com.google.alpollo.model.SongSentiment;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.cloud.language.v1.AnalyzeEntitiesRequest;
 import com.google.cloud.language.v1.AnalyzeEntitiesResponse;
