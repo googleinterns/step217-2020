@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.alpollo.model.SongInfo;
 import com.google.gson.Gson;
 
-/** Servlet created to deal with songInfo related operations. */
+/** Servlet retrieves or saves SongInfo objects to the database. */
 @WebServlet("/song-info")
 public class SongInfoServlet extends HttpServlet {
   private static final String SONG_ID = "id";
