@@ -1,12 +1,15 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { ListItemIcon } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import axios from "axios";
 
-const useStyles = makeStyles((theme) => ({
+const styles = (theme) => ({
   root: {
     marginTop: "50px",
     width: "100%",
@@ -19,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "28px",
     color: "#3A3838",
   },
-}));
+});
 
 function EnumeratedList(props) {
   const listItems = props.listItems;
@@ -30,77 +33,89 @@ function EnumeratedList(props) {
         {index + 1}
       </ListItemIcon>
       <ListItemText
-        primary={item.songName}
-        secondary={item.bandName + '. From album "' + item.albumName + '"'}
+        primary={item.name}
+        secondary={item.artist}
       />
     </ListItem>
   ));
   return <List>{reactListItems}</List>;
 }
 
-export default function RatingList() {
-  const classes = useStyles();
+class RatingList extends React.Component {
+  constructor(props) {
+    super(props);
 
-  // TODO Fetch top songs from database.
-  const topSongs = [
-    {
-      songName: "Yesterday",
-      albumName: "Help!",
-      bandName: "The Beatles",
-    },
-    {
-      songName: "Bohemian Rhapsody",
-      albumName: "A Night at the Opera",
-      bandName: "Queen",
-    },
-    {
-      songName: "Hotel California",
-      albumName: "Hotel California",
-      bandName: "Eagles",
-    },
-    {
-      songName: "Go Bananas",
-      albumName: "Go Bananas",
-      bandName: "Little Big",
-    },
-    {
-      songName: "Miracle",
-      albumName: "Exile",
-      bandName: "Hurts",
-    },
-    {
-      songName: "In The End",
-      albumName: "Wretched and Divine: The Story of the Wild Ones",
-      bandName: "Black Veil Brides",
-    },
-    {
-      songName: "Ashes of Eden",
-      albumName: "Dark Before Dawn",
-      bandName: "Breaking Benjamin",
-    },
-    {
-      songName: "Wolf Totem",
-      albumName: "The Gereg",
-      bandName: "The HU ft. Papa Roach",
-    },
-    {
-      songName: "Blinding Lights",
-      albumName: "After Hours",
-      bandName: "The Weeknd",
-    },
-    {
-      songName: "Roaring 20s",
-      albumName: "Pray for the Wicked",
-      bandName: "Panic! At The Disco",
-    },
-  ];
+    this.state = {
+      topSongs: [],
+      isLoading: false,
+      error: null,
+    };
+  }
 
-  return (
-    <div className={classes.root}>
-      <Typography variant="h3">
-        Top {topSongs.length} searched songs.
-      </Typography>
-      <EnumeratedList listItems={topSongs} styleClasses={classes} />
-    </div>
-  );
+  componentDidMount() {
+    this.setState({ isLoading: true });
+
+    axios
+      .get("/top")
+      .then((result) => result.data)
+      .then((topSongs) =>
+        this.setState({
+          topSongs: topSongs,
+          isLoading: false,
+        })
+      )
+      .catch((error) =>
+        this.setState({
+          error,
+          isLoading: false,
+        })
+      );
+  }
+
+  render() {
+    const classes = this.props.classes;
+    const topSongs = this.state.topSongs;
+
+    if (this.state.error) {
+      console.log(this.state.error.message);
+      return (
+        <div>
+          <p>{`Something went wrong, please try again later.`}</p>
+        </div>
+      );
+    }
+
+    if (this.state.isLoading) {
+      return (
+        <div>
+          <CircularProgress style={{ color: "black" }} />
+        </div>
+      );
+    }
+
+    if (topSongs.length == 0) {
+      return (
+        <div className={classes.root}>
+          <Typography variant="h3">
+            No songs were searched for. Be the first!
+          </Typography>
+        </div>
+      );
+    }
+
+    return (
+      <div className={classes.root}>
+        <Typography variant="h3">
+          Top {topSongs.length} searched songs.
+        </Typography>
+        <EnumeratedList listItems={topSongs} styleClasses={classes} />
+      </div>
+    );
+  }
 }
+
+RatingList.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(RatingList);
