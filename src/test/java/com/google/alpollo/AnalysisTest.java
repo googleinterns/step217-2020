@@ -55,6 +55,11 @@ public final class AnalysisTest {
   private static final String EMPTY_STRING = "";
   private static final String WIKI_LINK_GOOGLE = "https://en.wikipedia.org/wiki/Google";
 
+  private static final double NEUTRAL_MAGNITUDE = 0;
+  private static final double NEUTRAL_SENTIMENT = 0.1;
+
+  private static final String NEUTRAL_INTERPRETATION = "There isn't much going in this song.";
+
 
   @Before
   public void setUp() throws Exception {
@@ -159,5 +164,13 @@ public final class AnalysisTest {
         new SongEntity("results", 0.12, "OTHER", EMPTY_STRING));
 
       Assert.assertThat(actual, CoreMatchers.is(expected));
+  }
+
+  @Test
+  public void sentimentIsNeutral() {
+    String actual = AnalysisHelper.getInterpretation(NEUTRAL_SENTIMENT, NEUTRAL_MAGNITUDE);
+    String expected = NEUTRAL_INTERPRETATION;
+
+    Assert.assertEquals(expected, actual);
   }
 }
