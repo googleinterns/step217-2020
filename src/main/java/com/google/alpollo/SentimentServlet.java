@@ -25,7 +25,8 @@ public class SentimentServlet extends HttpServlet {
       String projectID = ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.PROJECT_ID);
 
       Sentiment sentiment = AnalysisHelper.getSentiment(projectID, lyrics);
-      SongSentiment songSentiment = new SongSentiment(sentiment.getScore(), sentiment.getMagnitude());
+      String interpretation = AnalysisHelper.getInterpretation(sentiment.getScore(), sentiment.getMagnitude());
+      SongSentiment songSentiment = new SongSentiment(sentiment.getScore(), sentiment.getMagnitude(), interpretation);
 
       String json = gson.toJson(songSentiment);
       response.setContentType("application/json;");
