@@ -110,7 +110,7 @@ public final class AnalysisHelper {
     }
   }
 
-  public static String interpretSentiment(double score, double magnitude) {
+  public static String getInterpretation(double score, double magnitude) {
     if(magnitude < NEUTRAL_THRESHOLD) {
       return NEUTRAL;
     }
