@@ -22,7 +22,7 @@ public class SongInfoServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) {
-    String songId = request.getParameter(SONG_ID);
+    int songId = gson.fromJson(request.getParameter(SONG_ID), int.class);
     SongInfo songInfo = SongDataBase.getSongInfo(songId);
 
     response.setContentType("application/json;");
