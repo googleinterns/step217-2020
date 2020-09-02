@@ -109,6 +109,10 @@ public final class AnalysisHelper {
     }
   }
 
+  /**
+   * Given the score and magnitude of a sentiment, this will return a general interpretation,
+   * telling the user what the values mean.
+   */
   public static String getInterpretation(double score, double magnitude) {
     if(magnitude < NEUTRAL_THRESHOLD) {
       return NEUTRAL;
