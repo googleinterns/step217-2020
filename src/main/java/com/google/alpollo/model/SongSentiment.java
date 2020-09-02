@@ -10,10 +10,13 @@ public class SongSentiment {
   private final float score;
   /** Each sentiment has a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf. */
   private final float magnitude;
+  /** Based on the score and magnitude of a sentiment, we can make up an interpretation of these values. */
+  private final String interpretation;
 
-  public SongSentiment(float score, float magnitude) {
+  public SongSentiment(float score, float magnitude, String interpretation) {
     this.score = score;
     this.magnitude = magnitude;
+    this.interpretation = interpretation;
   }
 
   public float getScore() {
