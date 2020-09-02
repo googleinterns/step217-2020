@@ -66,7 +66,6 @@ public final class AnalysisTest {
   private static final String POSITIVE_INTERPRETATION = "This song is predominantly positive";
   private static final String MIXED_INTERPRETATION = "This song has a lot of mixed feelings";
 
-
   @Before
   public void setUp() throws Exception {
     sentimentServletUnderTest = new SentimentServlet() {
