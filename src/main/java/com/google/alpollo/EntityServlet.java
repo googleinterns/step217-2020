@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.alpollo.model.Lyrics;
 import com.google.alpollo.model.SongEntity;
 import com.google.cloud.language.v1.Entity;
 import com.google.gson.Gson;
@@ -17,13 +18,11 @@ import com.google.gson.Gson;
 @WebServlet("/entity")
 public class EntityServlet extends HttpServlet {
   private final Gson gson = new Gson();
-  /** Parameter sent through the request which holds the song's lyrics. */
-  private static final String LYRICS = "lyrics";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
-      String lyrics = request.getParameter(LYRICS);
+      final String lyrics = gson.fromJson(request.getReader(), Lyrics.class).getLyrics();
       String projectID = ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.PROJECT_ID);
       // Get the Entity list from the API
       List<Entity> entityList = AnalysisHelper.getEntityList(projectID, lyrics);

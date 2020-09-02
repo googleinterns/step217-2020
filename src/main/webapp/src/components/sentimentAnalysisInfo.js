@@ -46,14 +46,8 @@ class SentimentAnalysisInfo extends React.Component {
     this.setState({ isLoading: true });
 
     axios
-      .post("/sentiment", {}, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        },
-        params: {
-          lyrics: this.props.lyrics  
-        }
+      .post("/sentiment", {
+        lyrics: this.props.lyrics
       })
       .then((result) => result.data)
       .then((sentimentAnalysisInfo) =>

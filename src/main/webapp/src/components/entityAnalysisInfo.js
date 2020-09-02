@@ -31,19 +31,9 @@ class EntityAnalysisInfo extends React.Component {
     this.setState({ isLoading: true });
 
     axios
-      .post(
-        "/entity",
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          params: {
-            lyrics: this.props.lyrics,
-          },
-        }
-      )
+      .post("/entity", {
+          lyrics: this.props.lyrics
+      })
       .then((result) => result.data)
       .then((entityAnalysisInfo) =>
         this.setState({
