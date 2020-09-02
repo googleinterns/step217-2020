@@ -1,5 +1,6 @@
 package com.google.alpollo;
 
+import java.io.IOException;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,17 +17,22 @@ public class SongInfoServlet extends HttpServlet {
   private static final String SONG_INFO = "songInfo";
   private final Gson gson = new Gson();
 
-  /** 
-   * Making a GET request to our servlet with the desired song ID as a parameter will return that 
-   * song from the database.
+  /**
+   * Making a GET request to our servlet with the desired song ID as a parameter
+   * will return that song from the database.
    */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     int songId = gson.fromJson(request.getParameter(SONG_ID), int.class);
     SongInfo songInfo = SongDataBase.getSongInfo(songId);
 
     response.setContentType("application/json;");
-    response.getWriter().println(gson.toJson(songInfo));
+    try {
+      response.getWriter().println(gson.toJson(songInfo));
+    } catch (IOException e) {
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+        e.getMessage());
+    }
   }
 
   /**
