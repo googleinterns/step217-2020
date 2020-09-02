@@ -56,7 +56,7 @@ public final class AnalysisTest {
   private static final String WIKI_LINK_GOOGLE = "https://en.wikipedia.org/wiki/Google";
 
   private static final double NEUTRAL_MAGNITUDE = 0;
-  private static final double NON_NEUTRAL_MAGNITUDE = 5;
+  private static final double NON_NEUTRAL_MAGNITUDE = 10;
   private static final double NEUTRAL_SCORE = 0.1;
   private static final double NEGATIVE_SCORE = -2;
   private static final double POSITIVE_SCORE = 2;
