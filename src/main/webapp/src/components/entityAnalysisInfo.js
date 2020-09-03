@@ -92,12 +92,6 @@ class EntityAnalysisInfo extends React.Component {
       }
     })
 
-    const listLinks = top10WordsLinks.map((link, index) =>
-      <li key={index + 1}>
-        <a href={link}> {link} </a>
-      </li>
-    );
-     
     return (
       <div>
         <div style={{ display: 'flex', maxWidth: 900 }}>
@@ -112,12 +106,6 @@ class EntityAnalysisInfo extends React.Component {
             }}
             legendToggle
           />
-        </div>
-        <div>
-        <Typography variant="h5">Wiki links found</Typography>
-          <ul>
-            {listLinks}         
-          </ul>
         </div>
       </div>
     );
