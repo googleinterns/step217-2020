@@ -115,6 +115,7 @@ class EntityAnalysisInfo extends React.Component {
             data={top10WordsData}
             options={{
               title: 'Most Important Words',
+              legend: {viewWindow: { min: 0, max: 15 }},
             }}
             chartEvents={chartEvents}
             legendToggle
