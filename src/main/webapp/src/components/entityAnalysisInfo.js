@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
-
-const google = window.google;
+import Chart from "react-google-charts";
+import Typography from "@material-ui/core/Typography";
 
 const styles = (theme) => ({
   root: {
@@ -82,44 +82,45 @@ class EntityAnalysisInfo extends React.Component {
       return <p>No entities were found.</p>;
     }
 
-    /**
-     * Function will draw a pie chart with static data representing the most important words in
-     * our song's context.
-     */
-    const drawTop10WordsChart = (element) => {
-      const data = new google.visualization.DataTable();
-      data.addColumn("string", "Name");
-      data.addColumn("number", "Salience");
-      this.state.entityAnalysisInfo.forEach((entity) => {
-        data.addRow([entity.name, entity.salience]);
-      });
+    /** Gather the most important words and their data in simple arrays. */
+    var top10WordsData = [];
+    var top10WordsLinks = [];
+    top10WordsData.push(['Word and Type', 'Importance'])
+    this.state.entityAnalysisInfo.forEach((entity) => {
+      top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience]);
+      if (entity.wikiLink !== "") {
+        top10WordsLinks.push(entity.wikiLink);
+      }
+    })
 
-      const options = {
-        title: "Most important words",
-        width: 600,
-        height: 500,
-      };
-
-      const entityChart = new google.visualization.PieChart(element);
-      entityChart.draw(data, options);
-    }
-
-    const loadChartAPI = (element) => {
-      // Load the Visualization API and the corechart package.
-      google.charts.load("current", { packages: ["corechart"] });
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(function () {
-        drawTop10WordsChart(element);
-      });
-    }
-
+    const listLinks = top10WordsLinks.map((link, index) =>
+      <li key={index + 1}>
+        <a href={link}> {link} </a>
+      </li>
+    );
+     
     return (
-      <div
-        ref={(elem) => {
-          if (elem) loadChartAPI(elem);
-        }}
-      ></div>
+      <div>
+        <div style={{ display: 'flex', maxWidth: 900 }}>
+          <Chart
+            width={1200}
+            height={400}
+            chartType="PieChart"
+            loader={<div>Loading Chart</div>}
+            data={top10WordsData}
+            options={{
+              title: 'Most Important Words',
+            }}
+            legendToggle
+          />
+        </div>
+        <div>
+        <Typography variant="h5">Wiki links found</Typography>
+          <ul>
+            {listLinks}         
+          </ul>
+        </div>
+      </div>
     );
   }
 }
