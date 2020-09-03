@@ -28,4 +28,8 @@ public class SongSentiment {
   public float getMagnitude() {
     return magnitude;
   }
+
+  public String getInterpretation() {
+    return interpretation;
+  }
 }
