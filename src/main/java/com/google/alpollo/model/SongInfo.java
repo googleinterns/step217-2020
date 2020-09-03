@@ -11,7 +11,9 @@ import com.googlecode.objectify.annotation.Entity;
  * Extending the Song class, it provides all the info related to a specific song.
  */
 @Entity
-public class SongInfo extends Song {
+public class SongInfo {
+  /** All the info in this class is attached to a specific parent song. */
+  private Song parentSong;
   /** Score tells us the overall positivty of the song, ranging from -1.0 to 1.0. */
   @Index private float score;
   /** Magnitude tells us how strong the main sentiment of the song is, ranging from 0.0 to +inf. */
@@ -22,9 +24,9 @@ public class SongInfo extends Song {
   /** After analyzing the entities, we'll have a list of recommended YouTube links. */
   @Index private List<String> youTubeIds;
 
-  public SongInfo(String artist, String name, String album, float score, float magnitude,
+  public SongInfo(Song parentSong, float score, float magnitude,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
-    super(artist, name, album);
+    this.parentSong = parentSong;
     this.score = score;
     this.magnitude = magnitude;
     this.topSalientEntities = topSalientEntities;
