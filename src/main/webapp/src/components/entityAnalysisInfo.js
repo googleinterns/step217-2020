@@ -87,10 +87,22 @@ class EntityAnalysisInfo extends React.Component {
     top10WordsData.push(['Word and Type', 'Importance'])
     this.state.entityAnalysisInfo.forEach((entity) => {
       top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience]);
-      if (entity.wikiLink !== "") {
-        top10WordsLinks.push(entity.wikiLink);
-      }
+      top10WordsLinks.push(entity.wikiLink);
     })
+
+    const chartEvents = [
+      {
+        eventName: "select",
+        callback({ chartWrapper }) {
+          const [selectedItem] = chartWrapper.getChart().getSelection();
+          const { row, column } = selectedItem;
+
+          if(top10WordsLinks[row] !== "") {
+            window.location.href = top10WordsLinks[row];
+          }
+        }
+      }
+    ];
 
     return (
       <div>
@@ -104,6 +116,7 @@ class EntityAnalysisInfo extends React.Component {
             options={{
               title: 'Most Important Words',
             }}
+            chartEvents={chartEvents}
             legendToggle
           />
         </div>
