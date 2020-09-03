@@ -13,7 +13,7 @@ import com.googlecode.objectify.annotation.Entity;
 @Entity
 public class SongInfo {
   /** All the info in this class is attached to a specific parent song. */
-  private Song parentSong;
+  private final Song parentSong;
   /** Score tells us the overall positivty of the song, ranging from -1.0 to 1.0. */
   @Index private float score;
   /** Magnitude tells us how strong the main sentiment of the song is, ranging from 0.0 to +inf. */
