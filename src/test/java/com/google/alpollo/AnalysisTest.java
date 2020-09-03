@@ -55,6 +55,11 @@ public final class AnalysisTest {
   private static final String EMPTY_STRING = "";
   private static final String WIKI_LINK_GOOGLE = "https://en.wikipedia.org/wiki/Google";
 
+  private static final double NEUTRAL_MAGNITUDE = 0;
+  private static final double NON_NEUTRAL_MAGNITUDE = 10;
+  private static final double NEUTRAL_SCORE = 0.1;
+  private static final double NEGATIVE_SCORE = -2;
+  private static final double POSITIVE_SCORE = 2;
 
   @Before
   public void setUp() throws Exception {
@@ -159,5 +164,37 @@ public final class AnalysisTest {
         new SongEntity("results", 0.12, "OTHER", EMPTY_STRING));
 
       Assert.assertThat(actual, CoreMatchers.is(expected));
+  }
+
+  @Test
+  public void sentimentIsNeutral() {
+    String actual = AnalysisHelper.getInterpretation(NEUTRAL_SCORE, NEUTRAL_MAGNITUDE);
+    String expected = AnalysisHelper.NEUTRAL;
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void sentimentIsNegative() {
+    String actual = AnalysisHelper.getInterpretation(NEGATIVE_SCORE, NON_NEUTRAL_MAGNITUDE);
+    String expected = AnalysisHelper.NEGATIVE;
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void sentimentIsPositive() {
+    String actual = AnalysisHelper.getInterpretation(POSITIVE_SCORE, NON_NEUTRAL_MAGNITUDE);
+    String expected = AnalysisHelper.POSITIVE;
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void sentimentIsMixed() {
+    String actual = AnalysisHelper.getInterpretation(NEUTRAL_SCORE, NON_NEUTRAL_MAGNITUDE);
+    String expected = AnalysisHelper.MIXED;
+
+    Assert.assertEquals(expected, actual);
   }
 }
