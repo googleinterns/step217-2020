@@ -104,6 +104,13 @@ class EntityAnalysisInfo extends React.Component {
       }
     ];
 
+    var offsetSlices = [];
+    for(var i = 0; i < top10WordsLinks.length; i++) {
+      if(top10WordsLinks[i] !== "") {
+        offsetSlices[i] = {offset:0.1};
+      }
+    }
+
     return (
       <div>
         <div style={{ display: 'flex', maxWidth: 900 }}>
@@ -116,6 +123,7 @@ class EntityAnalysisInfo extends React.Component {
             options={{
               title: 'Most Important Words',
               legend: {viewWindow: { min: 0, max: 15 }},
+              slices: offsetSlices,
             }}
             chartEvents={chartEvents}
             legendToggle
