@@ -8,7 +8,7 @@ import com.googlecode.objectify.annotation.Entity;
 
 /**
  * Class used for storing data related to the Natural Language API analysis.
- * Extending the Song class, it provides all the info related to a specific song.
+ * It provides all the info related to a specific song.
  */
 @Entity
 public class SongInfo {
