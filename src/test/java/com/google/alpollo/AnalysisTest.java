@@ -1,5 +1,6 @@
 package com.google.alpollo;
 
+import com.google.alpollo.model.Lyrics;
 import com.google.alpollo.model.SongSentiment;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -24,7 +25,7 @@ public final class AnalysisTest {
   private static final String TEST_RESOURCE_PATH = System.getProperty("user.dir") + "/src/main/webapp";
   private final Gson gson = new Gson();
   private static final float TOLERANCE = 0.05f;
-  private static final String LYRICS_LONG = "Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
+  private static final Lyrics LYRICS_LONG = new Lyrics("Days go by, but I don't seem to notice them\n" + "Just a roundabout of turns\n"
       + "All these nights I lie awake and on my own\n" + "My pale fire hardly burns\n"
       + "Never fell in love with the one who loves me\n" + "But with the ones who love me not\n"
       + "Are we doomed to live in grief and misery?\n" + "Is it everything we got?\n" + "I'm the mountain\n"
@@ -39,10 +40,10 @@ public final class AnalysisTest {
       + "Of the things we hide deep from ourselves\n" + "Mirror-mirror show me now what will I become and how\n"
       + "For now I'm just a mountain\n" + "I'm the mountain\n" + "Down the road that takes me to the Headley Grange\n"
       + "I see a figure of a young man\n" + "He's torn with doubts, mistakes, his selfishness and rage\n"
-      + "But doing all the best he can\n" + "I'm not so blind to see\n" + "That this young man is me";
-  private static final String LYRICS_SHORT = "I'm the mountain\n"
+      + "But doing all the best he can\n" + "I'm not so blind to see\n" + "That this young man is me");
+  private static final Lyrics LYRICS_SHORT = new Lyrics("I'm the mountain\n"
       + "Rising high\n" + "It's the way that I survived\n" + "I'm the mountain\n" + "Tell my tale\n"
-      + "The greatest story's now for sale\n";
+      + "The greatest story's now for sale\n");
   
   private ServletContext mockServletContext = mock(ServletContext.class);
   private HttpServletRequest request = mock(HttpServletRequest.class);
@@ -51,7 +52,7 @@ public final class AnalysisTest {
   private EntityServlet entityServletUnderTest;
   private StringWriter responseWriter;
 
-  private static final String LYRICS_WITH_METADATA = "Google has found me some nice results!";
+  private static final Lyrics LYRICS_WITH_METADATA = new Lyrics("Google has found me some nice results!");
   private static final String EMPTY_STRING = "";
   private static final String WIKI_LINK_GOOGLE = "https://en.wikipedia.org/wiki/Google";
 
@@ -81,7 +82,8 @@ public final class AnalysisTest {
 
   @Test
   public void checkSentimentScore() throws Exception {
-    when(request.getParameter("lyrics")).thenReturn(LYRICS_LONG);
+    when(request.getReader()).thenReturn(
+        new BufferedReader(new StringReader(gson.toJson(LYRICS_LONG))));
     sentimentServletUnderTest.doPost(request, response);
 
     String responseString = responseWriter.toString();
@@ -94,7 +96,8 @@ public final class AnalysisTest {
 
   @Test
   public void checkSentimentMagnitude() throws IOException {
-    when(request.getParameter("lyrics")).thenReturn(LYRICS_LONG);
+    when(request.getReader()).thenReturn(
+        new BufferedReader(new StringReader(gson.toJson(LYRICS_LONG))));
     sentimentServletUnderTest.doPost(request, response);
 
     String responseString = responseWriter.toString();
@@ -110,7 +113,8 @@ public final class AnalysisTest {
    */
   @Test
   public void top10SalientEntitiesWithLessThan10Entities() throws IOException {
-    when(request.getParameter("lyrics")).thenReturn(LYRICS_SHORT);
+    when(request.getReader()).thenReturn(
+        new BufferedReader(new StringReader(gson.toJson(LYRICS_SHORT))));
     entityServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
@@ -128,7 +132,8 @@ public final class AnalysisTest {
    */
   @Test
   public void top10SalientEntitiesWithMoreThan10Entities() throws IOException {
-    when(request.getParameter("lyrics")).thenReturn(LYRICS_LONG);
+    when(request.getReader()).thenReturn(
+        new BufferedReader(new StringReader(gson.toJson(LYRICS_LONG))));
     entityServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
@@ -150,7 +155,8 @@ public final class AnalysisTest {
   /** Some entities might have metadata attached to them. Let's see if they're shown correctly. */
   @Test
   public void checkEntitiesWithMetadata() throws IOException {
-    when(request.getParameter("lyrics")).thenReturn(LYRICS_WITH_METADATA);
+    when(request.getReader()).thenReturn(
+        new BufferedReader(new StringReader(gson.toJson(LYRICS_WITH_METADATA))));
     entityServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
