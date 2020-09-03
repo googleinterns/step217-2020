@@ -1,6 +1,7 @@
 package com.google.alpollo;
 
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Entity;
 
 /** 
  * Represents the structure of the song. 
