@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/Info';
+import objectEquals from '../helpers/objectEquals';
 import axios from "axios";
 
 const styles = (theme) => ({
@@ -42,24 +43,26 @@ class SentimentAnalysisInfo extends React.Component {
     };
   }
 
+  /* If state has changed, send it to songInfo component */
+  componentDidUpdate(prevProps, prevState) {
+    if (!objectEquals(prevState, this.state)) {
+      this.props.onChangeState(this.state);
+    }
+  }
+
   componentDidMount() {
     this.setState({ isLoading: true });
 
     axios
-      .post("/sentiment", {}, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        },
-        params: {
-          lyrics: this.props.lyrics  
-        }
+      .post("/sentiment", {
+        lyrics: this.props.lyrics
       })
       .then((result) => result.data)
       .then((sentimentAnalysisInfo) =>
         this.setState({
           sentimentAnalysisInfo: sentimentAnalysisInfo,
           isLoading: false,
+          error: null,
         })
       )
       .catch((error) =>
