@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/youtube")
 public class YouTubeServlet extends HttpServlet {
+  // This topic ID was found this file: https://gist.github.com/stpe/2951130dfc8f1d0d1a2ad736bef3b703
+  private static final String MUSIC_TOPIC_ID = "/m/04rlf";
+
   /**
    * Accesses YouTube and retrieves a collection of videos relating to the given query/words found
    * in the request. Returns only the snippet for each video and returns only videos, no playlists
@@ -46,7 +49,7 @@ public class YouTubeServlet extends HttpServlet {
     // Define and execute the API request
     YouTube.Search.List vidRequest = youtubeService.search().list("snippet");
     SearchListResponse vidResponse =
-        vidRequest.setMaxResults(5L).setQ(query).setOrder("viewCount").setType("video").execute();
+        vidRequest.setMaxResults(5L).setQ(query).setTopicId(MUSIC_TOPIC_ID).setOrder("viewCount").setType("video").execute();
     List<String> videoIds = vidResponse.getItems().stream().map(searchResult -> searchResult.getId().getVideoId()).collect(Collectors.toList());
 
     response.getWriter().println(gson.toJson(videoIds));
