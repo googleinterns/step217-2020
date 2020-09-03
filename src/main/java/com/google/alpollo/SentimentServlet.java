@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.alpollo.model.Lyrics;
 import com.google.alpollo.model.SongSentiment;
 import com.google.cloud.language.v1.Sentiment;
 import com.google.gson.Gson;
@@ -16,12 +17,11 @@ import com.google.gson.Gson;
 @WebServlet("/sentiment")
 public class SentimentServlet extends HttpServlet {
   private final Gson gson = new Gson();
-  private static final String LYRICS_PARAM = "lyrics";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     try {
-      final String lyrics = request.getParameter(LYRICS_PARAM);
+      final String lyrics = gson.fromJson(request.getReader(), Lyrics.class).getLyrics();
       String projectID = ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.PROJECT_ID);
 
       Sentiment sentiment = AnalysisHelper.getSentiment(projectID, lyrics);
