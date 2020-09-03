@@ -1,12 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import YouTube from "react-youtube";
 import { withStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import SentimentAnalysisInfo from "./sentimentAnalysisInfo";
 import EntityAnalysisInfo from "./entityAnalysisInfo";
+import YouTubeRecommendations from "./youTubeRecommendations";
 import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
 
@@ -23,30 +21,13 @@ const styles = (theme) => ({
   songLyrics: {
     paddingRight: "100px",
   },
-  youTubeVideo: {
-    playerVars: {
-      autoplay: 1,
-    },
+  languageAnalysisSection: {
+    display: "flex",
   },
   youTubeRecommendationsSection: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-  },
-  youTubeRecommendationsList: {
-    padding: 0,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    flexWrap: "wrap",
-  },
-  youTubeRecommendationsListItem: {
-    width: "640px",
-    margin: "10px",
-    listStyleType: "none",
-  },
-  languageAnalysisSection: {
-    display: "flex",
   },
 });
 
@@ -132,11 +113,6 @@ class SongInfo extends React.Component {
         },
       ],
       youTubeRecommendations: [
-        "AZKcl4-tcuo",
-        "2zX0lxiM8Xo",
-        "kJ095S0MmnA",
-        "slIG7Aes7DM",
-        "uqeH76RLpO8",
       ],
     };
 
@@ -162,25 +138,10 @@ class SongInfo extends React.Component {
         </div>
         <div className={classes.youTubeRecommendationsSection}>
           <Typography variant="h4">YouTube Recommendations</Typography>
-          <List className={classes.youTubeRecommendationsList}>
-            {songInfo.youTubeRecommendations.map((videoId, index) => (
-              <ListItem key={index + 1} className={classes.youTubeRecommendationsListItem}>
-                <YouTube
-                  className={classes.youTubeVideo}
-                  videoId={videoId}
-                  onReady={this._onReady}
-                />
-              </ListItem>
-            ))}
-          </List>
+          <YouTubeRecommendations q={songInfo.entityAnalysis[0].word} maxResults={5}/>
         </div>
       </div>
     );
-  }
-
-  _onReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
   }
 }
 
