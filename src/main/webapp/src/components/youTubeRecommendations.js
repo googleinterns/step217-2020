@@ -57,33 +57,29 @@ class YouTubeRecommendations extends React.Component {
         error: new Error(entityState.errorMsg),
         isLoading: false,
       });
+    } else if (entityState.entityAnalysisInfo.length == 0) {
+      this.setState({
+        error: new Error("No YouTube videos were found, because no entities were found"),
+        isLoading: false,
+      });
     } else {
-      if (entityState.entityAnalysisInfo.length == 0) {
-        this.setState({
-          error: new Error(
-            "No YouTube videos were found, because no entities were found"
-          ),
-          isLoading: false,
-        });
-      } else {
-        axios
-          .get(
-            `/youtube?query=${entityState.entityAnalysisInfo[0].name}`
-          )
-          .then((result) => result.data)
-          .then((videoIds) => {
-            this.setState({
-              videoIds: videoIds,
-              isLoading: false,
-            });
+      axios
+        .get(
+          `/youtube?query=${entityState.entityAnalysisInfo[0].name}`
+        )
+        .then((result) => result.data)
+        .then((videoIds) => {
+          this.setState({
+            videoIds: videoIds,
+            isLoading: false,
+          });
+        })
+        .catch((error) =>
+          this.setState({
+            error,
+            isLoading: false,
           })
-          .catch((error) =>
-            this.setState({
-              error,
-              isLoading: false,
-            })
-          );
-      }
+        );
     }
   };
 
