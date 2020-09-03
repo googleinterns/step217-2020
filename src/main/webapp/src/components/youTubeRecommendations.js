@@ -8,11 +8,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from "axios";
 
 const styles = (theme) => ({
-  youTubeVideo: {
-    playerVars: {
-      autoplay: 1,
-    },
-  },
   youTubeRecommendationsList: {
     padding: 0,
     display: "flex",
@@ -87,20 +82,13 @@ class YouTubeRecommendations extends React.Component {
           {this.state.videoIds.map((videoId, index) => (
             <ListItem key={index + 1} className={classes.youTubeRecommendationsListItem}>
               <YouTube
-                className={classes.youTubeVideo}
                 videoId={videoId}
-                onReady={this._onReady}
               />
             </ListItem>
           ))}
         </List>
       </div>
     );
-  }
-
-  _onReady(event) {
-    // Access to player in all event handlers via event.target.
-    event.target.pauseVideo();
   }
 }
 
