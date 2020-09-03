@@ -4,7 +4,6 @@ import com.googlecode.objectify.annotation.Index;
 
 /** 
  * Represents the structure of the song. 
- * Please do not add fields because they will be saved in the search counter database. 
  */
 public class Song {
   @Index private String artist;
@@ -12,7 +11,7 @@ public class Song {
   @Index private String album;
 
   /** Objectify requires no argument constructor. Do not use it. */
-  protected Song() { }
+  private Song() { }
 
   public Song(String artist, String name, String album) {
     this.artist = artist;

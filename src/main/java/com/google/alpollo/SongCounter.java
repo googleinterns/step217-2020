@@ -13,7 +13,7 @@ public class SongCounter {
   @Index private int searchCounter = 0;
 
   /** Objectify requires no argument constructor. Do not use it. */
-  protected SongCounter() { }
+  private SongCounter() { }
 
   public SongCounter(Song song) {
     this.song = song;
