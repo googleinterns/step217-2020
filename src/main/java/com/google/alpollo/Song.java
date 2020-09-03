@@ -1,13 +1,11 @@
 package com.google.alpollo;
 
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Entity;
 
 /** 
  * Represents the structure of the song. 
  * Please do not add fields because they will be saved in the search counter database. 
  */
-@Entity
 public class Song {
   @Index private String artist;
   @Index private String name;
