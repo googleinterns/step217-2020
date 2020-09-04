@@ -5,9 +5,9 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
 /** 
-  * Represents the structure of the song. 
-  * Please do not add fields because they will be saved in the search counter database. 
-  */
+ * Represents the structure of the song. 
+ * Please do not add fields because they will be saved in the search counter database. 
+ */
 @Entity
 public class Song {
   @Id private String id;
