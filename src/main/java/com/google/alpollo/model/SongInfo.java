@@ -30,7 +30,7 @@ public class SongInfo {
 
   public SongInfo(Song parentSong, float score, float magnitude,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
-        this.parentSong = parentSong;
+    this.parentSong = parentSong;
     this.score = score;
     this.magnitude = magnitude;
     this.topSalientEntities = topSalientEntities;
