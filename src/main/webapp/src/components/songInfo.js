@@ -8,6 +8,7 @@ import YouTubeRecommendations from "./youTubeRecommendations";
 import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
 import objectEquals from "../helpers/objectEquals";
+import axios from "axios";
 
 const styles = (theme) => ({
   root: {
@@ -46,8 +47,13 @@ class SongInfo extends React.Component {
     this.handleEntityChange = this.handleEntityChange.bind(this);
     this.handleYouTubeChange = this.handleYouTubeChange.bind(this);
 
+    this.saveState = this.saveState.bind(this);
+    this.isReady = this.isReady.bind(this);
+    this.sendSongInfo = this.sendSongInfo.bind(this);
+
     if (props.location.state) {
       this.state = {
+        wasSended: false,
         artistName: props.location.state.artistName,
         songName: props.location.state.songName,
         lyrics: props.location.state.lyrics,
@@ -94,10 +100,42 @@ class SongInfo extends React.Component {
     });
   }
 
+  saveState() {
+    const json = JSON.stringify(this.state);
+    localStorage.setItem("state", json);
+  }
+
+  isReady(componentState) {
+      return (componentState && componentState.isLoading === false && componentState.errorMsg === null);
+  }
+
+  sendSongInfo(state) {
+    if (!state.wasSended && this.isReady(state.youTubeState) && this.isReady(state.entityState) && this.isReady(state.sentimentState)) {
+      axios
+        .post("/song-info", {
+          parentSong: {
+            artist: state.artistName,
+            name: state.songName,
+          },
+          lyrics: state.lyrics,
+          score: state.sentimentState.sentimentAnalysisInfo.score,
+          magnitude: state.sentimentState.sentimentAnalysisInfo.magnitude,
+          topSalientEntities: state.entityState.entityAnalysisInfo,
+          youTubeIds: state.youTubeState.videoIds,
+        })
+        .then(() => {
+            this.setState({ wasSended: true });
+        })
+        .catch((error) =>
+          console.log(error.message)
+        );
+      }
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (!objectEquals(prevState.entityState, this.state)) {
-      const json = JSON.stringify(this.state);
-      localStorage.setItem("state", json);
+    if (!objectEquals(prevState, this.state)) {
+      this.saveState();
+      this.sendSongInfo(this.state);
     }
   }
 
@@ -105,7 +143,7 @@ class SongInfo extends React.Component {
     const json = localStorage.getItem("state");
     try {
       const state = JSON.parse(json);
-      this.setState(() => state);
+      this.setState({state}, () => this.sendSongInfo(state));
     } catch (_) {}
   }
 
@@ -126,6 +164,19 @@ class SongInfo extends React.Component {
       youTubeRecommendations: this.state.youTubeState ? this.state.youTubeState.videoIds : undefined,
     };
 
+    const sendedInfo = (info) => {
+      if (this.state.wasSended) 
+        return {
+          wasSended: true,
+          info: info,
+        }
+      else {
+        return {
+          wasSended: false,
+        }
+      }
+    };
+
     return (
       <div className={classes.root}>
         <Typography variant="h3" className={classes.songName}>
@@ -138,17 +189,26 @@ class SongInfo extends React.Component {
           <div>
             <div class="song-sentiment-analysis">
               <Typography variant="h4">Sentiment Analysis</Typography>
-              <SentimentAnalysisInfo lyrics={this.state.lyrics} onChangeState={this.handleSentimentChange} />
+              <SentimentAnalysisInfo
+                sendedInfo={sendedInfo(this.state.sentimentState ? this.state.sentimentState.sentimentAnalysisInfo : undefined)}
+                lyrics={this.state.lyrics} 
+                onChangeState={this.handleSentimentChange} />
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
-              <EntityAnalysisInfo lyrics={this.state.lyrics} onChangeState={this.handleEntityChange} />
+              <EntityAnalysisInfo 
+                sendedInfo={sendedInfo(this.state.entityState ? this.state.entityState.entityAnalysisInfo : undefined)} 
+                lyrics={this.state.lyrics} 
+                onChangeState={this.handleEntityChange} />
             </div>
           </div>
         </div>
         <div className={classes.youTubeRecommendationsSection}>
           <Typography variant="h4">YouTube Recommendations</Typography>
-          <YouTubeRecommendations entityState={this.state.entityState} onChangeState={this.handleYouTubeChange}/>
+          <YouTubeRecommendations 
+            sendedInfo={sendedInfo(this.state.youTubeState ? this.state.youTubeState.videoIds : undefined)} 
+            entityState={this.state.entityState} 
+            onChangeState={this.handleYouTubeChange} />
         </div>
       </div>
     );

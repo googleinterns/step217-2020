@@ -36,26 +36,30 @@ class EntityAnalysisInfo extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ isLoading: true });
+    if (this.props.sendedInfo.wasSended) {
+      this.setState({ entityAnalysisInfo: this.props.sendedInfo.info });
+    } else {
+      this.setState({ isLoading: true });
 
-    axios
-      .post("/entity", {
-          lyrics: this.props.lyrics
-      })
-      .then((result) => result.data)
-      .then((entityAnalysisInfo) =>
-        this.setState({
-          entityAnalysisInfo: entityAnalysisInfo,
-          isLoading: false,
-          error: null
+      axios
+        .post("/entity", {
+            lyrics: this.props.lyrics
         })
-      )
-      .catch((error) =>
-        this.setState({
-          error,
-          isLoading: false,
-        })
-      );
+        .then((result) => result.data)
+        .then((entityAnalysisInfo) =>
+          this.setState({
+            entityAnalysisInfo: entityAnalysisInfo,
+            isLoading: false,
+            error: null
+          })
+        )
+        .catch((error) =>
+          this.setState({
+            error,
+            isLoading: false,
+          })
+        );
+    }
   }
 
   render() {
