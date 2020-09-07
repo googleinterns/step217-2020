@@ -5,6 +5,7 @@ import com.google.alpollo.Song;
 import com.google.alpollo.model.SongEntity;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 /**
  * Class used for storing data related to the Natural Language API analysis.
@@ -12,6 +13,7 @@ import com.googlecode.objectify.annotation.Entity;
  */
 @Entity
 public class SongInfo {
+  @Id private String id;
   /** All the info in this class is attached to a specific parent song. */
   private final Song parentSong;
   /** Score tells us the overall positivty of the song, ranging from -1.0 to 1.0. */
@@ -24,8 +26,13 @@ public class SongInfo {
   /** List of YouTube video IDs based on the most salient entity */
   @Index private List<String> youTubeIds;
 
+  public Song getSong() {
+    return parentSong;
+  }
+  
   public SongInfo(Song parentSong, float score, float magnitude,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
+    this.id = Song.id(song);
     this.parentSong = parentSong;
     this.score = score;
     this.magnitude = magnitude;

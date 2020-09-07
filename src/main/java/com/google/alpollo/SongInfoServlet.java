@@ -38,8 +38,9 @@ public class SongInfoServlet extends HttpServlet {
    * all the info related to our song) will send the song to the storage layer. 
    */
   @Override 
-  public void doPost(HttpServletRequest request, HttpServletResponse response) {
-    SongInfo songInfo = gson.fromJson(request.getParameter(SONG_INFO), SongInfo.class);
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    SongInfo songInfo = gson.fromJson(request.getReader(), SongInfo.class);
     SongDataBase.saveSongInfo(songInfo);
+    SongDataBase.saveSongRequest(songInfo.getSong());
   }
 }

@@ -9,8 +9,8 @@ import com.google.alpollo.model.SongInfo;
 public class OfyService {
   /** Registers Song class in Objectify. */
   static {
-    ObjectifyService.register(Song.class);
     ObjectifyService.register(SongInfo.class);
+    ObjectifyService.register(SongCounter.class);
   }
 
   /** Overrides the ofy method. */
