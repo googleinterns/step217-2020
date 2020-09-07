@@ -88,7 +88,7 @@ class EntityAnalysisInfo extends React.Component {
           + '<b>Salience: </b>' + entity.salience + '<br>' 
           + ((entity.wikiLink !== "") ? 'Click for wiki link' : '')
           + '</div>';
-  }
+    }
 
     /** Gather the most important words and their data in simple arrays. */
     var top10WordsData = [];
