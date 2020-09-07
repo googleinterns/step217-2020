@@ -81,12 +81,21 @@ class EntityAnalysisInfo extends React.Component {
       return <p>No entities were found.</p>;
     }
 
+    /** Generate a custom tooltip for each entity */
+    function getTooltip(entity) {
+      return '<div style="font-size:15px">' + entity.name + '<br>' 
+          + '<b>Type </b>' + entity.type + '<br>' 
+          + '<b>Salience </b>' + entity.salience + '<br>' 
+          + ((entity.wikiLink !== "") ? 'Click for wiki link' : '')
+          + '</div>';
+  }
+
     /** Gather the most important words and their data in simple arrays. */
     var top10WordsData = [];
     var top10WordsLinks = [];
-    top10WordsData.push(['Word and Type', 'Importance'])
+    top10WordsData.push(['Word and Type', 'Importance', { role: "tooltip", type: "string", 'p': {'html': true} }])
     this.state.entityAnalysisInfo.forEach((entity) => {
-      top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience]);
+      top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience, getTooltip(entity)]);
       top10WordsLinks.push(entity.wikiLink);
     })
 
@@ -124,6 +133,8 @@ class EntityAnalysisInfo extends React.Component {
               title: 'Most Important Words',
               legend: { viewWindow: { min: 0, max: 15 } },
               slices: offsetSlices,
+              focusTarget: 'category',
+              tooltip: { isHtml: true }
             }}
             chartEvents={chartEvents}
             legendToggle
