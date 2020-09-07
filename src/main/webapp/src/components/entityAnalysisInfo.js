@@ -97,7 +97,7 @@ class EntityAnalysisInfo extends React.Component {
           const [selectedItem] = chartWrapper.getChart().getSelection();
           const { row, column } = selectedItem;
 
-          if(top10WordsLinks[row] !== "") {
+          if (top10WordsLinks[row] !== "") {
             window.location.href = top10WordsLinks[row];
           }
         }
@@ -105,9 +105,9 @@ class EntityAnalysisInfo extends React.Component {
     ];
 
     var offsetSlices = [];
-    for(var i = 0; i < top10WordsLinks.length; i++) {
-      if(top10WordsLinks[i] !== "") {
-        offsetSlices[i] = {offset:0.1};
+    for (var i = 0; i < top10WordsLinks.length; i++) {
+      if (top10WordsLinks[i] !== "") {
+        offsetSlices[i] = { offset:0.1 };
       }
     }
 
@@ -122,7 +122,7 @@ class EntityAnalysisInfo extends React.Component {
             data={top10WordsData}
             options={{
               title: 'Most Important Words',
-              legend: {viewWindow: { min: 0, max: 15 }},
+              legend: { viewWindow: { min: 0, max: 15 } },
               slices: offsetSlices,
             }}
             chartEvents={chartEvents}
