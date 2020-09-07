@@ -24,7 +24,7 @@ public class SongDataBase {
   }
 
   /** Returns the song info by song id. */
-  public static SongInfo getSongInfo(int id) {
+  public static SongInfo getSongInfo(String id) {
     return OfyService.ofy().load().type(SongInfo.class).id(id).now();
   }
 }
