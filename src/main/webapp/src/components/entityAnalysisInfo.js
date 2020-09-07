@@ -84,8 +84,8 @@ class EntityAnalysisInfo extends React.Component {
     /** Generate a custom tooltip for each entity */
     function getTooltip(entity) {
       return '<div style="font-size:15px">' + entity.name + '<br>' 
-          + '<b>Type </b>' + entity.type + '<br>' 
-          + '<b>Salience </b>' + entity.salience + '<br>' 
+          + '<b>Type: </b>' + entity.type + '<br>' 
+          + '<b>Salience: </b>' + entity.salience + '<br>' 
           + ((entity.wikiLink !== "") ? 'Click for wiki link' : '')
           + '</div>';
   }
