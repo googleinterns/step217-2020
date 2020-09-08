@@ -8,7 +8,8 @@ import com.googlecode.objectify.annotation.Index;
 public class Song {
   @Index private String artist;
   @Index private String name;
-  private final long BIG_PRIME_NUMBER = 2_147_483_647;
+  /** For counting hashcode. **/
+  private static final long BIG_PRIME_NUMBER = 2_147_483_647;
 
   /** Objectify requires no argument constructor. Do not use it. */
   private Song() { }
