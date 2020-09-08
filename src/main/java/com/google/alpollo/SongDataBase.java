@@ -23,13 +23,13 @@ public class SongDataBase {
     return OfyService.ofy().load().type(SongCounter.class).order("-searchCounter").limit(TOP_SIZE).list();
   }
 
-  /** Save whole song info to database. */
-  public static void saveSongInfo(AnalysisInfo info) {
+  /** Save analysis info to database. */
+  public static void saveAnalysisInfo(AnalysisInfo info) {
     OfyService.ofy().save().entity(info).now();
   }
 
-  /** Returns the song info by song id. */
-  public static AnalysisInfo getSongInfo(String id) {
+  /** Returns the analysis info by song id. */
+  public static AnalysisInfo getAnanlysisInfo(Long id) {
     return OfyService.ofy().load().type(AnalysisInfo.class).id(id).now();
   }
 }

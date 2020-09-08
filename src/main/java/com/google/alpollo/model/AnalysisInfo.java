@@ -13,7 +13,7 @@ import com.googlecode.objectify.annotation.Id;
  */
 @Entity
 public class AnalysisInfo {
-  @Id private String id;
+  @Id private Long id;
   /** All the info in this class is attached to a specific parent song. */
   private final Song song;
   /** Score tells us the overall positivty of the song, ranging from -1.0 to 1.0. */
@@ -28,7 +28,7 @@ public class AnalysisInfo {
 
   public AnalysisInfo(Song song, float score, float magnitude,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
-    id = song.getId();
+    id = song.id();
     this.song = song;
     this.score = score;
     this.magnitude = magnitude;
