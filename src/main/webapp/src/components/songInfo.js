@@ -40,9 +40,6 @@ class SongInfo extends React.Component {
   constructor(props) {
     super(props);
 
-    const json = localStorage.getItem("state");
-    const state = JSON.parse(json);
-
     this.handleSentimentChange = this.handleSentimentChange.bind(this);
     this.handleEntityChange = this.handleEntityChange.bind(this);
     this.handleYouTubeChange = this.handleYouTubeChange.bind(this);
@@ -51,7 +48,15 @@ class SongInfo extends React.Component {
     this.isReady = this.isReady.bind(this);
     this.sendSongInfo = this.sendSongInfo.bind(this);
 
-    if (props.location.state) {
+    /** If we have Song id */
+    if (props.match.params.id) {
+      this.state = {
+        /** We don't send song information in this case. */
+        wasSended: true,
+        id: props.match.params.id,
+      }
+    } /** If we have basic song information in the location state */ 
+    else if (props.location.state) {
       this.state = {
         wasSended: false,
         artistName: props.location.state.artistName,
@@ -60,10 +65,15 @@ class SongInfo extends React.Component {
       };
       const json = JSON.stringify(this.state);
       localStorage.setItem("state", json);
-    } else if (state) {
-      this.state = state;
-    } else {
-      this.state = undefined;
+    } /** Retrive state from the localStorage if it exists. */ 
+    else {
+      const json = localStorage.getItem("state");
+      try {
+        const state = JSON.parse(json);
+        this.state = state;
+      } catch (_) {
+        this.state = undefined;
+      }
     }
   }
 
