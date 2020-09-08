@@ -100,15 +100,18 @@ class SongInfo extends React.Component {
     });
   }
 
+  /** Save state of the component to localStorage. */
   saveState() {
     const json = JSON.stringify(this.state);
     localStorage.setItem("state", json);
   }
 
+  /** Checks if the state of the component was loaded successfully. */
   isReady(componentState) {
       return (componentState && componentState.isLoading === false && componentState.errorMsg === null);
   }
 
+  /** If all analysis components are ready, send SongInfo object to the server. */
   sendSongInfo(state) {
     if (!state.wasSended && this.isReady(state.youTubeState) && this.isReady(state.entityState) && this.isReady(state.sentimentState)) {
       axios
@@ -154,7 +157,6 @@ class SongInfo extends React.Component {
       return <Redirect to="/search" />
     }
 
-    // TODO Fetch song information from database.
     const songInfo = {
       bandName: this.state.artistName.toUpperCase(),
       songName: this.state.songName.toUpperCase(),
@@ -164,6 +166,11 @@ class SongInfo extends React.Component {
       youTubeRecommendations: this.state.youTubeState ? this.state.youTubeState.videoIds : undefined,
     };
 
+    /** 
+     * Creates information for the component if it was sended before.
+     * Analysis components use it to avoid loading the same data and 
+     * do API requests several times.
+     */
     const sendedInfo = (info) => {
       if (this.state.wasSended) 
         return {

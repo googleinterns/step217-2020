@@ -50,6 +50,10 @@ class SentimentAnalysisInfo extends React.Component {
     }
   }
 
+  /** 
+   * Get sentiment analysis info if it was sended before
+   * or load it instead.
+   */
   componentDidMount() {
     if (this.props.sendedInfo.wasSended) {
       this.setState({ sentimentAnalysisInfo: this.props.sendedInfo.info });

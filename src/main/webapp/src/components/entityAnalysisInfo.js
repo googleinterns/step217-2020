@@ -35,6 +35,10 @@ class EntityAnalysisInfo extends React.Component {
     }
   }
 
+  /** 
+   * Get entity analysis info if it was sended before
+   * or load it instead.
+   */
   componentDidMount() {
     if (this.props.sendedInfo.wasSended) {
       this.setState({ entityAnalysisInfo: this.props.sendedInfo.info });

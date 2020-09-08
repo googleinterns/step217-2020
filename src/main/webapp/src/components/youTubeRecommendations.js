@@ -93,6 +93,10 @@ class YouTubeRecommendations extends React.Component {
     }
   }
 
+  /** 
+   * Get youtube video ids if they were sended before
+   * or load it instead.
+   */
   componentDidMount() {
     if (this.props.sendedInfo.wasSended) {
       this.setState({ videoIds: this.props.sendedInfo.info });
