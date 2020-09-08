@@ -2,10 +2,10 @@ package com.google.alpollo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import com.google.alpollo.model.SongEntity;
 import com.google.api.gax.rpc.FixedHeaderProvider;
-import com.google.cloud.language.v1.AnalyzeEntitiesRequest;
 import com.google.cloud.language.v1.AnalyzeEntitiesResponse;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.EncodingType;
@@ -13,6 +13,7 @@ import com.google.cloud.language.v1.Entity;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.LanguageServiceSettings;
 import com.google.cloud.language.v1.Sentiment;
+import com.google.cloud.language.v1.AnalyzeEntitiesRequest;
 
 /**
  * Helper class with methods that use the Natural Language API or use the data that comes
@@ -127,5 +128,21 @@ public final class AnalysisHelper {
     }
 
     return MIXED;
+  }
+
+  public static List<SongEntity> getListWithoutDuplicates(List<SongEntity> list) {
+    HashMap<String, SongEntity> map = new HashMap<>(); 
+
+    for (SongEntity entity: list) {
+      if (map.containsKey(entity.getName())) {
+        SongEntity existingEntity = map.get(entity.getName());
+        String newType = entity.getType();
+        existingEntity.addType(newType);
+      } else {
+        map.put(entity.getName(), entity);
+      }
+    }
+
+    return new ArrayList<SongEntity>(map.values());
   }
 }
