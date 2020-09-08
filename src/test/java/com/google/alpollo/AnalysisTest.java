@@ -124,8 +124,7 @@ public final class AnalysisTest {
     String responseString = responseWriter.toString();
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
-    List<SongEntity> expected = Arrays.asList(new SongEntity("mountain", 0.84, "OTHER", EMPTY_STRING),
-        new SongEntity("mountain", 0.06, "LOCATION", EMPTY_STRING),
+    List<SongEntity> expected = Arrays.asList(new SongEntity("mountain", 0.84, "OTHER, LOCATION", EMPTY_STRING),
         new SongEntity("story", 0.05, "WORK_OF_ART", EMPTY_STRING),
         new SongEntity("sale", 0.03, "OTHER", EMPTY_STRING),
         new SongEntity("tale", 0.01, "WORK_OF_ART", EMPTY_STRING));
@@ -145,14 +144,14 @@ public final class AnalysisTest {
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
     List<SongEntity> expected = Arrays.asList(new SongEntity("seaside", 0.36, "LOCATION", EMPTY_STRING),
         new SongEntity("source", 0.34, "PERSON", EMPTY_STRING),
-        new SongEntity("mountain", 0.05, "OTHER", EMPTY_STRING),
+        new SongEntity("mountain", 0.05, "OTHER, LOCATION", EMPTY_STRING),
+        new SongEntity("one", 0.03, "PERSON, UNRECOGNIZED", EMPTY_STRING),
         new SongEntity("ones", 0.03, "PERSON", EMPTY_STRING),
-        new SongEntity("one", 0.03, "PERSON", EMPTY_STRING),
-        new SongEntity("roundabout", 0.02, "OTHER", EMPTY_STRING),
         new SongEntity("love", 0.02, "OTHER", EMPTY_STRING),
-        new SongEntity("nights", 0.02, "EVENT", EMPTY_STRING),
         new SongEntity("fire", 0.02, "OTHER", EMPTY_STRING),
-        new SongEntity("root", 0.01, "OTHER", EMPTY_STRING));
+        new SongEntity("roundabout", 0.02, "OTHER", EMPTY_STRING),
+        new SongEntity("nights", 0.02, "EVENT", EMPTY_STRING),
+        new SongEntity("misery", 0.01, "OTHER", EMPTY_STRING));
         
       Assert.assertThat(actual, CoreMatchers.is(expected));
   }
