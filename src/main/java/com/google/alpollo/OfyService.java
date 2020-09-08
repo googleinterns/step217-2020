@@ -6,9 +6,9 @@ import com.googlecode.objectify.ObjectifyService;
 
 /** Helper class to start running Objectify. */
 public class OfyService {
-  /** Registers Song class in Objectify. */
+  /** Registers SongCounter class in Objectify. */
   static {
-    ObjectifyService.register(Song.class);
+    ObjectifyService.register(SongCounter.class);
   }
 
   /** Overrides the ofy method. */
