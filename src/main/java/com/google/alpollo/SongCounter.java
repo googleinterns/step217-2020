@@ -24,7 +24,7 @@ public class SongCounter {
     return song;
   }
 
-  /** Increments by 1 search counter. */
+  /** Increments search counter by 1. */
   void incrementSearchCounter() {
     searchCounter++;
   }

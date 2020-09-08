@@ -30,7 +30,7 @@ public class Song {
   }
 
   /** Calculates and returns song id by each song. */
-  protected Long id() {
+  public Long id() {
     return BIG_PRIME_NUMBER * artist.hashCode() + name.hashCode();
   }
 }

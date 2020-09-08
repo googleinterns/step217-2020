@@ -8,7 +8,7 @@ public class SongDataBase {
   /** Number of the songs that will be shown to the user. */
   private static final int TOP_SIZE = 10;
 
-  /** Save request song to database and increase the search counter. */
+  /** Save request song to database and increment the search counter. */
   public static void saveSongRequest(Song song) {
     SongCounter songCounter = OfyService.ofy().load().type(SongCounter.class).id(song.id()).now();
     if (songCounter == null) {
