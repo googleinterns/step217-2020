@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.model;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Index;
@@ -20,12 +20,12 @@ public class SongCounter {
     id = Song.id(song);
   }
 
-  Song getSong() {
+  public Song getSong() {
     return song;
   }
 
   /** Increases by 1 search counter. */
-  void increaseSearchCounter() {
+  public void increaseSearchCounter() {
     searchCounter++;
   }
 }

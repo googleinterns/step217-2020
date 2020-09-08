@@ -2,6 +2,8 @@ package com.google.alpollo;
 
 import java.util.List;
 import com.google.alpollo.model.SongInfo;
+import com.google.alpollo.model.Song;
+import com.google.alpollo.model.SongCounter;
 import java.util.ArrayList;
 
 /** Class that provides methods to work with the database. */

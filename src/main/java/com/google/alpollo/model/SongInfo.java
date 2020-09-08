@@ -1,7 +1,7 @@
 package com.google.alpollo.model;
 
 import java.util.List;
-import com.google.alpollo.Song;
+import com.google.alpollo.model.Song;
 import com.google.alpollo.model.SongEntity;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Entity;
@@ -32,7 +32,7 @@ public class SongInfo {
   
   public SongInfo(Song parentSong, float score, float magnitude,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
-    this.id = Song.id(song);
+    this.id = Song.id(parentSong);
     this.parentSong = parentSong;
     this.score = score;
     this.magnitude = magnitude;

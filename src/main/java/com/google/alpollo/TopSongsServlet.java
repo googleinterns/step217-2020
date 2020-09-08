@@ -1,5 +1,6 @@
 package com.google.alpollo;
 
+import com.google.alpollo.model.SongCounter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
