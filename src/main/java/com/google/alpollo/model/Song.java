@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.model;
 
 import com.googlecode.objectify.annotation.Index;
 
@@ -28,7 +28,7 @@ public class Song {
   }
 
   /** Calculates and returns song id by each song. */
-  static String id(Song song) {
+  public static String id(Song song) {
     // TODO: add hashcode instead of concatenation
     return song.artist + song.name;
   }

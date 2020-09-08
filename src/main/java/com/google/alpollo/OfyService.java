@@ -4,6 +4,7 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 import com.google.alpollo.model.SongInfo;
+import com.google.alpollo.model.SongCounter;
 
 /** Helper class to start running Objectify. */
 public class OfyService {
