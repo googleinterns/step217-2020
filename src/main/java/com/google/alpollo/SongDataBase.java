@@ -10,19 +10,16 @@ public class SongDataBase {
 
   /** Save request song to database and increase the search counter. */
   public static void saveSongRequest(Song song) {
-    SongCounter songCounter = OfyService.ofy().load().type(SongCounter.class).id(Song.id(song)).now();
+    SongCounter songCounter = OfyService.ofy().load().type(SongCounter.class).id(song.id()).now();
     if (songCounter == null) {
       songCounter = new SongCounter(song);
     }
-    songCounter.increaseSearchCounter();
+    songCounter.incrementSearchCounter();
     OfyService.ofy().save().entity(songCounter).now();
   }
 
   /** Returns the list of the most requested songs. */
-  public static List<Song> topSongs() {
-    List<Song> songs = new ArrayList<>();
-    OfyService.ofy().load().type(SongCounter.class).order("-searchCounter").limit(TOP_SIZE).list()
-        .forEach(songCounter -> songs.add(songCounter.getSong()));
-    return songs;
+  public static List<SongCounter> topSongs() {
+    return OfyService.ofy().load().type(SongCounter.class).order("-searchCounter").limit(TOP_SIZE).list();
   }
 }

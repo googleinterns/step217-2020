@@ -35,8 +35,8 @@ public class Song {
   }
 
   /** Calculates and returns song id by each song. */
-  static String id(Song song) {
+  protected String id() {
     // TODO: add hashcode instead of concatenation
-    return song.artist + song.name + song.album;
+    return artist + name + album;
   }
 }

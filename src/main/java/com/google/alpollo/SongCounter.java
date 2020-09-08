@@ -17,15 +17,15 @@ public class SongCounter {
 
   public SongCounter(Song song) {
     this.song = song;
-    id = Song.id(song);
+    id = song.id();
   }
 
   Song getSong() {
     return song;
   }
 
-  /** Increases by 1 search counter. */
-  void increaseSearchCounter() {
+  /** Increments by 1 search counter. */
+  void incrementSearchCounter() {
     searchCounter++;
   }
 }

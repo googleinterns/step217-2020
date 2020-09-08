@@ -33,8 +33,8 @@ function EnumeratedList(props) {
         {index + 1}
       </ListItemIcon>
       <ListItemText
-        primary={item.name}
-        secondary={item.artist}
+        primary={item.song.name}
+        secondary={item.song.artist}
       />
     </ListItem>
   ));
