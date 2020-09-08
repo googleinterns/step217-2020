@@ -1,7 +1,6 @@
 package com.google.alpollo;
 
 import com.googlecode.objectify.annotation.Index;
-import java.util.Objects;
 
 /** 
  * Represents the structure of the song. 
@@ -9,6 +8,7 @@ import java.util.Objects;
 public class Song {
   @Index private String artist;
   @Index private String name;
+  private final long BIG_PRIME_NUMBER = 2_147_483_647;
 
   /** Objectify requires no argument constructor. Do not use it. */
   private Song() { }
@@ -30,6 +30,6 @@ public class Song {
 
   /** Calculates and returns song id by each song. */
   protected Long id() {
-    return (long) Objects.hash(artist, name);
+    return BIG_PRIME_NUMBER * artist.hashCode() + name.hashCode();
   }
 }
