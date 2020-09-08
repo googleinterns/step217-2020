@@ -17,7 +17,7 @@ public class SongEntity {
    * All types can be seen here: 
    * https://cloud.google.com/natural-language/docs/reference/rest/v1/Entity#type
    */ 
-  private final String type;
+  private String type;
   /** Some entities might have a wikipedia link attached to them. */
   private final String wikiLink;
 
@@ -63,5 +63,21 @@ public class SongEntity {
     hash = 31 * hash + (type == null ? 0 : Objects.hashCode(type));
     hash = 31 * hash + (wikiLink == null ? 0 : Objects.hashCode(wikiLink));
     return hash;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  /** 
+   * Method to add a new type to the existing entity, removing the need of duplicate
+   * entities which have the same name but different types.
+   */
+  public void addType(String newType) {
+    this.type += ", " + newType;
   }
 }
