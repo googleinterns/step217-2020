@@ -21,8 +21,8 @@ public class AnalysisInfoServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String songId = request.getParameter(SONG_ID);
-    AnalysisInfo analysisInfo = SongDataBase.getAnalysisInfo(songId);
+    long songId = gson.fromJson(request.getParameter(SONG_ID), Long.class);
+    AnalysisInfo analysisInfo = SongDataBase.getAnanlysisInfo(songId);
 
     response.setContentType("application/json;");
     try {
@@ -34,7 +34,7 @@ public class AnalysisInfoServlet extends HttpServlet {
   }
 
   /**
-   * Making a POST request to the server with the songInfo object as a parameter (object containing
+   * Making a POST request to the server with the analysisInfo object as a parameter (object containing
    * all the info related to our song) will send the song to the storage layer. 
    */
   @Override 
