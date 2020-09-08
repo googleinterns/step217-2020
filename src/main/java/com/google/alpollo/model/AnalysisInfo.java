@@ -36,4 +36,8 @@ public class AnalysisInfo {
     this.lyrics = lyrics;
     this.youTubeIds = youTubeIds;
   }
+
+  public Song getSong() {
+    return song;
+  }
 }

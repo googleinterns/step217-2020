@@ -28,4 +28,8 @@ public class SongCounter {
   void incrementSearchCounter() {
     searchCounter++;
   }
+
+  int getSearchCounter() {
+    return searchCounter;
+  }
 }
