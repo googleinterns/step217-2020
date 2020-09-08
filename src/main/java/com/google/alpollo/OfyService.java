@@ -7,9 +7,9 @@ import com.google.alpollo.model.AnalysisInfo;
 
 /** Helper class to start running Objectify. */
 public class OfyService {
-  /** Registers Song and AnalysisInfo class in Objectify. */
+  /** Registers SongCounter and AnalysisInfo class in Objectify. */
   static {
-    ObjectifyService.register(Song.class);
+    ObjectifyService.register(SongCounter.class);
     ObjectifyService.register(AnalysisInfo.class);
   }
 
