@@ -137,12 +137,28 @@ public final class AnalysisHelper {
       if (map.containsKey(entity.getName())) {
         SongEntity existingEntity = map.get(entity.getName());
         String newType = entity.getType();
-        existingEntity.addType(newType);
+
+        if(entityDoesNotHaveType(existingEntity, newType)) {
+          existingEntity.addType(newType);
+        }
       } else {
         map.put(entity.getName(), entity);
       }
     }
 
     return new ArrayList<SongEntity>(map.values());
+  }
+
+  /** Method to avoid adding duplicate types to the same entity. */
+  private static boolean entityDoesNotHaveType(SongEntity entity, String newType) {
+    String[] types = entity.getType().split(", ");
+
+    for (String type: types) {
+      if (type.equals(newType)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }
