@@ -13,6 +13,7 @@ import com.google.gson.JsonSyntaxException;
 /** Servlet retrieves or saves SongInfo objects to the database. */
 @WebServlet("/analysis-info")
 public class AnalysisInfoServlet extends HttpServlet {
+  private static final String SONG_ID = "id";
   private final Gson gson = new Gson();
 
   /**
@@ -21,7 +22,7 @@ public class AnalysisInfoServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    long songId = gson.fromJson(request.getReader(), Long.class);
+    long songId = gson.fromJson(request.getParameter(SONG_ID), Long.class);
     AnalysisInfo analysisInfo = SongDataBase.getAnanlysisInfo(songId);
 
     response.setContentType("application/json;");
