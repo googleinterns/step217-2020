@@ -56,7 +56,7 @@ class SentimentAnalysisInfo extends React.Component {
    */
   componentDidMount() {
     if (this.props.sentInfo.wasSent) {
-      this.setState({ sentimentAnalysisInfo: this.pInfo.info });
+      this.setState({ sentimentAnalysisInfo: this.props.sentInfo.info });
     } else {
       this.setState({ isLoading: true });
 

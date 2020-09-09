@@ -10,6 +10,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
+import JSONbig from "json-bigint";
 
 const styles = (theme) => ({
   root: {
@@ -61,7 +62,12 @@ class RatingList extends React.Component {
     this.setState({ isLoading: true });
 
     axios
-      .get("/top")
+      .get("/top", {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        transformResponse: data => JSONbig.parse(data),
+      })
       .then((result) => result.data)
       .then((topSongs) =>
         this.setState({

@@ -10,6 +10,7 @@ import { Redirect } from "react-router";
 import objectEquals from "../helpers/objectEquals";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from "axios";
+import JSONbig from "json-bigint";
 
 const styles = (theme) => ({
   root: {
@@ -54,7 +55,7 @@ class SongInfo extends React.Component {
     if (props.match.params.id) {
       this.state = {
         /** We don't send song information in this case. */
-        wasSended: true,
+        wasSent: true,
         id: props.match.params.id,
         isLoading: true,
         error: null,
@@ -155,7 +156,12 @@ class SongInfo extends React.Component {
     this.setState({ isLoading: true });
     
     axios
-      .get(`/song-info?id=${id}`)
+      .get(`/analysis-info?id=${id}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        transformResponse: data => JSONbig.parse(data),
+      })
       .then((result) => result.data)
       .then((songInfo) => {
         this.handleSentimentChange({
@@ -174,8 +180,8 @@ class SongInfo extends React.Component {
           isLoading: false,
           error: null,
         }, () => this.setState({
-          artistName: songInfo.parentSong.artist,
-          songName: songInfo.parentSong.name,
+          artistName: songInfo.song.artist,
+          songName: songInfo.song.name,
           lyrics: songInfo.lyrics,
           isLoading: false,
           error: null,
