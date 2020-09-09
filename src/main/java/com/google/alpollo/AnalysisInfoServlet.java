@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.alpollo.model.AnalysisInfo;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 
 /** Servlet retrieves or saves SongInfo objects to the database. */
 @WebServlet("/analysis-info")
@@ -26,18 +28,23 @@ public class AnalysisInfoServlet extends HttpServlet {
     try {
       response.getWriter().println(gson.toJson(analysisInfo));
     } catch (IOException e) {
-      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-        e.getMessage());
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
     }
   }
 
   /**
-   * Making a POST request to the server with the analysisInfo object as a parameter (object containing
-   * all the info related to our song) will send the song to the storage layer. 
+   * Making a POST request to the server with the analysisInfo object as a
+   * parameter (object containing all the info related to our song) will send the
+   * song to the storage layer.
    */
-  @Override 
-  public void doPost(HttpServletRequest request, HttpServletResponse response) {
-    AnalysisInfo analysisInfo = gson.fromJson(request.getReader(), AnalysisInfo.class);
-    SongDataBase.saveAnalysisInfo(analysisInfo);
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    AnalysisInfo analysisInfo;
+    try {
+      analysisInfo = gson.fromJson(request.getReader(), AnalysisInfo.class);
+      SongDataBase.saveAnalysisInfo(analysisInfo);
+    } catch (JsonSyntaxException | JsonIOException | IOException e) {
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+    }
   }
 }
