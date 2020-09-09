@@ -8,7 +8,7 @@ import com.google.alpollo.model.SongCounter;
 
 /** Helper class to start running Objectify. */
 public class OfyService {
-  /** Registers Song class in Objectify. */
+  /** Registers SongCounter class in Objectify. */
   static {
     ObjectifyService.register(SongInfo.class);
     ObjectifyService.register(SongCounter.class);
