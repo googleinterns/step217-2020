@@ -1,6 +1,7 @@
 package com.google.alpollo.model;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -17,11 +18,11 @@ public class SongEntity {
    * All types can be seen here: 
    * https://cloud.google.com/natural-language/docs/reference/rest/v1/Entity#type
    */ 
-  private String type;
+  private HashSet<String> type;
   /** Some entities might have a wikipedia link attached to them. */
   private final String wikiLink;
 
-  public SongEntity(String name, double salience, String type, String wikiLink) {
+  public SongEntity(String name, double salience, HashSet<String> type, String wikiLink) {
     this.name = name;
     this.salience = salience;
     this.type = type;
@@ -69,15 +70,7 @@ public class SongEntity {
     return name;
   }
 
-  public String getType() {
+  public HashSet<String> getType() {
     return type;
-  }
-
-  /** 
-   * Method to add a new type to the existing entity, removing the need of duplicate
-   * entities which have the same name but different types.
-   */
-  public void addType(String newType) {
-    this.type += ", " + newType;
   }
 }

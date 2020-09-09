@@ -2,7 +2,9 @@ package com.google.alpollo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import com.google.alpollo.model.SongEntity;
 import com.google.api.gax.rpc.FixedHeaderProvider;
@@ -91,7 +93,8 @@ public final class AnalysisHelper {
     for (Entity entity : entityList) {
       // Use round() here to set the double to 2 decimals.
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
-          Math.round(entity.getSalience() * 100.0) / 100.0, entity.getType().toString(),
+          Math.round(entity.getSalience() * 100.0) / 100.0, 
+          new HashSet<String>(Arrays.asList(entity.getType().toString())),
           entity.getMetadataMap().getOrDefault("wikipedia_url", ""));
       simplifiedEntityList.add(simplifiedEntity);
     }
@@ -136,29 +139,15 @@ public final class AnalysisHelper {
     for (SongEntity entity: list) {
       if (map.containsKey(entity.getName())) {
         SongEntity existingEntity = map.get(entity.getName());
-        String newType = entity.getType();
-
-        if(entityDoesNotHaveType(existingEntity, newType)) {
-          existingEntity.addType(newType);
-        }
+        HashSet<String> newTypes = entity.getType();
+        HashSet<String> existingTypes = existingEntity.getType();
+        
+        existingTypes.addAll(newTypes);
       } else {
         map.put(entity.getName(), entity);
       }
     }
 
     return new ArrayList<SongEntity>(map.values());
-  }
-
-  /** Method to avoid adding duplicate types to the same entity. */
-  private static boolean entityDoesNotHaveType(SongEntity entity, String newType) {
-    String[] types = entity.getType().split(", ");
-
-    for (String type: types) {
-      if (type.equals(newType)) {
-        return false;
-      }
-    }
-
-    return true;
   }
 }

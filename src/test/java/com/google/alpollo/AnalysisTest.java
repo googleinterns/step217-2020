@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import com.google.alpollo.model.SongEntity;
 import com.google.gson.Gson;
@@ -124,10 +125,11 @@ public final class AnalysisTest {
     String responseString = responseWriter.toString();
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
-    List<SongEntity> expected = Arrays.asList(new SongEntity("mountain", 0.84, "OTHER, LOCATION", EMPTY_STRING),
-        new SongEntity("story", 0.05, "WORK_OF_ART", EMPTY_STRING),
-        new SongEntity("sale", 0.03, "OTHER", EMPTY_STRING),
-        new SongEntity("tale", 0.01, "WORK_OF_ART", EMPTY_STRING));
+    List<SongEntity> expected = Arrays.asList(
+        new SongEntity("mountain", 0.84, new HashSet<String>(Arrays.asList("OTHER", "LOCATION")), EMPTY_STRING),
+        new SongEntity("story", 0.05, new HashSet<String>(Arrays.asList("WORK_OF_ART")), EMPTY_STRING),
+        new SongEntity("sale", 0.03, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
+        new SongEntity("tale", 0.01, new HashSet<String>(Arrays.asList("WORK_OF_ART")), EMPTY_STRING));
     Assert.assertThat(actual, CoreMatchers.is(expected));
   }
 
@@ -142,16 +144,17 @@ public final class AnalysisTest {
     String responseString = responseWriter.toString();
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
-    List<SongEntity> expected = Arrays.asList(new SongEntity("seaside", 0.36, "LOCATION", EMPTY_STRING),
-        new SongEntity("source", 0.34, "PERSON", EMPTY_STRING),
-        new SongEntity("mountain", 0.05, "OTHER, LOCATION", EMPTY_STRING),
-        new SongEntity("one", 0.03, "PERSON, UNRECOGNIZED", EMPTY_STRING),
-        new SongEntity("ones", 0.03, "PERSON", EMPTY_STRING),
-        new SongEntity("love", 0.02, "OTHER", EMPTY_STRING),
-        new SongEntity("fire", 0.02, "OTHER", EMPTY_STRING),
-        new SongEntity("roundabout", 0.02, "OTHER", EMPTY_STRING),
-        new SongEntity("nights", 0.02, "EVENT", EMPTY_STRING),
-        new SongEntity("misery", 0.01, "OTHER", EMPTY_STRING));
+    List<SongEntity> expected = Arrays.asList(
+        new SongEntity("seaside", 0.36, new HashSet<String>(Arrays.asList("LOCATION")), EMPTY_STRING),
+        new SongEntity("source", 0.34, new HashSet<String>(Arrays.asList("PERSON")), EMPTY_STRING),
+        new SongEntity("mountain", 0.05, new HashSet<String>(Arrays.asList("OTHER", "LOCATION")), EMPTY_STRING),
+        new SongEntity("one", 0.03, new HashSet<String>(Arrays.asList("PERSON", "UNRECOGNIZED")), EMPTY_STRING),
+        new SongEntity("ones", 0.03, new HashSet<String>(Arrays.asList("PERSON")), EMPTY_STRING),
+        new SongEntity("love", 0.02, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
+        new SongEntity("fire", 0.02, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
+        new SongEntity("roundabout", 0.02, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
+        new SongEntity("nights", 0.02, new HashSet<String>(Arrays.asList("EVENT")), EMPTY_STRING),
+        new SongEntity("misery", 0.01, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
         
       Assert.assertThat(actual, CoreMatchers.is(expected));
   }
@@ -165,8 +168,9 @@ public final class AnalysisTest {
     String responseString = responseWriter.toString();
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
-    List<SongEntity> expected = Arrays.asList(new SongEntity("Google", 0.88, "ORGANIZATION", WIKI_LINK_GOOGLE),
-        new SongEntity("results", 0.12, "OTHER", EMPTY_STRING));
+    List<SongEntity> expected = Arrays.asList(
+        new SongEntity("Google", 0.88, new HashSet<String>(Arrays.asList("ORGANIZATION")), WIKI_LINK_GOOGLE),
+        new SongEntity("results", 0.12, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
 
       Assert.assertThat(actual, CoreMatchers.is(expected));
   }
