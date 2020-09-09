@@ -90,18 +90,31 @@ class EntityAnalysisInfo extends React.Component {
           + '</div>';
     }
 
+    /** Array that holds the data that will be displayed by the chart. */
     var top10WordsData = [];
+    /** Array that will hold the wiki links for later use. */
     var top10WordsLinks = [];
     /** 
      * Create a custom tooltip to overwrite the default one, we want to show whether a wiki link
      * is available, besides the default data.
-     * This tooltip will be able to interpret HTML, so we can format the text.
+     * The p tells the tooltip to have the HTML property, so we can format the text.
+     * https://developers.google.com/chart/interactive/docs/customizing_tooltip_content#customizing-html-content
      */
-    const customTooltip = { role: "tooltip", type: "string", 'p': {'html': true} };
+    const customTooltip = { 'role': 'tooltip', 'type': 'string', 'p': {'html': true} };
 
     /** 
-     * Gather entity data in a separate array to display later in the chart.
-     * We make a separate array for wiki links to use them later for redirection.
+     * React requires the first item to contain the title of each axis.
+     * 
+     * In our case, we have a pie chart without axes, but the first 2 elements
+     * of the subarray are considered to be the x and y of the graph.
+     * The third element of the first subarray is optional, but it tells the chart that we are going to
+     * overwrite the default tooltip.
+     * 
+     * The next items of the array must follow the same pattern as in the first item.
+     * (entity name and type, salience, custom tooltip)
+     * 
+     * You can think of it as a table, where the first row contains the titles of each column.
+     * https://react-google-charts.com/pie-chart
      */
     top10WordsData.push(['Word and Type', 'Importance', customTooltip])
     this.state.entityAnalysisInfo.forEach((entity) => {
