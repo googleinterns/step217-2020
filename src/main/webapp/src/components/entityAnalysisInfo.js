@@ -116,7 +116,7 @@ class EntityAnalysisInfo extends React.Component {
     var offsetSlices = [];
     for (var i = 0; i < top10WordsLinks.length; i++) {
       if (top10WordsLinks[i] !== "") {
-        offsetSlices[i] = { offset:0.1 };
+        offsetSlices[i] = { offset: 0.1 };
       }
     }
 
