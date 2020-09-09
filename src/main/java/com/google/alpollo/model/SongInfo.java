@@ -15,7 +15,7 @@ import com.googlecode.objectify.annotation.Id;
 public class SongInfo {
   @Id private String id;
   /** All the info in this class is attached to a specific parent song. */
-  private final Song parentSong;
+  @Index private Song parentSong;
   /** Score tells us the overall positivty of the song, ranging from -1.0 to 1.0. */
   @Index private float score;
   /** Magnitude tells us how strong the main sentiment of the song is, ranging from 0.0 to +inf. */
@@ -26,8 +26,15 @@ public class SongInfo {
   /** List of YouTube video IDs based on the most salient entity */
   @Index private List<String> youTubeIds;
 
+  /** Objectify requires no argument constructor. Do not use it. */
+  private SongInfo() { }
+
   public Song getSong() {
     return parentSong;
+  }
+
+  public void setId() {
+    this.id = Song.id(this.parentSong);
   }
   
   public SongInfo(Song parentSong, float score, float magnitude,

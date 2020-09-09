@@ -28,6 +28,7 @@ public class SongDataBase {
 
   /** Save whole song info to database. */
   public static void saveSongInfo(SongInfo songInfo) {
+    songInfo.setId();
     OfyService.ofy().save().entity(songInfo).now();
   }
 
