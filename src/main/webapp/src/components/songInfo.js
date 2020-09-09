@@ -53,7 +53,7 @@ class SongInfo extends React.Component {
 
     if (props.location.state) {
       this.state = {
-        wasSended: false,
+        wasSent: false,
         artistName: props.location.state.artistName,
         songName: props.location.state.songName,
         lyrics: props.location.state.lyrics,
@@ -113,7 +113,7 @@ class SongInfo extends React.Component {
 
   /** If all analysis components are ready, send SongInfo object to the server. */
   sendSongInfo(state) {
-    if (!state.wasSended && this.isReady(state.youTubeState) && this.isReady(state.entityState) && this.isReady(state.sentimentState)) {
+    if (!state.wasSent && this.isReady(state.youTubeState) && this.isReady(state.entityState) && this.isReady(state.sentimentState)) {
       axios
         .post("/analysis-info", {
           song: {
@@ -127,7 +127,7 @@ class SongInfo extends React.Component {
           youTubeIds: state.youTubeState.videoIds,
         })
         .then(() => {
-            this.setState({ wasSended: true });
+            this.setState({ wasSent: true });
         })
         .catch((error) =>
           console.log(error.message)
@@ -167,19 +167,19 @@ class SongInfo extends React.Component {
     };
 
     /** 
-     * Creates information for the component if it was sended before.
+     * Creates information for the component if it was sent before.
      * Analysis components use it to avoid loading the same data and 
      * do API requests several times.
      */
-    const sendedInfo = (info) => {
-      if (this.state.wasSended) 
+    const sentInfo = (info) => {
+      if (this.state.wasSent) 
         return {
-          wasSended: true,
+          wasSent: true,
           info: info,
         }
       else {
         return {
-          wasSended: false,
+          wasSent: false,
         }
       }
     };
@@ -197,14 +197,14 @@ class SongInfo extends React.Component {
             <div class="song-sentiment-analysis">
               <Typography variant="h4">Sentiment Analysis</Typography>
               <SentimentAnalysisInfo
-                sendedInfo={sendedInfo(this.state.sentimentState ? this.state.sentimentState.sentimentAnalysisInfo : undefined)}
+                sentInfo={sentInfo(this.state.sentimentState ? this.state.sentimentState.sentimentAnalysisInfo : undefined)}
                 lyrics={this.state.lyrics} 
                 onChangeState={this.handleSentimentChange} />
             </div>
             <div class="song-entity-analysis">
               <Typography variant="h4">Entity Analysis</Typography>
               <EntityAnalysisInfo 
-                sendedInfo={sendedInfo(this.state.entityState ? this.state.entityState.entityAnalysisInfo : undefined)} 
+                sentInfo={sentInfo(this.state.entityState ? this.state.entityState.entityAnalysisInfo : undefined)} 
                 lyrics={this.state.lyrics} 
                 onChangeState={this.handleEntityChange} />
             </div>
@@ -213,7 +213,7 @@ class SongInfo extends React.Component {
         <div className={classes.youTubeRecommendationsSection}>
           <Typography variant="h4">YouTube Recommendations</Typography>
           <YouTubeRecommendations 
-            sendedInfo={sendedInfo(this.state.youTubeState ? this.state.youTubeState.videoIds : undefined)} 
+            sentInfo={sentInfo(this.state.youTubeState ? this.state.youTubeState.videoIds : undefined)} 
             entityState={this.state.entityState} 
             onChangeState={this.handleYouTubeChange} />
         </div>

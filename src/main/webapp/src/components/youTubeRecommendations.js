@@ -87,19 +87,19 @@ class YouTubeRecommendations extends React.Component {
      * If entityState has changed and videoIds wasn't loaded before,
      * change the component state based on new entityState
      */
-    if (!this.props.sendedInfo.wasSended
+    if (!this.props.sentInfo.wasSent
         && !objectEquals(prevProps.entityState, this.props.entityState)) {
       this.getVideos(this.props.entityState);
     }
   }
 
   /** 
-   * Get youtube video ids if they were sended before
+   * Get youtube video ids if they were sent before
    * or load it instead.
    */
   componentDidMount() {
-    if (this.props.sendedInfo.wasSended) {
-      this.setState({ videoIds: this.props.sendedInfo.info });
+    if (this.props.sentInfo.wasSent) {
+      this.setState({ videoIds: this.props.sentInfo.info });
     } else {
       this.getVideos(this.props.entityState);
     }
