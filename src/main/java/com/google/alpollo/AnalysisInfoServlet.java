@@ -11,8 +11,6 @@ import com.google.gson.Gson;
 /** Servlet retrieves or saves SongInfo objects to the database. */
 @WebServlet("/analysis-info")
 public class AnalysisInfoServlet extends HttpServlet {
-  private static final String SONG_ID = "id";
-  private static final String ANALYSIS_INFO = "analysisInfo";
   private final Gson gson = new Gson();
 
   /**
@@ -21,7 +19,7 @@ public class AnalysisInfoServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    long songId = gson.fromJson(request.getParameter(SONG_ID), Long.class);
+    long songId = gson.fromJson(request.getReader(), Long.class);
     AnalysisInfo analysisInfo = SongDataBase.getAnanlysisInfo(songId);
 
     response.setContentType("application/json;");
@@ -39,7 +37,7 @@ public class AnalysisInfoServlet extends HttpServlet {
    */
   @Override 
   public void doPost(HttpServletRequest request, HttpServletResponse response) {
-    AnalysisInfo analysisInfo = gson.fromJson(request.getParameter(ANALYSIS_INFO), AnalysisInfo.class);
+    AnalysisInfo analysisInfo = gson.fromJson(request.getReader(), AnalysisInfo.class);
     SongDataBase.saveAnalysisInfo(analysisInfo);
   }
 }
