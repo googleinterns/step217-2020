@@ -108,7 +108,7 @@ class SongInfo extends React.Component {
 
   /** Checks if the state of the component was loaded successfully. */
   isReady(componentState) {
-      return (componentState && componentState.isLoading === false && componentState.errorMsg === null);
+      return (componentState && !componentState.isLoading && !componentState.errorMsg);
   }
 
   /** If all analysis components are ready, send SongInfo object to the server. */
