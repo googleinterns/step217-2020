@@ -1,8 +1,6 @@
 package com.google.alpollo.model;
 
 import java.util.List;
-import com.google.alpollo.model.Song;
-import com.google.alpollo.model.SongEntity;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
