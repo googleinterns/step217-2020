@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { ListItemIcon } from "@material-ui/core";
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
@@ -28,7 +30,7 @@ function EnumeratedList(props) {
   const listItems = props.listItems;
   const classes = props.styleClasses;
   const reactListItems = listItems.map((item, index) => (
-    <ListItem key={index + 1}>
+    <ListItem key={index + 1} button component={Link} to={`/song/${item.id}`}>
       <ListItemIcon className={classes.listIcon}>
         {index + 1}
       </ListItemIcon>
@@ -36,6 +38,9 @@ function EnumeratedList(props) {
         primary={item.song.name}
         secondary={item.song.artist}
       />
+      <ListItemSecondaryAction>
+        {item.searchCounter}
+      </ListItemSecondaryAction>
     </ListItem>
   ));
   return <List>{reactListItems}</List>;
