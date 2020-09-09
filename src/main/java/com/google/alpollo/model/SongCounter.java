@@ -7,7 +7,7 @@ import com.googlecode.objectify.annotation.Id;
 /** Represents the structure of the song to save search counter in the database. */
 @Entity
 public class SongCounter {
-  @Id private String id;
+  @Id private Long id;
   @Index private Song song;
   /** Number of times users searched for this song in the system. */
   @Index private int searchCounter = 0;
@@ -17,15 +17,15 @@ public class SongCounter {
 
   public SongCounter(Song song) {
     this.song = song;
-    id = Song.id(song);
+    id = song.id();
   }
 
   public Song getSong() {
     return song;
   }
 
-  /** Increases by 1 search counter. */
-  public void increaseSearchCounter() {
+  /** Increments search counter by 1. */
+  public void incrementSearchCounter() {
     searchCounter++;
   }
 }
