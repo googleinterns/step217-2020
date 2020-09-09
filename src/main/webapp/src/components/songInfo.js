@@ -115,8 +115,8 @@ class SongInfo extends React.Component {
   sendSongInfo(state) {
     if (!state.wasSended && this.isReady(state.youTubeState) && this.isReady(state.entityState) && this.isReady(state.sentimentState)) {
       axios
-        .post("/song-info", {
-          parentSong: {
+        .post("/analysis-info", {
+          song: {
             artist: state.artistName,
             name: state.songName,
           },

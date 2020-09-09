@@ -5,14 +5,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.google.alpollo.model.SongInfo;
+import com.google.alpollo.model.AnalysisInfo;
 import com.google.gson.Gson;
 
-/** Servlet created to deal with songInfo related operations. */
-@WebServlet("/song-info")
-public class SongInfoServlet extends HttpServlet {
+/** Servlet retrieves or saves SongInfo objects to the database. */
+@WebServlet("/analysis-info")
+public class AnalysisInfoServlet extends HttpServlet {
   private static final String SONG_ID = "id";
-  private static final String SONG_INFO = "songInfo";
+  private static final String ANALYSIS_INFO = "analysisInfo";
   private final Gson gson = new Gson();
 
   /**
@@ -21,12 +21,12 @@ public class SongInfoServlet extends HttpServlet {
    */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String songId = request.getParameter(SONG_ID);
-    SongInfo songInfo = SongDataBase.getSongInfo(songId);
+    long songId = gson.fromJson(request.getParameter(SONG_ID), Long.class);
+    AnalysisInfo analysisInfo = SongDataBase.getAnanlysisInfo(songId);
 
     response.setContentType("application/json;");
     try {
-      response.getWriter().println(gson.toJson(songInfo));
+      response.getWriter().println(gson.toJson(analysisInfo));
     } catch (IOException e) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
         e.getMessage());
@@ -34,13 +34,13 @@ public class SongInfoServlet extends HttpServlet {
   }
 
   /**
-   * Making a POST request to the server with the songInfo object as a parameter (object containing
+   * Making a POST request to the server with the analysisInfo object as a parameter (object containing
    * all the info related to our song) will send the song to the storage layer. 
    */
   @Override 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    SongInfo songInfo = gson.fromJson(request.getReader(), SongInfo.class);
-    SongDataBase.saveSongInfo(songInfo);
-    SongDataBase.saveSongRequest(songInfo.getSong());
+    AnalysisInfo analysisInfo = gson.fromJson(request.getReader(), AnalysisInfo.class);
+    SongDataBase.saveAnalysisInfo(analysisInfo);
+    SongDataBase.saveSongRequest(analysisInfo.getSong());
   }
 }
