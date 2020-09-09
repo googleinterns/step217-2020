@@ -90,10 +90,20 @@ class EntityAnalysisInfo extends React.Component {
           + '</div>';
     }
 
-    /** Gather the most important words and their data in simple arrays. */
     var top10WordsData = [];
     var top10WordsLinks = [];
-    top10WordsData.push(['Word and Type', 'Importance', { role: "tooltip", type: "string", 'p': {'html': true} }])
+    /** 
+     * Create a custom tooltip to overwrite the default one, we want to show whether a wiki link
+     * is available, besides the default data.
+     * This tooltip will be able to interpret HTML, so we can format the text.
+     */
+    const customTooltip = { role: "tooltip", type: "string", 'p': {'html': true} };
+
+    /** 
+     * Gather entity data in a separate array to display later in the chart.
+     * We make a separate array for wiki links to use them later for redirection.
+     */
+    top10WordsData.push(['Word and Type', 'Importance', customTooltip])
     this.state.entityAnalysisInfo.forEach((entity) => {
       top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience, getTooltip(entity)]);
       top10WordsLinks.push(entity.wikiLink);
@@ -104,7 +114,7 @@ class EntityAnalysisInfo extends React.Component {
         eventName: "select",
         callback({ chartWrapper }) {
           const [selectedItem] = chartWrapper.getChart().getSelection();
-          const { row, column } = selectedItem;
+          const { row } = selectedItem;
 
           if (top10WordsLinks[row] !== "") {
             window.location.href = top10WordsLinks[row];
