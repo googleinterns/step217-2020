@@ -31,7 +31,7 @@ class EntityAnalysisInfo extends React.Component {
   /* If state has changed, send it to songInfo component */
   componentDidUpdate(prevProps, prevState) {
     if (!objectEquals(prevState, this.state)) {
-      this.props.onChangeState(this.state);
+      this.props.onChangeState(this.state, () => {});
     }
   }
 

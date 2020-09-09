@@ -81,7 +81,7 @@ class YouTubeRecommendations extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     /* If state has changed, send it to songInfo component */
     if (!objectEquals(prevState, this.state)) {
-      this.props.onChangeState(this.state);
+      this.props.onChangeState(this.state, () => {});
     }
     /**
      * If entityState has changed and videoIds wasn't loaded before,
