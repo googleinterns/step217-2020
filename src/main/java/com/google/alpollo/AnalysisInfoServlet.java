@@ -20,7 +20,7 @@ public class AnalysisInfoServlet extends HttpServlet {
    * will return that song from the database.
    */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) {
     long songId = gson.fromJson(request.getReader(), Long.class);
     AnalysisInfo analysisInfo = SongDataBase.getAnanlysisInfo(songId);
 
@@ -38,7 +38,7 @@ public class AnalysisInfoServlet extends HttpServlet {
    * song to the storage layer.
    */
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) {
     AnalysisInfo analysisInfo;
     try {
       analysisInfo = gson.fromJson(request.getReader(), AnalysisInfo.class);
