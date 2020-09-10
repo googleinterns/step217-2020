@@ -136,7 +136,7 @@ public final class AnalysisHelper {
   public static List<SongEntity> getListWithoutDuplicates(List<SongEntity> list) {
     HashMap<String, SongEntity> map = new HashMap<>(); 
 
-    for (SongEntity entity: list) {
+    for (SongEntity entity : list) {
       if (map.containsKey(entity.getName())) {
         SongEntity existingEntity = map.get(entity.getName());
         HashSet<String> newTypes = entity.getType();
