@@ -24,9 +24,8 @@ public class AnalysisInfo {
   /** After analyzing the entities, we'll have a list of recommended YouTube video IDs. */
   @Index private List<String> youTubeIds;
 
-  public Song getSong() {
-    return song;
-  }
+  /** Objectify requires no argument constructor. Do not use it. */
+  private AnalysisInfo() { }
   
   public AnalysisInfo(Song song, float score, float magnitude,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
@@ -37,5 +36,9 @@ public class AnalysisInfo {
     this.topSalientEntities = topSalientEntities;
     this.lyrics = lyrics;
     this.youTubeIds = youTubeIds;
+  }
+
+  public Song getSong() {
+    return song;
   }
 }

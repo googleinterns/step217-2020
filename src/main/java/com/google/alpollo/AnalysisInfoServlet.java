@@ -14,14 +14,14 @@ import com.google.gson.JsonSyntaxException;
 @WebServlet("/analysis-info")
 public class AnalysisInfoServlet extends HttpServlet {
   private final Gson gson = new Gson();
-
+  private static final String SONG_ID = "id";
   /**
    * Making a GET request to our servlet with the desired song ID as a parameter
    * will return that song from the database.
    */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    long songId = gson.fromJson(request.getReader(), Long.class);
+  public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    long songId = gson.fromJson(request.getParameter(SONG_ID), Long.class);
     AnalysisInfo analysisInfo = SongDataBase.getAnanlysisInfo(songId);
 
     response.setContentType("application/json;");
@@ -38,7 +38,7 @@ public class AnalysisInfoServlet extends HttpServlet {
    * song to the storage layer.
    */
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) {
     AnalysisInfo analysisInfo;
     try {
       analysisInfo = gson.fromJson(request.getReader(), AnalysisInfo.class);
