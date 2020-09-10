@@ -13,9 +13,8 @@ import com.google.gson.JsonSyntaxException;
 /** Servlet retrieves or saves SongInfo objects to the database. */
 @WebServlet("/analysis-info")
 public class AnalysisInfoServlet extends HttpServlet {
-  private final Gson gson = new Gson();
   private static final String SONG_ID = "id";
-  
+  private final Gson gson = new Gson();
   /**
    * Making a GET request to our servlet with the desired song ID as a parameter
    * will return that song from the database.
@@ -44,7 +43,6 @@ public class AnalysisInfoServlet extends HttpServlet {
     try {
       analysisInfo = gson.fromJson(request.getReader(), AnalysisInfo.class);
       SongDataBase.saveAnalysisInfo(analysisInfo);
-      SongDataBase.saveSongRequest(analysisInfo.getSong());
     } catch (JsonSyntaxException | JsonIOException | IOException e) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
     }

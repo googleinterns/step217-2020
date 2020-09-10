@@ -29,7 +29,7 @@ public class SongCounter {
     searchCounter++;
   }
 
-  int getSearchCounter() {
+  public int getSearchCounter() {
     return searchCounter;
   }
 }

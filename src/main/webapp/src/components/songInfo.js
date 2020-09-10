@@ -8,7 +8,9 @@ import YouTubeRecommendations from "./youTubeRecommendations";
 import Lyrics from "./lyrics";
 import { Redirect } from "react-router";
 import objectEquals from "../helpers/objectEquals";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from "axios";
+import JSONbig from "json-bigint";
 
 const styles = (theme) => ({
   root: {
@@ -40,9 +42,6 @@ class SongInfo extends React.Component {
   constructor(props) {
     super(props);
 
-    const json = localStorage.getItem("state");
-    const state = JSON.parse(json);
-
     this.handleSentimentChange = this.handleSentimentChange.bind(this);
     this.handleEntityChange = this.handleEntityChange.bind(this);
     this.handleYouTubeChange = this.handleYouTubeChange.bind(this);
@@ -50,8 +49,20 @@ class SongInfo extends React.Component {
     this.saveState = this.saveState.bind(this);
     this.isReady = this.isReady.bind(this);
     this.sendSongInfo = this.sendSongInfo.bind(this);
+    this.getSongInfo = this.getSongInfo.bind(this);
 
-    if (props.location.state) {
+    /** If we have Song id */
+    if (props.match.params.id) {
+      this.state = {
+        /** We don't send song information in this case. */
+        wasSent: true,
+        id: props.match.params.id,
+        isLoading: true,
+        error: null,
+      }
+      localStorage.removeItem("state");
+    } /** If we have basic song information in the location state */ 
+    else if (props.location.state) {
       this.state = {
         wasSent: false,
         artistName: props.location.state.artistName,
@@ -60,44 +71,49 @@ class SongInfo extends React.Component {
       };
       const json = JSON.stringify(this.state);
       localStorage.setItem("state", json);
-    } else if (state) {
-      this.state = state;
-    } else {
-      this.state = undefined;
+    } /** Retrive state from the localStorage if it exists. */ 
+    else {
+      const json = localStorage.getItem("state");
+      try {
+        const state = JSON.parse(json);
+        this.state = state;
+      } catch (_) {
+        this.state = undefined;
+      }
     }
   }
 
   /* Save new sentiment component state */
-  handleSentimentChange(state) {
+  handleSentimentChange(state, callback) {
     this.setState({
       sentimentState: {
         sentimentAnalysisInfo: state.sentimentAnalysisInfo,
         isLoading: state.isLoading,
         errorMsg: state.error ? state.error.message : null,
       }
-    });
+    }, callback);
   }
 
   /* Save new entity component state */
-  handleEntityChange(state) {
+  handleEntityChange(state, callback) {
     this.setState({
       entityState: {
         entityAnalysisInfo: state.entityAnalysisInfo,
         isLoading: state.isLoading,
         errorMsg: state.error ? state.error.message : null,
       }
-    });
+    }, callback);
   }
 
   /* Save new YouTube component state */
-  handleYouTubeChange(state) {
+  handleYouTubeChange(state, callback) {
     this.setState({
       youTubeState: {
         videoIds: state.videoIds,
         isLoading: state.isLoading,
         errorMsg: state.error ? state.error.message : null,
       }
-    });
+    }, callback);
   }
 
   /** Save state of the component to localStorage. */
@@ -135,8 +151,53 @@ class SongInfo extends React.Component {
       }
   }
 
+  /** Get song info by the id */
+  getSongInfo(id) {
+    this.setState({ isLoading: true });
+    
+    axios
+      .get(`/analysis-info?id=${id}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        transformResponse: data => JSONbig.parse(data),
+      })
+      .then((result) => result.data)
+      .then((songInfo) => {
+        this.handleSentimentChange({
+          sentimentAnalysisInfo: {
+            score: songInfo.score,
+            magnitude: songInfo.magnitude,
+          },
+          isLoading: false,
+          error: null,
+        }, () => this.handleEntityChange({
+          entityAnalysisInfo: songInfo.topSalientEntities,
+          isLoading: false,
+          error: null,
+        }, () => this.handleYouTubeChange({
+          videoIds: songInfo.youTubeIds,
+          isLoading: false,
+          error: null,
+        }, () => this.setState({
+          artistName: songInfo.song.artist,
+          songName: songInfo.song.name,
+          lyrics: songInfo.lyrics,
+          isLoading: false,
+          error: null,
+        }, () => this.saveState()))));
+      })
+      .catch((error) =>
+        this.setState({
+          error,
+          isLoading: false,
+        }, this.saveState())
+      );
+  }
+
+  /** Save the state and send song info if there's no song id. */
   componentDidUpdate(prevProps, prevState) {
-    if (!objectEquals(prevState, this.state)) {
+    if (this.state.id === undefined && !objectEquals(prevState, this.state)) {
       this.saveState();
       this.sendSongInfo(this.state);
     }
@@ -144,10 +205,14 @@ class SongInfo extends React.Component {
 
   componentDidMount() {
     const json = localStorage.getItem("state");
-    try {
-      const state = JSON.parse(json);
-      this.setState({state}, () => this.sendSongInfo(state));
-    } catch (_) {}
+    if (json == undefined && this.state.id !== undefined) {
+      this.getSongInfo(this.state.id);
+    } else {
+      try {
+        const state = JSON.parse(json);
+        this.setState({state}, () => this.sendSongInfo(state));
+      } catch (_) {}
+    }
   }
 
   render() {
@@ -155,6 +220,23 @@ class SongInfo extends React.Component {
 
     if (this.state == undefined) {
       return <Redirect to="/search" />
+    }
+
+    if (this.state.error) {
+      console.log(this.state.error.message)
+      return (
+        <div>
+          <p>{`Something went wrong, please try again later.`}</p>
+        </div>
+      );
+    }
+
+    if (this.state.isLoading) {
+      return (
+        <div>
+          <CircularProgress style={{ color: "black" }} />
+        </div>
+      );
     }
 
     const songInfo = {

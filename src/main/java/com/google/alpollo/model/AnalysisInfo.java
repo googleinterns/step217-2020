@@ -38,6 +38,10 @@ public class AnalysisInfo {
     this.youTubeIds = youTubeIds;
   }
 
+  public void initializeId() {
+    this.id = this.song.id();
+  }
+
   public Song getSong() {
     return song;
   }
