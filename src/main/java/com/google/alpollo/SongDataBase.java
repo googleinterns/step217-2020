@@ -34,8 +34,8 @@ public class SongDataBase {
     List<SongCounter> songCounters = topSongs();
     // Song that we already have in database and it is on the last place in the top of songs
     SongCounter lessSearchedSongFromTop = songCounters.get(songCounters.size() - 1);
-
-    if (lessSearchedSongFromTop.getSearchCounter() < newSong.getSearchCounter()) {
+    
+    if (lessSearchedSongFromTop.getSearchCounter() < newSong.getSearchCounter() || songCounters.size() <= TOP_SIZE) {
       OfyService.ofy().delete().type(AnalysisInfo.class).id(lessSearchedSongFromTop.getSong().id());
       info.setId();
       OfyService.ofy().save().entity(info).now();
