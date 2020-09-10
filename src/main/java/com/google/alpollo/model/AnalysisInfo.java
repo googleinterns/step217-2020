@@ -15,7 +15,7 @@ import com.googlecode.objectify.annotation.Id;
 public class AnalysisInfo {
   @Id private Long id;
   /** All the info in this class is attached to a specific parent song. */
-  private final Song song;
+  @Index private Song song;
   /** Score tells us the overall positivty of the song, ranging from -1.0 to 1.0. */
   @Index private float score;
   /** Magnitude tells us how strong the main sentiment of the song is, ranging from 0.0 to +inf. */
@@ -26,6 +26,9 @@ public class AnalysisInfo {
   /** After analyzing the entities, we'll have a list of recommended YouTube video IDs. */
   @Index private List<String> youTubeIds;
 
+  /** Objectify requires no argument constructor. Do not use it. */
+  private AnalysisInfo() { }
+
   public AnalysisInfo(Song song, float score, float magnitude,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
     id = song.id();
@@ -35,5 +38,9 @@ public class AnalysisInfo {
     this.topSalientEntities = topSalientEntities;
     this.lyrics = lyrics;
     this.youTubeIds = youTubeIds;
+  }
+
+  public Song getSong() {
+    return song;
   }
 }
