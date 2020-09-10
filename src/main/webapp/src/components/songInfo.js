@@ -122,14 +122,18 @@ class SongInfo extends React.Component {
     localStorage.setItem("state", json);
   }
 
-  /** Checks if the state of the component was loaded successfully. */
-  isReady(componentState) {
+  /** Checks that all analysis components are ready and info wasn't sent before.  */
+  isReady(state) {
+    /** Checks if the state of the component was loaded successfully. */
+    const isComponentReady = function(componentState) {
       return (componentState && !componentState.isLoading && !componentState.errorMsg);
+    };
+    return !state.wasSent && this.isReady(state.youTubeState) && this.isReady(state.entityState) && this.isReady(state.sentimentState);
   }
 
   /** If all analysis components are ready, send SongInfo object to the server. */
   sendSongInfo(state) {
-    if (!state.wasSent && this.isReady(state.youTubeState) && this.isReady(state.entityState) && this.isReady(state.sentimentState)) {
+    if (this.isReady(state)) {
       axios
         .post("/analysis-info", {
           song: {
@@ -205,6 +209,7 @@ class SongInfo extends React.Component {
 
   componentDidMount() {
     const json = localStorage.getItem("state");
+    /** If this song has id and wasn't loaded before. */
     if (json == undefined && this.state.id !== undefined) {
       this.getSongInfo(this.state.id);
     } else {
