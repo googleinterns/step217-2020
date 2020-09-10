@@ -15,7 +15,6 @@ import com.google.gson.JsonSyntaxException;
 public class AnalysisInfoServlet extends HttpServlet {
   private static final String SONG_ID = "id";
   private final Gson gson = new Gson();
-
   /**
    * Making a GET request to our servlet with the desired song ID as a parameter
    * will return that song from the database.

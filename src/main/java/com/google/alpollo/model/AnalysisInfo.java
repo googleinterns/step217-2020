@@ -26,14 +26,6 @@ public class AnalysisInfo {
 
   /** Objectify requires no argument constructor. Do not use it. */
   private AnalysisInfo() { }
-
-  public Song getSong() {
-    return song;
-  }
-
-  public void setId() {
-    this.id = this.song.id();
-  }
   
   public AnalysisInfo(Song song, float score, float magnitude,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
@@ -44,5 +36,13 @@ public class AnalysisInfo {
     this.topSalientEntities = topSalientEntities;
     this.lyrics = lyrics;
     this.youTubeIds = youTubeIds;
+  }
+
+  public void setId() {
+    this.id = this.song.id();
+  }
+
+  public Song getSong() {
+    return song;
   }
 }
