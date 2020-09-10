@@ -1,7 +1,7 @@
 package com.google.alpollo;
 
 import java.util.List;
-import java.util.ArrayList;
+import com.google.alpollo.model.AnalysisInfo;
 
 /** Class that provides methods to work with the database. */
 public class SongDataBase {
@@ -21,5 +21,15 @@ public class SongDataBase {
   /** Returns the list of the most requested songs. */
   public static List<SongCounter> topSongs() {
     return OfyService.ofy().load().type(SongCounter.class).order("-searchCounter").limit(TOP_SIZE).list();
+  }
+
+  /** Save analysis info to database. */
+  public static void saveAnalysisInfo(AnalysisInfo info) {
+    OfyService.ofy().save().entity(info).now();
+  }
+
+  /** Returns the analysis info by song id. */
+  public static AnalysisInfo getAnanlysisInfo(Long id) {
+    return OfyService.ofy().load().type(AnalysisInfo.class).id(id).now();
   }
 }
