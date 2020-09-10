@@ -38,7 +38,7 @@ public class AnalysisInfo {
     this.youTubeIds = youTubeIds;
   }
 
-  public void setId() {
+  public void initializeId() {
     this.id = this.song.id();
   }
 

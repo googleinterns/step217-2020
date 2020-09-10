@@ -37,7 +37,8 @@ public class SongDataBase {
     
     if (lessSearchedSongFromTop.getSearchCounter() < newSong.getSearchCounter() || songCounters.size() <= TOP_SIZE) {
       OfyService.ofy().delete().type(AnalysisInfo.class).id(lessSearchedSongFromTop.getSong().id());
-      info.setId();
+      // Initialize id, because frontend will send SongInfo object without it.
+      info.initializeId();
       OfyService.ofy().save().entity(info).now();
     }
   }
