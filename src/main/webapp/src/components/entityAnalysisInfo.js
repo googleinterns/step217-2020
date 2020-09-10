@@ -81,23 +81,68 @@ class EntityAnalysisInfo extends React.Component {
       return <p>No entities were found.</p>;
     }
 
-    /** Gather the most important words and their data in simple arrays. */
+    /** Generate a custom tooltip for each entity */
+    function getTooltip(entity) {
+      return '<div style="font-size:15px">' + entity.name + '<br>' 
+          + '<b>Type: </b>' + entity.type + '<br>' 
+          + '<b>Salience: </b>' + entity.salience + '<br>' 
+          + ((entity.wikiLink !== "") ? 'Click for wiki link' : '')
+          + '</div>';
+    }
+
+    /** Array that holds the data that will be displayed by the chart. */
     var top10WordsData = [];
+    /** Array that will hold the wiki links for later use. */
     var top10WordsLinks = [];
-    top10WordsData.push(['Word and Type', 'Importance'])
+    /** 
+     * Create a custom tooltip to overwrite the default one, we want to show whether a wiki link
+     * is available, besides the default data.
+     * The p tells the tooltip to have the HTML property, so we can format the text.
+     * https://developers.google.com/chart/interactive/docs/customizing_tooltip_content#customizing-html-content
+     */
+    const customTooltip = { 'role': 'tooltip', 'type': 'string', 'p': {'html': true} };
+
+    /** 
+     * React requires the first item to contain the title of each axis.
+     * 
+     * In our case, we have a pie chart without axes, but the first 2 elements
+     * of the subarray are considered to be the x and y of the graph.
+     * The third element of the first subarray is optional, but it tells the chart that we are going to
+     * overwrite the default tooltip.
+     * 
+     * The next items of the array must follow the same pattern as in the first item.
+     * (entity name and type, salience, custom tooltip)
+     * 
+     * You can think of it as a table, where the first row contains the titles of each column.
+     * https://react-google-charts.com/pie-chart
+     */
+    top10WordsData.push(['Word and Type', 'Importance', customTooltip])
     this.state.entityAnalysisInfo.forEach((entity) => {
-      top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience]);
-      if (entity.wikiLink !== "") {
-        top10WordsLinks.push(entity.wikiLink);
-      }
+      top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience, getTooltip(entity)]);
+      top10WordsLinks.push(entity.wikiLink);
     })
 
-    const listLinks = top10WordsLinks.map((link, index) =>
-      <li key={index + 1}>
-        <a href={link}> {link} </a>
-      </li>
-    );
-     
+    const chartEvents = [
+      {
+        eventName: "select",
+        callback({ chartWrapper }) {
+          const [selectedItem] = chartWrapper.getChart().getSelection();
+          const { row } = selectedItem;
+
+          if (top10WordsLinks[row] !== "") {
+            window.location.href = top10WordsLinks[row];
+          }
+        }
+      }
+    ];
+
+    var offsetSlices = [];
+    for (var i = 0; i < top10WordsLinks.length; i++) {
+      if (top10WordsLinks[i] !== "") {
+        offsetSlices[i] = { offset: 0.1 };
+      }
+    }
+
     return (
       <div>
         <div style={{ display: 'flex', maxWidth: 900 }}>
@@ -109,15 +154,14 @@ class EntityAnalysisInfo extends React.Component {
             data={top10WordsData}
             options={{
               title: 'Most Important Words',
+              legend: { viewWindow: { min: 0, max: 15 } },
+              slices: offsetSlices,
+              focusTarget: 'category',
+              tooltip: { isHtml: true }
             }}
+            chartEvents={chartEvents}
             legendToggle
           />
-        </div>
-        <div>
-        <Typography variant="h5">Wiki links found</Typography>
-          <ul>
-            {listLinks}         
-          </ul>
         </div>
       </div>
     );
