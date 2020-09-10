@@ -21,6 +21,8 @@ class EntityAnalysisInfo extends React.Component {
   constructor(props) {
     super(props);
 
+    this.setEntityAnalysisInfo = this.setEntityAnalysisInfo.bind(this);
+
     this.state = {
       entityAnalysisInfo: [],
       isLoading: false,
@@ -39,7 +41,7 @@ class EntityAnalysisInfo extends React.Component {
    * Get entity analysis info if it was sent before
    * or load it instead.
    */
-  componentDidMount() {
+  setEntityAnalysisInfo() {
     if (this.props.sentInfo.wasSent) {
       this.setState({ entityAnalysisInfo: this.props.sentInfo.info });
     } else {
@@ -64,6 +66,10 @@ class EntityAnalysisInfo extends React.Component {
           })
         );
     }
+  }
+  
+  componentDidMount() {
+    this.setEntityAnalysisInfo();
   }
 
   render() {

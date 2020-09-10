@@ -36,6 +36,8 @@ class SentimentAnalysisInfo extends React.Component {
   constructor(props) {
     super(props);
 
+    this.setSentimentAnalysisInfo = this.setSentimentAnalysisInfo.bind(this);
+
     this.state = {
       sentimentAnalysisInfo: {},
       isLoading: false,
@@ -54,7 +56,7 @@ class SentimentAnalysisInfo extends React.Component {
    * Get sentiment analysis info if it was sent before
    * or load it instead.
    */
-  componentDidMount() {
+  setSentimentAnalysisInfo() {
     if (this.props.sentInfo.wasSent) {
       this.setState({ sentimentAnalysisInfo: this.props.sentInfo.info });
     } else {
@@ -79,6 +81,10 @@ class SentimentAnalysisInfo extends React.Component {
           })
         );
     }
+  }
+
+  componentDidMount() {
+    this.setSentimentAnalysisInfo();
   }
 
   render() {
