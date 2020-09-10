@@ -44,6 +44,7 @@ public class AnalysisInfoServlet extends HttpServlet {
     try {
       analysisInfo = gson.fromJson(request.getReader(), AnalysisInfo.class);
       SongDataBase.saveAnalysisInfo(analysisInfo);
+      SongDataBase.saveSongRequest(analysisInfo.getSong());
     } catch (JsonSyntaxException | JsonIOException | IOException e) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
     }
