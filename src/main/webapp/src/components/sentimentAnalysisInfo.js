@@ -50,27 +50,35 @@ class SentimentAnalysisInfo extends React.Component {
     }
   }
 
+  /** 
+   * Get sentiment analysis info if it was sent before
+   * or load it instead.
+   */
   componentDidMount() {
-    this.setState({ isLoading: true });
+    if (this.props.sentInfo.wasSent) {
+      this.setState({ sentimentAnalysisInfo: this.props.sentInfo.info });
+    } else {
+      this.setState({ isLoading: true });
 
-    axios
-      .post("/sentiment", {
-        lyrics: this.props.lyrics
-      })
-      .then((result) => result.data)
-      .then((sentimentAnalysisInfo) =>
-        this.setState({
-          sentimentAnalysisInfo: sentimentAnalysisInfo,
-          isLoading: false,
-          error: null,
+      axios
+        .post("/sentiment", {
+          lyrics: this.props.lyrics
         })
-      )
-      .catch((error) =>
-        this.setState({
-          error,
-          isLoading: false,
-        })
-      );
+        .then((result) => result.data)
+        .then((sentimentAnalysisInfo) =>
+          this.setState({
+            sentimentAnalysisInfo: sentimentAnalysisInfo,
+            isLoading: false,
+            error: null,
+          })
+        )
+        .catch((error) =>
+          this.setState({
+            error,
+            isLoading: false,
+          })
+        );
+    }
   }
 
   render() {

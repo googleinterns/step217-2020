@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.model;
 
 import com.googlecode.objectify.annotation.Index;
 
