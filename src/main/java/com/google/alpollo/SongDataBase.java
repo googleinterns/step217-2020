@@ -8,7 +8,7 @@ public class SongDataBase {
   /** Number of the songs that will be shown to the user. */
   private static final int TOP_SIZE = 10;
 
-  /** Save request song to database and increment the search counter. */
+  /** Save request song to database, increment the search counter and returns SongCounter with correct searchCounter. */
   public static SongCounter saveSongRequest(Song song) {
     SongCounter songCounter = OfyService.ofy().load().type(SongCounter.class).id(song.id()).now();
     if (songCounter == null) {
@@ -26,15 +26,15 @@ public class SongDataBase {
 
   /** Save analysis info to database. */
   public static void saveAnalysisInfo(AnalysisInfo info) {
-    // Song that we want to save
-    SongCounter newSongCounter = saveSongRequest(info.getSong());
+    // Song that we want to save with analysis
+    SongCounter newSong = saveSongRequest(info.getSong());
 
     List<SongCounter> songCounters = topSongs();
-    // Song that we already have in database
-    SongCounter oldSongCounter = songCounters.get(songCounters.size() - 1);
+    // Song that we already have in database and it is on the last place in the top of songs
+    SongCounter lessSearchedSongFromTop = songCounters.get(songCounters.size() - 1);
 
-    if (oldSongCounter.getSearchCounter() < newSongCounter.getSearchCounter()) {
-      OfyService.ofy().delete().type(AnalysisInfo.class).id(oldSongCounter.getSong().id());
+    if (lessSearchedSongFromTop.getSearchCounter() < newSong.getSearchCounter()) {
+      OfyService.ofy().delete().type(AnalysisInfo.class).id(lessSearchedSongFromTop.getSong().id());
       OfyService.ofy().save().entity(info).now();
     }
   }
