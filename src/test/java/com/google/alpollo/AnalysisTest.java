@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -205,5 +206,17 @@ public final class AnalysisTest {
     String expected = AnalysisHelper.MIXED;
 
     Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void duplicateEntitiesWithSameType() {
+    List<SongEntity> duplicateList = Arrays.asList(
+        new SongEntity("mountain", 0.03, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
+        new SongEntity("mountain", 0.04, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
+    List<SongEntity> actual = AnalysisHelper.filterDuplicates(duplicateList);    
+    List<SongEntity> expected = Arrays.asList(
+      new SongEntity("mountain", 0.07, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
+
+    Assert.assertThat(actual, CoreMatchers.is(expected));
   }
 }
