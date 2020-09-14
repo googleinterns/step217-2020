@@ -1,8 +1,9 @@
 package com.google.alpollo.model;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 import com.googlecode.objectify.annotation.Index;
 
 /**
@@ -21,14 +22,14 @@ public class SongEntity {
    * 
    * Each entity will have multiple, non-duplicate types.
    */ 
-  private HashSet<String> type;
+  private Set<String> type;
   /** Some entities might have a wikipedia link attached to them. */
   @Index private String wikiLink;
 
   /** Objectify requires no argument constructor. Do not use it. */
   private SongEntity() { }
 
-  public SongEntity(String name, double salience, HashSet<String> type, String wikiLink) {
+  public SongEntity(String name, double salience, Set<String> type, String wikiLink) {
     this.name = name;
     this.salience = salience;
     this.type = type;
@@ -76,7 +77,7 @@ public class SongEntity {
     return name;
   }
 
-  public HashSet<String> getType() {
+  public Set<String> getType() {
     return type;
   }
 }
