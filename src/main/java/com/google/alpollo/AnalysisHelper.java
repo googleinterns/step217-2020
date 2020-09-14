@@ -137,7 +137,7 @@ public final class AnalysisHelper {
     return MIXED;
   }
 
-  public static List<SongEntity> getListWithoutDuplicates(List<SongEntity> list) {
+  public static List<SongEntity> filterDuplicates(List<SongEntity> list) {
     HashMap<String, SongEntity> map = new HashMap<>(); 
 
     for (SongEntity entity : list) {
