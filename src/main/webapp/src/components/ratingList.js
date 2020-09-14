@@ -1,13 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { ListItemIcon } from "@material-ui/core";
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
+import JSONbig from "json-bigint";
 
 const styles = (theme) => ({
   root: {
@@ -28,14 +31,17 @@ function EnumeratedList(props) {
   const listItems = props.listItems;
   const classes = props.styleClasses;
   const reactListItems = listItems.map((item, index) => (
-    <ListItem key={index + 1}>
+    <ListItem key={index + 1} button component={Link} to={`/song/${item.id}`}>
       <ListItemIcon className={classes.listIcon}>
         {index + 1}
       </ListItemIcon>
       <ListItemText
-        primary={item.name}
-        secondary={item.artist}
+        primary={item.song.name}
+        secondary={item.song.artist}
       />
+      <ListItemSecondaryAction>
+        {item.searchCounter}
+      </ListItemSecondaryAction>
     </ListItem>
   ));
   return <List>{reactListItems}</List>;
@@ -56,7 +62,12 @@ class RatingList extends React.Component {
     this.setState({ isLoading: true });
 
     axios
-      .get("/top")
+      .get("/top", {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        transformResponse: data => JSONbig.parse(data),
+      })
       .then((result) => result.data)
       .then((topSongs) =>
         this.setState({

@@ -1,5 +1,6 @@
 package com.google.alpollo;
 
+import com.google.alpollo.model.SongCounter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ public class TopSongsServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     response.setContentType("application/json");
 
-    final List<Song> songs = SongDataBase.topSongs();
+    final List<SongCounter> songs = SongDataBase.topSongs();
     response.getWriter().write(gson.toJson(songs));
   }
 }

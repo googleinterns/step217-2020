@@ -3,12 +3,15 @@ package com.google.alpollo;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
+import com.google.alpollo.model.AnalysisInfo;
+import com.google.alpollo.model.SongCounter;
 
 /** Helper class to start running Objectify. */
 public class OfyService {
-  /** Registers Song class in Objectify. */
+  /** Registers SongCounter and AnalysisInfo class in Objectify. */
   static {
-    ObjectifyService.register(Song.class);
+    ObjectifyService.register(SongCounter.class);
+    ObjectifyService.register(AnalysisInfo.class);
   }
 
   /** Overrides the ofy method. */
