@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import com.google.alpollo.model.SongEntity;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.cloud.language.v1.AnalyzeEntitiesResponse;
@@ -143,8 +145,8 @@ public final class AnalysisHelper {
     for (SongEntity entity : list) {
       if (map.containsKey(entity.getName())) {
         SongEntity existingEntity = map.get(entity.getName());
-        HashSet<String> newTypes = entity.getType();
-        HashSet<String> existingTypes = existingEntity.getType();
+        Set<String> newTypes = entity.getType();
+        Set<String> existingTypes = existingEntity.getType();
         
         existingTypes.addAll(newTypes);
       } else {
