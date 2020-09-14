@@ -27,7 +27,7 @@ public class EntityServlet extends HttpServlet {
       // Get the Entity list from the API
       List<Entity> entityList = AnalysisHelper.getEntityList(projectID, lyrics);
       List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
-      List<SongEntity> listWithoutDuplicates = AnalysisHelper.getListWithoutDuplicates(simplifiedEntityList);
+      List<SongEntity> listWithoutDuplicates = AnalysisHelper.filterDuplicates(simplifiedEntityList);
       List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(listWithoutDuplicates);
 
       String json = gson.toJson(topSalientEntities);
