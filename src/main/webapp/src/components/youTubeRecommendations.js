@@ -44,7 +44,7 @@ class YouTubeRecommendations extends React.Component {
    * entities were found.
    * @param {Object} entityState 
    */
-  getVideos = (entityState) => {
+  fetchVideos = (entityState) => {
     if (entityState == undefined || entityState.isLoading) {
       this.setState({ isLoading: true });
     } else if (entityState.errorMsg) {
@@ -78,6 +78,18 @@ class YouTubeRecommendations extends React.Component {
     }
   };
 
+  /** 
+   * Get youtube video ids if they were sent before
+   * or load it instead.
+   */
+  getVideoIds = () => {
+    if (this.props.sentInfo.wasSent) {
+      this.setState({ videoIds: this.props.sentInfo.info });
+    } else {
+      this.fetchVideos(this.props.entityState);
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     /* If state has changed, send it to songInfo component */
     if (!objectEquals(prevState, this.state)) {
@@ -89,20 +101,12 @@ class YouTubeRecommendations extends React.Component {
      */
     if (!this.props.sentInfo.wasSent
         && !objectEquals(prevProps.entityState, this.props.entityState)) {
-      this.getVideos(this.props.entityState);
+      this.fetchVideos(this.props.entityState);
     }
   }
 
-  /** 
-   * Get youtube video ids if they were sent before
-   * or load it instead.
-   */
   componentDidMount() {
-    if (this.props.sentInfo.wasSent) {
-      this.setState({ videoIds: this.props.sentInfo.info });
-    } else {
-      this.getVideos(this.props.entityState);
-    }
+    this.getVideoIds();
   }
 
   render() {
