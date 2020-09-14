@@ -126,7 +126,7 @@ public final class AnalysisTest {
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
     List<SongEntity> expected = Arrays.asList(
-        new SongEntity("mountain", 0.84, new HashSet<String>(Arrays.asList("OTHER", "LOCATION")), EMPTY_STRING),
+        new SongEntity("mountain", 0.90, new HashSet<String>(Arrays.asList("OTHER", "LOCATION")), EMPTY_STRING),
         new SongEntity("story", 0.05, new HashSet<String>(Arrays.asList("WORK_OF_ART")), EMPTY_STRING),
         new SongEntity("sale", 0.03, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
         new SongEntity("tale", 0.01, new HashSet<String>(Arrays.asList("WORK_OF_ART")), EMPTY_STRING));

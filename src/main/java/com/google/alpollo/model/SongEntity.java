@@ -80,4 +80,12 @@ public class SongEntity {
   public Set<String> getType() {
     return type;
   }
+
+  public double getSalience() {
+    return salience;
+  }
+
+  public void setSalience(double newSalience) {
+    this.salience = newSalience;
+  }
 }

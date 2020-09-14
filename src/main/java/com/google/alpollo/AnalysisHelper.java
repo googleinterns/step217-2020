@@ -148,8 +148,11 @@ public final class AnalysisHelper {
         SongEntity existingEntity = map.get(entity.getName());
         Set<String> newTypes = entity.getType();
         Set<String> existingTypes = existingEntity.getType();
+        double newSalience = entity.getSalience() + existingEntity.getSalience();
         
         existingTypes.addAll(newTypes);
+        // Apparently 0.84 + 0.06 = 0.899999999, so we have to format the salience again.
+        existingEntity.setSalience(Double.parseDouble(salienceFormat.format(newSalience)));
       } else {
         map.put(entity.getName(), entity);
       }
