@@ -36,6 +36,8 @@ class SentimentAnalysisInfo extends React.Component {
   constructor(props) {
     super(props);
 
+    this.setSentimentAnalysisInfo = this.setSentimentAnalysisInfo.bind(this);
+
     this.state = {
       sentimentAnalysisInfo: {},
       isLoading: false,
@@ -46,31 +48,43 @@ class SentimentAnalysisInfo extends React.Component {
   /* If state has changed, send it to songInfo component */
   componentDidUpdate(prevProps, prevState) {
     if (!objectEquals(prevState, this.state)) {
-      this.props.onChangeState(this.state);
+      this.props.onChangeState(this.state, () => {});
+    }
+  }
+
+  /** 
+   * Get sentiment analysis info if it was sent before
+   * or load it instead.
+   */
+  setSentimentAnalysisInfo() {
+    if (this.props.sentInfo.wasSent) {
+      this.setState({ sentimentAnalysisInfo: this.props.sentInfo.info });
+    } else {
+      this.setState({ isLoading: true });
+
+      axios
+        .post("/sentiment", {
+          lyrics: this.props.lyrics
+        })
+        .then((result) => result.data)
+        .then((sentimentAnalysisInfo) =>
+          this.setState({
+            sentimentAnalysisInfo: sentimentAnalysisInfo,
+            isLoading: false,
+            error: null,
+          })
+        )
+        .catch((error) =>
+          this.setState({
+            error,
+            isLoading: false,
+          })
+        );
     }
   }
 
   componentDidMount() {
-    this.setState({ isLoading: true });
-
-    axios
-      .post("/sentiment", {
-        lyrics: this.props.lyrics
-      })
-      .then((result) => result.data)
-      .then((sentimentAnalysisInfo) =>
-        this.setState({
-          sentimentAnalysisInfo: sentimentAnalysisInfo,
-          isLoading: false,
-          error: null,
-        })
-      )
-      .catch((error) =>
-        this.setState({
-          error,
-          isLoading: false,
-        })
-      );
+    this.setSentimentAnalysisInfo();
   }
 
   render() {
