@@ -1,13 +1,13 @@
 package com.google.alpollo;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import com.google.alpollo.model.SongEntity;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.cloud.language.v1.AnalyzeEntitiesResponse;
@@ -36,6 +36,7 @@ public final class AnalysisHelper {
   private static final double NEUTRAL_MAGNITUDE_THRESHOLD = 2;
   private static final double NEGATIVE_SCORE_THRESHOLD = -0.15;
   private static final double POSITIVE_SCORE_THRESHOLD = 0.15;
+  private static DecimalFormat salienceFormat = new DecimalFormat("0.00");
 
   private AnalysisHelper() {};
 
@@ -99,7 +100,7 @@ public final class AnalysisHelper {
     for (Entity entity : entityList) {
       // Use round() here to set the double to 2 decimals.
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
-          Math.round(entity.getSalience() * 100.0) / 100.0, 
+          Double.parseDouble(salienceFormat.format(entity.getSalience())), 
           new HashSet<String>(Arrays.asList(entity.getType().toString())),
           entity.getMetadataMap().getOrDefault("wikipedia_url", ""));
       simplifiedEntityList.add(simplifiedEntity);
