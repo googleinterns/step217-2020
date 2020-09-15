@@ -3,9 +3,7 @@ package com.google.alpollo;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import com.google.alpollo.model.SongEntity;
@@ -37,7 +35,6 @@ public final class AnalysisHelper {
   private static final double NEUTRAL_MAGNITUDE_THRESHOLD = 2;
   private static final double NEGATIVE_SCORE_THRESHOLD = -0.15;
   private static final double POSITIVE_SCORE_THRESHOLD = 0.15;
-  private static DecimalFormat salienceFormat = new DecimalFormat("0.00");
 
   private AnalysisHelper() {};
 
