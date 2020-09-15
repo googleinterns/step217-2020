@@ -143,6 +143,7 @@ class SongInfo extends React.Component {
           lyrics: state.lyrics,
           score: state.sentimentState.sentimentAnalysisInfo.score,
           magnitude: state.sentimentState.sentimentAnalysisInfo.magnitude,
+          interpretation: state.sentimentState.sentimentAnalysisInfo.interpretation,
           topSalientEntities: state.entityState.entityAnalysisInfo,
           youTubeIds: state.youTubeState.videoIds,
         })
@@ -172,6 +173,7 @@ class SongInfo extends React.Component {
           sentimentAnalysisInfo: {
             score: songInfo.score,
             magnitude: songInfo.magnitude,
+            interpretation: songInfo.interpretation
           },
           isLoading: false,
           error: null,
