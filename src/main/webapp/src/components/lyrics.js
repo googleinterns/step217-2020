@@ -1,5 +1,6 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
+import axios from "axios";
 
 /**
  * Displays search component for song lyrics.
@@ -7,6 +8,36 @@ import Typography from "@material-ui/core/Typography";
 class Lyrics extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      speech: [],
+      isLoading: false,
+      error: null,
+    };
+  }
+
+  getSpeech = () => {
+    axios
+      .post("/text-to-speech", {
+        lyrics: this.props.lyrics
+      })
+      .then((result) => result.data)
+      .then((speech) =>
+        this.setState({
+          speech: speech,
+          isLoading: false,
+        })
+      )
+      .catch((error) =>
+        this.setState({
+          error,
+          isLoading: false,
+        })
+      );
+  }
+
+  componentDidMount() {
+    this.getSpeech();
   }
 
   render() {
