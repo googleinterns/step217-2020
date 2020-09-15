@@ -100,7 +100,7 @@ public final class AnalysisHelper {
     for (Entity entity : entityList) {
       // Use round() here to set the double to 2 decimals.
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
-          Double.parseDouble(salienceFormat.format(entity.getSalience())), 
+          entity.getSalience(), 
           new HashSet<String>(Arrays.asList(entity.getType().toString())),
           entity.getMetadataMap().getOrDefault("wikipedia_url", ""));
       simplifiedEntityList.add(simplifiedEntity);
@@ -151,8 +151,7 @@ public final class AnalysisHelper {
         double newSalience = entity.getSalience() + existingEntity.getSalience();
         
         existingTypes.addAll(newTypes);
-        // Apparently 0.84 + 0.06 = 0.899999999, so we have to format the salience again.
-        existingEntity.setSalience(Double.parseDouble(salienceFormat.format(newSalience)));
+        existingEntity.setSalience(newSalience);
       } else {
         map.put(entity.getName(), entity);
       }

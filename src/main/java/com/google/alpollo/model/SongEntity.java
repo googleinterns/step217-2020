@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
+import com.google.common.math.DoubleMath;
 import com.googlecode.objectify.annotation.Index;
 
 /**
@@ -25,6 +26,7 @@ public class SongEntity {
   private Set<String> type;
   /** Some entities might have a wikipedia link attached to them. */
   @Index private String wikiLink;
+  private static final double TOLERANCE = 0.02;
 
   /** Objectify requires no argument constructor. Do not use it. */
   private SongEntity() { }
@@ -57,7 +59,7 @@ public class SongEntity {
   } 
 
     SongEntity entity = (SongEntity) obj;
-    return salience == entity.salience
+    return DoubleMath.fuzzyEquals(salience, entity.salience, TOLERANCE)
         && (Objects.equals(name,entity.name))
         && (Objects.equals(type, entity.type))
         && (Objects.equals(wikiLink, entity.wikiLink));

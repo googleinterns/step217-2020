@@ -149,13 +149,13 @@ public final class AnalysisTest {
         new SongEntity("seaside", 0.36, new HashSet<String>(Arrays.asList("LOCATION")), EMPTY_STRING),
         new SongEntity("source", 0.34, new HashSet<String>(Arrays.asList("PERSON")), EMPTY_STRING),
         new SongEntity("mountain", 0.05, new HashSet<String>(Arrays.asList("OTHER", "LOCATION")), EMPTY_STRING),
-        new SongEntity("one", 0.03, new HashSet<String>(Arrays.asList("PERSON", "UNRECOGNIZED")), EMPTY_STRING),
         new SongEntity("ones", 0.03, new HashSet<String>(Arrays.asList("PERSON")), EMPTY_STRING),
+        new SongEntity("one", 0.03, new HashSet<String>(Arrays.asList("PERSON", "UNRECOGNIZED")), EMPTY_STRING),
         new SongEntity("love", 0.02, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
         new SongEntity("fire", 0.02, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
         new SongEntity("roundabout", 0.02, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
         new SongEntity("nights", 0.02, new HashSet<String>(Arrays.asList("EVENT")), EMPTY_STRING),
-        new SongEntity("misery", 0.01, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
+        new SongEntity("root", 0.01, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
         
       Assert.assertThat(actual, CoreMatchers.is(expected));
   }
