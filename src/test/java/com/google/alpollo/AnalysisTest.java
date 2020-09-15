@@ -16,6 +16,7 @@ import java.util.List;
 import com.google.alpollo.model.SongEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.common.collect.Sets;
 import org.mockito.stubbing.Answer;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -127,10 +128,10 @@ public final class AnalysisTest {
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
     List<SongEntity> expected = Arrays.asList(
-        new SongEntity("mountain", 0.90, new HashSet<String>(Arrays.asList("OTHER", "LOCATION")), EMPTY_STRING),
-        new SongEntity("story", 0.05, new HashSet<String>(Arrays.asList("WORK_OF_ART")), EMPTY_STRING),
-        new SongEntity("sale", 0.03, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
-        new SongEntity("tale", 0.01, new HashSet<String>(Arrays.asList("WORK_OF_ART")), EMPTY_STRING));
+        new SongEntity("mountain", 0.90, Sets.newHashSet("OTHER", "LOCATION"), EMPTY_STRING),
+        new SongEntity("story", 0.05, Sets.newHashSet("WORK_OF_ART"), EMPTY_STRING),
+        new SongEntity("sale", 0.03, Sets.newHashSet("OTHER"), EMPTY_STRING),
+        new SongEntity("tale", 0.01, Sets.newHashSet("WORK_OF_ART"), EMPTY_STRING));
     Assert.assertThat(actual, CoreMatchers.is(expected));
   }
 
@@ -147,15 +148,15 @@ public final class AnalysisTest {
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
     List<SongEntity> expected = Arrays.asList(
         new SongEntity("seaside", 0.36, new HashSet<String>(Arrays.asList("LOCATION")), EMPTY_STRING),
-        new SongEntity("source", 0.34, new HashSet<String>(Arrays.asList("PERSON")), EMPTY_STRING),
-        new SongEntity("mountain", 0.05, new HashSet<String>(Arrays.asList("OTHER", "LOCATION")), EMPTY_STRING),
-        new SongEntity("ones", 0.03, new HashSet<String>(Arrays.asList("PERSON")), EMPTY_STRING),
-        new SongEntity("one", 0.03, new HashSet<String>(Arrays.asList("PERSON", "UNRECOGNIZED")), EMPTY_STRING),
-        new SongEntity("love", 0.02, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
-        new SongEntity("fire", 0.02, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
-        new SongEntity("roundabout", 0.02, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
-        new SongEntity("nights", 0.02, new HashSet<String>(Arrays.asList("EVENT")), EMPTY_STRING),
-        new SongEntity("root", 0.01, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
+        new SongEntity("source", 0.34, Sets.newHashSet("PERSON"), EMPTY_STRING),
+        new SongEntity("mountain", 0.05, Sets.newHashSet("OTHER", "LOCATION"), EMPTY_STRING),
+        new SongEntity("ones", 0.03, Sets.newHashSet("PERSON"), EMPTY_STRING),
+        new SongEntity("one", 0.03, Sets.newHashSet("PERSON", "UNRECOGNIZED"), EMPTY_STRING),
+        new SongEntity("love", 0.02, Sets.newHashSet("OTHER"), EMPTY_STRING),
+        new SongEntity("fire", 0.02, Sets.newHashSet("OTHER"), EMPTY_STRING),
+        new SongEntity("roundabout", 0.02, Sets.newHashSet("OTHER"), EMPTY_STRING),
+        new SongEntity("nights", 0.02, Sets.newHashSet("EVENT"), EMPTY_STRING),
+        new SongEntity("root", 0.01, Sets.newHashSet("OTHER"), EMPTY_STRING));
         
       Assert.assertThat(actual, CoreMatchers.is(expected));
   }
@@ -170,8 +171,8 @@ public final class AnalysisTest {
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
     List<SongEntity> expected = Arrays.asList(
-        new SongEntity("Google", 0.88, new HashSet<String>(Arrays.asList("ORGANIZATION")), WIKI_LINK_GOOGLE),
-        new SongEntity("results", 0.12, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
+        new SongEntity("Google", 0.88, Sets.newHashSet("ORGANIZATION"), WIKI_LINK_GOOGLE),
+        new SongEntity("results", 0.12, Sets.newHashSet("OTHER"), EMPTY_STRING));
 
       Assert.assertThat(actual, CoreMatchers.is(expected));
   }
@@ -211,11 +212,11 @@ public final class AnalysisTest {
   @Test
   public void duplicateEntitiesWithSameType() {
     List<SongEntity> duplicateList = Arrays.asList(
-        new SongEntity("mountain", 0.03, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING),
-        new SongEntity("mountain", 0.04, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
+        new SongEntity("mountain", 0.03, Sets.newHashSet("OTHER"), EMPTY_STRING),
+        new SongEntity("mountain", 0.04, Sets.newHashSet("OTHER"), EMPTY_STRING));
     List<SongEntity> actual = AnalysisHelper.filterDuplicates(duplicateList);    
     List<SongEntity> expected = Arrays.asList(
-      new SongEntity("mountain", 0.07, new HashSet<String>(Arrays.asList("OTHER")), EMPTY_STRING));
+      new SongEntity("mountain", 0.07, Sets.newHashSet("OTHER"), EMPTY_STRING));
 
     Assert.assertThat(actual, CoreMatchers.is(expected));
   }

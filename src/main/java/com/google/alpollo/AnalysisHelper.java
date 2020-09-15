@@ -17,6 +17,7 @@ import com.google.cloud.language.v1.Entity;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.LanguageServiceSettings;
 import com.google.cloud.language.v1.Sentiment;
+import com.google.common.collect.Sets;
 import com.google.cloud.language.v1.AnalyzeEntitiesRequest;
 
 /**
@@ -101,7 +102,7 @@ public final class AnalysisHelper {
       // Use round() here to set the double to 2 decimals.
       SongEntity simplifiedEntity = new SongEntity(entity.getName(), 
           entity.getSalience(), 
-          new HashSet<String>(Arrays.asList(entity.getType().toString())),
+          Sets.newHashSet(entity.getType().toString()),
           entity.getMetadataMap().getOrDefault("wikipedia_url", ""));
       simplifiedEntityList.add(simplifiedEntity);
     }
