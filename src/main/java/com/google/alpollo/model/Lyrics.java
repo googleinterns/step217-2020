@@ -1,10 +1,13 @@
 package com.google.alpollo.model;
 
+import com.google.alpollo.servlets.EntityServlet;
+import com.google.alpollo.servlets.SentimentServlet;
+
 /**
  * Class that contains only lyrics field.
  * Represents body request of the next servlets:
- * @see com.google.alpollo.SentimentServlet
- * @see com.google.alpollo.EntityServlet
+ * @see SentimentServlet
+ * @see EntityServlet
  *
  * Used only for deserialization.
  */
