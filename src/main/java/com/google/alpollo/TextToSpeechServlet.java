@@ -14,9 +14,10 @@ public class TextToSpeechServlet extends HttpServlet {
   private final Gson gson = new Gson();
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String lyrics = gson.fromJson(request.getReader(), Lyrics.class).getLyrics();
     try {
-      ByteString audioContents = TextToSpeechService.convertTextToSpeech(lyrics);
+      String lyrics = gson.fromJson(request.getReader(), Lyrics.class).getLyrics();
+      String projectID = ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.PROJECT_ID);
+      ByteString audioContents = TextToSpeechService.convertTextToSpeech(lyrics, projectID);
 
       if (audioContents == null) {
         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
