@@ -128,7 +128,7 @@ class SongInfo extends React.Component {
     const isComponentReady = function(componentState) {
       return (componentState && !componentState.isLoading && !componentState.errorMsg);
     };
-    return !state.wasSent && this.isReady(state.youTubeState) && this.isReady(state.entityState) && this.isReady(state.sentimentState);
+    return !state.wasSent && isComponentReady(state.youTubeState) && isComponentReady(state.entityState) && isComponentReady(state.sentimentState);
   }
 
   /** If all analysis components are ready, send SongInfo object to the server. */
