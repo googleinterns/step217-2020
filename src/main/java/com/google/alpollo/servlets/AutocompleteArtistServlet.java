@@ -21,6 +21,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.jayway.jsonpath.JsonPath;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 @WebServlet("/autocomplete-artist")
 public class AutocompleteArtistServlet extends HttpServlet {
@@ -35,17 +39,18 @@ public class AutocompleteArtistServlet extends HttpServlet {
       HttpTransport httpTransport = new NetHttpTransport();
       HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
 
+      JSONParser parser = new JSONParser();
+
       GenericUrl url = new GenericUrl("https://kgsearch.googleapis.com/v1/entities:search");
       url.put("query", artistName);
       url.put("limit", "5");
       url.put("indent", "true");
-      url.put("key", ConfigHelper.getSensitiveData(this.getServletContext(), 
-          ConfigHelper.SENSITIVE_DATA.API_KEY));
+      url.put("key", ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.API_KEY));
 
       HttpRequest autocompleteRequest = requestFactory.buildGetRequest(url);
       HttpResponse autocompleteResponse = autocompleteRequest.execute();
-      JsonObject responseObject = (JsonObject) JsonParser.parseString(autocompleteResponse.parseAsString());
-      JsonArray elements = (JsonArray) responseObject.get("itemListElement");
+      JSONObject responseObject = (JSONObject) parser.parse(autocompleteResponse.parseAsString());
+      JSONArray elements = (JSONArray) responseObject.get("itemListElement");
 
       List<String> artists = new ArrayList<>();
       for (Object element : elements) {
@@ -55,9 +60,8 @@ public class AutocompleteArtistServlet extends HttpServlet {
       String json = gson.toJson(artists);
       response.setContentType("application/json");
       response.getWriter().println(json);
-    } catch (JsonSyntaxException | JsonIOException | IOException autoException) {
-      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-          autoException.getMessage());
+    } catch (JsonSyntaxException | JsonIOException | IOException | ParseException autoException) {
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, autoException.getMessage());
     }
   }
 }
