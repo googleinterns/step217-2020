@@ -46,6 +46,15 @@ public class AutocompleteArtistServlet extends HttpServlet {
       HttpResponse autocompleteResponse = autocompleteRequest.execute();
       JsonObject responseObject = (JsonObject) JsonParser.parseString(autocompleteResponse.parseAsString());
       JsonArray elements = (JsonArray) responseObject.get("itemListElement");
+
+      List<String> artists = new ArrayList<>();
+      for (Object element : elements) {
+        artists.add(JsonPath.read(element, "$.result.name").toString());
+      }
+
+      String json = gson.toJson(artists);
+      response.setContentType("application/json");
+      response.getWriter().println(json);
     } catch (JsonSyntaxException | JsonIOException | IOException autoException) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
           autoException.getMessage());
