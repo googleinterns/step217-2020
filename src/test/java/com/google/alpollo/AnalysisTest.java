@@ -69,6 +69,7 @@ public final class AnalysisTest {
 
   private static final String FULL_ARTIST_NAME = "Eminem";
   private static final String INCOMPLETE_ARTIST_NAME = "Emine";
+  private static final String WRONG_ARTIST_NAME = "Emnem";
 
   @Before
   public void setUp() throws Exception {
@@ -242,6 +243,20 @@ public final class AnalysisTest {
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
     List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Emine Erdoğan", "Emine Gülbahar Hatun");
+
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void foundArtistWithWrongName() throws IOException {
+    when(request.getReader()).thenReturn(
+        new BufferedReader(new StringReader(gson.toJson(WRONG_ARTIST_NAME))));
+    artistServletUnderTest.doPost(request, response);
+    String responseString = responseWriter.toString();
+
+    List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
+    List<String> expected = Arrays.asList();
 
 
     Assert.assertEquals(expected, actual);
