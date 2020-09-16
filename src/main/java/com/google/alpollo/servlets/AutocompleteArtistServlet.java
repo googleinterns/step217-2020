@@ -42,7 +42,10 @@ public class AutocompleteArtistServlet extends HttpServlet {
       url.put("key", ConfigHelper.getSensitiveData(this.getServletContext(), 
           ConfigHelper.SENSITIVE_DATA.API_KEY));
 
-      
+      HttpRequest autocompleteRequest = requestFactory.buildGetRequest(url);
+      HttpResponse autocompleteResponse = autocompleteRequest.execute();
+      JsonObject responseObject = (JsonObject) JsonParser.parseString(autocompleteResponse.parseAsString());
+      JsonArray elements = (JsonArray) responseObject.get("itemListElement");
     } catch (JsonSyntaxException | JsonIOException | IOException autoException) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
           autoException.getMessage());
