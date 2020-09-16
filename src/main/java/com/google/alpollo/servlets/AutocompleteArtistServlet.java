@@ -28,7 +28,24 @@ public class AutocompleteArtistServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String artistName = gson.fromJson(request.getReader(), String.class);
-    
+    String artistName;
+    try {
+      artistName = gson.fromJson(request.getReader(), String.class);
+
+      HttpTransport httpTransport = new NetHttpTransport();
+      HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
+
+      GenericUrl url = new GenericUrl("https://kgsearch.googleapis.com/v1/entities:search");
+      url.put("query", artistName);
+      url.put("limit", "10");
+      url.put("indent", "true");
+      url.put("key", ConfigHelper.getSensitiveData(this.getServletContext(), 
+          ConfigHelper.SENSITIVE_DATA.API_KEY));
+
+      
+    } catch (JsonSyntaxException | JsonIOException | IOException autoException) {
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+          autoException.getMessage());
+    }
   }
 }
