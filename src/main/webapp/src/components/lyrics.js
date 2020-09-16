@@ -9,9 +9,12 @@ import axios from "axios";
 
 const styles = () => ({
   root: {
-    '& *': {
-      marginBottom: '20px'
-    }
+    minWidth: "300px",
+    display: "flex",
+    flexDirection: "column"
+  },
+  audio: {
+    margin: "20px 0 20px 0",
   }
 });
 
@@ -101,7 +104,9 @@ class Lyrics extends React.Component {
     const LyricsHTML = (AudioPlayerStatus) => { return (
       <div className={classes.root}>
         <Typography variant="h4">Lyrics</Typography>
-        {AudioPlayerStatus}
+        <div className={classes.audio}>
+          {AudioPlayerStatus}
+        </div>
         <p style={{ whiteSpace: "pre-wrap" }}>{lyrics}</p>
       </div>);};
 
