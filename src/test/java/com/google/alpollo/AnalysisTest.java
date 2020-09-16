@@ -70,6 +70,7 @@ public final class AnalysisTest {
   private static final String FULL_ARTIST_NAME = "Eminem";
   private static final String INCOMPLETE_ARTIST_NAME = "Emine";
   private static final String WRONG_ARTIST_NAME = "Emnem";
+  private static final String INCOMPLETE_BAND_NAME = "Rammste" ;
 
   @Before
   public void setUp() throws Exception {
@@ -220,10 +221,6 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
-  /** 
-   * When the user searches for the correct name of the artist, it should appear in the 
-   * first 5 results.
-   */
   @Test
   public void foundArtistWithFullName() throws IOException {
     when(request.getReader()).thenReturn(
@@ -238,10 +235,6 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
-  /**
-   * When the user searches for an incomplete name, the artist should appear 
-   * in the first 5 results
-   */
   @Test
   public void foundArtistWithIncompleteName() throws IOException {
     when(request.getReader()).thenReturn(
@@ -256,7 +249,6 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
-  /** When the user searches for a full name with a typo, the API will return nothing */
   @Test
   public void foundArtistWithWrongName() throws IOException {
     when(request.getReader()).thenReturn(
@@ -270,4 +262,18 @@ public final class AnalysisTest {
 
     Assert.assertEquals(expected, actual);
   }
+
+  @Test
+  public void artistIsABand() throws IOException {
+    when(request.getReader()).thenReturn(
+        new BufferedReader(new StringReader(gson.toJson(INCOMPLETE_BAND_NAME))));
+    artistServletUnderTest.doPost(request, response);
+    String responseString = responseWriter.toString();
+
+    List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
+    List<String> expected = Arrays.asList("Rammstein", "Otthein Rammstedt", "Rammstedt");
+
+
+    Assert.assertEquals(expected, actual);
+  }  
 }
