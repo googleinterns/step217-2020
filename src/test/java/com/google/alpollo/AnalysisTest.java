@@ -67,6 +67,8 @@ public final class AnalysisTest {
   private static final double NEGATIVE_SCORE = -2;
   private static final double POSITIVE_SCORE = 2;
 
+  private static final String FULL_ARTIST_NAME = "Eminem";
+
   @Before
   public void setUp() throws Exception {
     sentimentServletUnderTest = new SentimentServlet() {
@@ -212,6 +214,19 @@ public final class AnalysisTest {
   public void sentimentIsMixed() {
     String actual = AnalysisHelper.getInterpretation(NEUTRAL_SCORE, NON_NEUTRAL_MAGNITUDE);
     String expected = AnalysisHelper.MIXED;
+
+    Assert.assertEquals(expected, actual);
+  }
+
+  @Test
+  public void foundArtistWithFullName() throws IOException {
+    when(request.getReader()).thenReturn(
+        new BufferedReader(new StringReader(gson.toJson(FULL_ARTIST_NAME))));
+    artistServletUnderTest.doPost(request, response);
+    String responseString = responseWriter.toString();
+
+    List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
+    List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Bodied", "The Eminem Show");
 
     Assert.assertEquals(expected, actual);
   }
