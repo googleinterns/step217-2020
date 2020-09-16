@@ -3,6 +3,7 @@ package com.google.alpollo;
 import com.google.alpollo.helpers.AnalysisHelper;
 import com.google.alpollo.model.Lyrics;
 import com.google.alpollo.model.SongSentiment;
+import com.google.alpollo.servlets.AutocompleteArtistServlet;
 import com.google.alpollo.servlets.EntityServlet;
 import com.google.alpollo.servlets.SentimentServlet;
 import org.hamcrest.CoreMatchers;
@@ -53,6 +54,7 @@ public final class AnalysisTest {
   private HttpServletResponse response = mock(HttpServletResponse.class);
   private SentimentServlet sentimentServletUnderTest;
   private EntityServlet entityServletUnderTest;
+  private AutocompleteArtistServlet artistServletUnderTest;
   private StringWriter responseWriter;
 
   private static final Lyrics LYRICS_WITH_METADATA = new Lyrics("Google has found me some nice results!");
@@ -75,6 +77,13 @@ public final class AnalysisTest {
     };
 
     entityServletUnderTest = new EntityServlet() {
+      @Override
+      public ServletContext getServletContext() {
+        return mockServletContext;
+      }
+    };
+
+    artistServletUnderTest = new AutocompleteArtistServlet() {
       @Override
       public ServletContext getServletContext() {
         return mockServletContext;
