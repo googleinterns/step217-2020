@@ -1,6 +1,6 @@
 package com.google.alpollo.model;
 
-import com.google.alpollo.AnalysisHelper;
+import com.google.alpollo.helpers.AnalysisHelper;
 
 /**
  * Class created to store only sentiment score and magnitude, leaving the other

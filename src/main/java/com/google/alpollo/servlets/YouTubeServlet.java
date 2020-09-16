@@ -1,5 +1,7 @@
-package com.google.alpollo;
+package com.google.alpollo.servlets;
 
+import com.google.alpollo.helpers.ConfigHelper;
+import com.google.alpollo.helpers.YouTubeService;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.gson.Gson;
