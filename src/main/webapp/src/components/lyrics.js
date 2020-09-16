@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ReactAudioPlayer from 'react-audio-player';
+import AudioPlayer from 'material-ui-audio-player';
 import axios from "axios";
 
 /**
@@ -76,10 +76,8 @@ class Lyrics extends React.Component {
     return (
       <div>
         <Typography variant="h4">Lyrics</Typography>
-        <ReactAudioPlayer
+        <AudioPlayer
           src={this.state.speechUrl}
-          autoPlay
-          controls
         />
         <p style={{ whiteSpace: "pre-wrap" }}>{lyrics}</p>
       </div>
