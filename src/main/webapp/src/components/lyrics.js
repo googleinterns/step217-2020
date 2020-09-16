@@ -1,8 +1,28 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/styles";
+import { lighten } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import AudioPlayer from 'material-ui-audio-player';
 import axios from "axios";
+
+const styles = () => ({
+  root: {
+    '& *': {
+      marginBottom: '20px'
+    }
+  }
+});
+
+const StyledLinearProgress = withStyles({
+  root: {
+    backgroundColor: lighten('#000000', 0.5), 
+  },
+  bar: {
+    background: '#000000',
+  },
+})(LinearProgress);
 
 /**
  * Displays search component for song lyrics.
@@ -19,6 +39,8 @@ class Lyrics extends React.Component {
   }
 
   getSpeech = () => {
+    this.setState({ isLoading: true });
+
     axios
       .post("/text-to-speech", {
         lyrics: this.props.lyrics
@@ -45,6 +67,8 @@ class Lyrics extends React.Component {
   }
 
   render() {
+    const classes = this.props.classes;
+
     /**
      * Lyrics, returned by lyrics.ovh has `\n\n\n`
      * and `\r\n`.
@@ -55,12 +79,37 @@ class Lyrics extends React.Component {
     const lyrics = this.props.lyrics
       .replace(/\r\n/g, "\n")
       .replace(/\n\n\n/g, "\n\n");
+    
+    const speechUrl = this.state.speechUrl;
+
+    const AudioPlayerHTML = (
+      <AudioPlayer
+        src={speechUrl}
+      />);
+
+    const LoadingProgressHTML = (
+      <div>
+        <p>Loading audio file...</p>
+        <StyledLinearProgress/>
+      </div>
+    );
+
+    const AudioErrorHTML = (
+      <p>{`Couldn't load the audio, please try again later.`}</p>
+    );
+
+    const LyricsHTML = (AudioPlayerStatus) => { return (
+      <div className={classes.root}>
+        <Typography variant="h4">Lyrics</Typography>
+        {AudioPlayerStatus}
+        <p style={{ whiteSpace: "pre-wrap" }}>{lyrics}</p>
+      </div>);};
 
     if (this.state.error) {
       console.log(this.state.error.message)
       return (
         <div>
-          <p>{`Something went wrong, please try again later.`}</p>
+          {LyricsHTML(AudioErrorHTML)}
         </div>
       );
     }
@@ -68,21 +117,17 @@ class Lyrics extends React.Component {
     if (this.state.isLoading) {
       return (
         <div>
-          <CircularProgress style={{ color: "black" }} />
+          {LyricsHTML(LoadingProgressHTML)}
         </div>
       );
     }
 
-    return (
-      <div>
-        <Typography variant="h4">Lyrics</Typography>
-        <AudioPlayer
-          src={this.state.speechUrl}
-        />
-        <p style={{ whiteSpace: "pre-wrap" }}>{lyrics}</p>
-      </div>
-    );
+    return LyricsHTML(AudioPlayerHTML);
   }
 }
 
-export default Lyrics;
+Lyrics.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Lyrics);
