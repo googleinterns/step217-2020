@@ -2,6 +2,7 @@ package com.google.alpollo.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,10 +16,7 @@ import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.jayway.jsonpath.JsonPath;
 import org.json.simple.JSONArray;
@@ -44,6 +42,7 @@ public class AutocompleteArtistServlet extends HttpServlet {
       GenericUrl url = new GenericUrl("https://kgsearch.googleapis.com/v1/entities:search");
       url.put("query", artistName);
       url.put("limit", "5");
+      url.put("types", Arrays.asList("MusicGroup", "Person"));
       url.put("indent", "true");
       url.put("key", ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.API_KEY));
 

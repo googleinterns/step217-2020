@@ -226,7 +226,8 @@ public final class AnalysisTest {
     String responseString = responseWriter.toString();
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
-    List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Bodied", "The Eminem Show");
+    List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Bad Meets Evil", "Vincent Vinel");
+
 
     Assert.assertEquals(expected, actual);
   }
