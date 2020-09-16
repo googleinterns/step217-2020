@@ -28,6 +28,13 @@ import org.json.simple.parser.ParseException;
 public class AutocompleteArtistServlet extends HttpServlet {
   private final Gson gson = new Gson();
 
+  /**
+   * Making a POST request to this servlet with an artist's name in the body
+   * will make a call to the Knowledge Graph Search API and it will return a list of
+   * possible search results.
+   * 
+   * The artist's name doesn't necessarily have to be complete
+   */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String artistName;

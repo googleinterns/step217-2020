@@ -220,6 +220,10 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
+  /** 
+   * When the user searches for the correct name of the artist, it should appear in the 
+   * first 5 results.
+   */
   @Test
   public void foundArtistWithFullName() throws IOException {
     when(request.getReader()).thenReturn(
@@ -234,6 +238,10 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
+  /**
+   * When the user searches for an incomplete name, the artist should appear 
+   * in the first 5 results
+   */
   @Test
   public void foundArtistWithIncompleteName() throws IOException {
     when(request.getReader()).thenReturn(
@@ -248,6 +256,7 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
+  /** When the user searches for a full name with a typo, the API will return nothing */
   @Test
   public void foundArtistWithWrongName() throws IOException {
     when(request.getReader()).thenReturn(
