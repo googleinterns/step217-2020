@@ -3,7 +3,7 @@ package com.google.alpollo;
 import com.google.alpollo.helpers.AnalysisHelper;
 import com.google.alpollo.model.Lyrics;
 import com.google.alpollo.model.SongSentiment;
-import com.google.alpollo.servlets.AutocompleteArtistServlet;
+import com.google.alpollo.servlets.AutocompleteServlet;
 import com.google.alpollo.servlets.EntityServlet;
 import com.google.alpollo.servlets.SentimentServlet;
 import org.hamcrest.CoreMatchers;
@@ -54,7 +54,7 @@ public final class AnalysisTest {
   private HttpServletResponse response = mock(HttpServletResponse.class);
   private SentimentServlet sentimentServletUnderTest;
   private EntityServlet entityServletUnderTest;
-  private AutocompleteArtistServlet artistServletUnderTest;
+  private AutocompleteServlet autocompleteServletUnderTest;
   private StringWriter responseWriter;
 
   private static final Lyrics LYRICS_WITH_METADATA = new Lyrics("Google has found me some nice results!");
@@ -70,7 +70,12 @@ public final class AnalysisTest {
   private static final String FULL_ARTIST_NAME = "Eminem";
   private static final String INCOMPLETE_ARTIST_NAME = "Emine";
   private static final String WRONG_ARTIST_NAME = "Emnem";
-  private static final String INCOMPLETE_BAND_NAME = "Rammste" ;
+  private static final String INCOMPLETE_BAND_NAME = "Rammste";
+  private static final String INCOMPLETE_SONG_NAME = "Lost On";
+  private static final String SEARCH_STRING = "searchString";
+  private static final String TYPES = "types";
+  private static final String ARTIST_TYPES = "Person, MusicGroup";
+  private static final String SONG_TYPES = "MusicRecording";
 
   @Before
   public void setUp() throws Exception {
@@ -88,7 +93,7 @@ public final class AnalysisTest {
       }
     };
 
-    artistServletUnderTest = new AutocompleteArtistServlet() {
+    autocompleteServletUnderTest = new AutocompleteServlet() {
       @Override
       public ServletContext getServletContext() {
         return mockServletContext;
@@ -223,56 +228,52 @@ public final class AnalysisTest {
 
   @Test
   public void foundArtistWithFullName() throws IOException {
-    when(request.getReader()).thenReturn(
-        new BufferedReader(new StringReader(gson.toJson(FULL_ARTIST_NAME))));
-    artistServletUnderTest.doPost(request, response);
+    when(request.getParameter(SEARCH_STRING)).thenReturn(FULL_ARTIST_NAME);
+    when(request.getParameter(TYPES)).thenReturn(ARTIST_TYPES);
+    autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
     List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Bad Meets Evil", "Vincent Vinel");
-
 
     Assert.assertEquals(expected, actual);
   }
 
   @Test
   public void foundArtistWithIncompleteName() throws IOException {
-    when(request.getReader()).thenReturn(
-        new BufferedReader(new StringReader(gson.toJson(INCOMPLETE_ARTIST_NAME))));
-    artistServletUnderTest.doPost(request, response);
+    when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_ARTIST_NAME);
+    when(request.getParameter(TYPES)).thenReturn(ARTIST_TYPES);
+    autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
     List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Emine Erdoğan", "Emine Gülbahar Hatun");
-
 
     Assert.assertEquals(expected, actual);
   }
 
   @Test
   public void foundArtistWithWrongName() throws IOException {
-    when(request.getReader()).thenReturn(
-        new BufferedReader(new StringReader(gson.toJson(WRONG_ARTIST_NAME))));
-    artistServletUnderTest.doPost(request, response);
+    when(request.getParameter(SEARCH_STRING)).thenReturn(WRONG_ARTIST_NAME);
+    when(request.getParameter(TYPES)).thenReturn(ARTIST_TYPES);
+    autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
     List<String> expected = Arrays.asList();
-
 
     Assert.assertEquals(expected, actual);
   }
 
   @Test
   public void artistIsABand() throws IOException {
-    when(request.getReader()).thenReturn(
-        new BufferedReader(new StringReader(gson.toJson(INCOMPLETE_BAND_NAME))));
-    artistServletUnderTest.doPost(request, response);
+    when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_BAND_NAME);
+    when(request.getParameter(TYPES)).thenReturn(ARTIST_TYPES);;
+    autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
     List<String> expected = Arrays.asList("Rammstein", "Otthein Rammstedt", "Rammstedt");
-
 
     Assert.assertEquals(expected, actual);
   }  
