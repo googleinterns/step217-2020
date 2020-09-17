@@ -272,7 +272,7 @@ public final class AnalysisTest {
   @Test
   public void artistIsABand() throws IOException {
     when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_BAND_NAME);
-    when(request.getParameter(TYPE)).thenReturn(ARTIST);;
+    when(request.getParameter(TYPE)).thenReturn(ARTIST);
     autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
@@ -285,7 +285,7 @@ public final class AnalysisTest {
   @Test
   public void searchSongWithIncompleteName() throws IOException {
     when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_SONG_NAME);
-    when(request.getParameter(TYPE)).thenReturn(SONG);;
+    when(request.getParameter(TYPE)).thenReturn(SONG);
     autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
