@@ -59,7 +59,7 @@ public class SongEntity {
   } 
 
     SongEntity entity = (SongEntity) obj;
-    return DoubleMath.fuzzyEquals(salience, entity.salience, TOLERANCE)
+    return (Double.compare(salience, entity.salience) == 0)
         && (Objects.equals(name,entity.name))
         && (Objects.equals(type, entity.type))
         && (Objects.equals(wikiLink, entity.wikiLink));
@@ -68,6 +68,7 @@ public class SongEntity {
   @Override
   public int hashCode() {
     int hash = 7;
+    hash = 31 * hash + (int) Double.doubleToLongBits(salience);
     hash = 31 * hash + (name == null ? 0 : Objects.hashCode(name));
     hash = 31 * hash + (type == null ? 0 : Objects.hashCode(type));
     hash = 31 * hash + (wikiLink == null ? 0 : Objects.hashCode(wikiLink));

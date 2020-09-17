@@ -130,10 +130,10 @@ public final class AnalysisTest {
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
     List<SongEntity> expected = Arrays.asList(
-        new SongEntity("mountain", 0.90, Sets.newHashSet("OTHER", "LOCATION"), EMPTY_STRING),
-        new SongEntity("story", 0.05, Sets.newHashSet("WORK_OF_ART"), EMPTY_STRING),
-        new SongEntity("sale", 0.03, Sets.newHashSet("OTHER"), EMPTY_STRING),
-        new SongEntity("tale", 0.01, Sets.newHashSet("WORK_OF_ART"), EMPTY_STRING));
+        new SongEntity("mountain", 0.8993416801095009, Sets.newHashSet("OTHER", "LOCATION"), EMPTY_STRING),
+        new SongEntity("story", 0.05391406640410423, Sets.newHashSet("WORK_OF_ART"), EMPTY_STRING),
+        new SongEntity("sale", 0.031783707439899445, Sets.newHashSet("OTHER"), EMPTY_STRING),
+        new SongEntity("tale", 0.014960560016334057, Sets.newHashSet("WORK_OF_ART"), EMPTY_STRING));
     Assert.assertThat(actual, CoreMatchers.is(expected));
   }
 
@@ -149,16 +149,16 @@ public final class AnalysisTest {
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
     List<SongEntity> expected = Arrays.asList(
-        new SongEntity("seaside", 0.36, Sets.newHashSet("LOCATION"), EMPTY_STRING),
-        new SongEntity("source", 0.34, Sets.newHashSet("PERSON"), EMPTY_STRING),
-        new SongEntity("mountain", 0.05, Sets.newHashSet("OTHER", "LOCATION"), EMPTY_STRING),
-        new SongEntity("ones", 0.03, Sets.newHashSet("PERSON"), EMPTY_STRING),
-        new SongEntity("one", 0.03, Sets.newHashSet("PERSON", "UNRECOGNIZED"), EMPTY_STRING),
-        new SongEntity("love", 0.02, Sets.newHashSet("OTHER"), EMPTY_STRING),
-        new SongEntity("fire", 0.02, Sets.newHashSet("OTHER"), EMPTY_STRING),
-        new SongEntity("roundabout", 0.02, Sets.newHashSet("OTHER"), EMPTY_STRING),
-        new SongEntity("nights", 0.02, Sets.newHashSet("EVENT"), EMPTY_STRING),
-        new SongEntity("root", 0.01, Sets.newHashSet("OTHER"), EMPTY_STRING));
+        new SongEntity("seaside", 0.3589962422847748, Sets.newHashSet("LOCATION"), EMPTY_STRING),
+        new SongEntity("source", 0.3411712050437927, Sets.newHashSet("PERSON"), EMPTY_STRING),
+        new SongEntity("mountain", 0.0662671010941267, Sets.newHashSet("OTHER", "LOCATION"), EMPTY_STRING),
+        new SongEntity("ones", 0.03210622997721657, Sets.newHashSet("PERSON"), EMPTY_STRING),
+        new SongEntity("one", 0.027577804401516914, Sets.newHashSet("PERSON", "UNRECOGNIZED"), EMPTY_STRING),
+        new SongEntity("love", 0.01844923384487629, Sets.newHashSet("OTHER"), EMPTY_STRING),
+        new SongEntity("fire", 0.01844923384487629, Sets.newHashSet("OTHER"), EMPTY_STRING),
+        new SongEntity("roundabout", 0.01844923384487629, Sets.newHashSet("OTHER"), EMPTY_STRING),
+        new SongEntity("nights", 0.01844923384487629, Sets.newHashSet("EVENT"), EMPTY_STRING),
+        new SongEntity("root", 0.014146503061056137, Sets.newHashSet("OTHER"), EMPTY_STRING));
         
       Assert.assertThat(actual, CoreMatchers.is(expected));
   }
@@ -173,8 +173,8 @@ public final class AnalysisTest {
 
     List<SongEntity> actual = gson.fromJson(responseString, new TypeToken<List<SongEntity>>(){}.getType());
     List<SongEntity> expected = Arrays.asList(
-        new SongEntity("Google", 0.88, Sets.newHashSet("ORGANIZATION"), WIKI_LINK_GOOGLE),
-        new SongEntity("results", 0.12, Sets.newHashSet("OTHER"), EMPTY_STRING));
+        new SongEntity("Google", 0.8838967680931091, Sets.newHashSet("ORGANIZATION"), WIKI_LINK_GOOGLE),
+        new SongEntity("results", 0.11610323935747147, Sets.newHashSet("OTHER"), EMPTY_STRING));
 
       Assert.assertThat(actual, CoreMatchers.is(expected));
   }
