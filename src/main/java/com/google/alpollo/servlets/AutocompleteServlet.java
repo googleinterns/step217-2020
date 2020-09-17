@@ -29,6 +29,7 @@ public class AutocompleteServlet extends HttpServlet {
   private final Gson gson = new Gson();
   private final static String SEARCH_STRING = "searchString";
   private final static String TYPES = "types";
+  private final static String LIMIT = "10";
 
   /**
    * Making a POST request to this servlet with a search string and the types searched for
@@ -52,9 +53,8 @@ public class AutocompleteServlet extends HttpServlet {
 
       GenericUrl url = new GenericUrl("https://kgsearch.googleapis.com/v1/entities:search");
       url.put("query", searchString);
-      url.put("limit", "10");
+      url.put("limit", LIMIT);
       url.put("types", Arrays.asList(types.split(",")));
-      url.put("indent", "true");
       url.put("key", ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.API_KEY));
 
       HttpRequest autocompleteRequest = requestFactory.buildGetRequest(url);
