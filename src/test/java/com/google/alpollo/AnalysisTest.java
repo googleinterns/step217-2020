@@ -6,8 +6,6 @@ import com.google.alpollo.model.SongSentiment;
 import com.google.alpollo.servlets.AutocompleteServlet;
 import com.google.alpollo.servlets.EntityServlet;
 import com.google.alpollo.servlets.SentimentServlet;
-
-
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
