@@ -216,7 +216,7 @@ public final class AnalysisTest {
     List<SongEntity> duplicateList = Arrays.asList(
         new SongEntity("mountain", 0.03, Sets.newHashSet("OTHER"), EMPTY_STRING),
         new SongEntity("mountain", 0.04, Sets.newHashSet("OTHER"), EMPTY_STRING));
-    List<SongEntity> actual = AnalysisHelper.filterDuplicates(duplicateList);    
+    List<SongEntity> actual = AnalysisHelper.getFilteredTop10(duplicateList);    
     List<SongEntity> expected = Arrays.asList(
       new SongEntity("mountain", 0.07, Sets.newHashSet("OTHER"), EMPTY_STRING));
 

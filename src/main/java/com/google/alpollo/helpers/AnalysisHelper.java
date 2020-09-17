@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.google.alpollo.model.SongEntity;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.cloud.language.v1.AnalyzeEntitiesResponse;
@@ -106,16 +108,6 @@ public final class AnalysisHelper {
     return simplifiedEntityList;
   }
 
-  public static List<SongEntity> getTopSalientEntities(List<SongEntity> filteredList) {
-    filteredList.sort(SongEntity.ORDER_BY_SALIENCE_DESCENDING);
-
-    if (filteredList.size() <= MAX_ENTITIES) {
-      return filteredList;
-    } else {
-        return filteredList.subList(FIRST_ENTITY, MAX_ENTITIES);
-    }
-  }
-
   /**
    * Given the score and magnitude of a sentiment, this will return a general interpretation,
    * telling the user what the values mean.
@@ -136,7 +128,7 @@ public final class AnalysisHelper {
     return MIXED;
   }
 
-  public static List<SongEntity> filterDuplicates(List<SongEntity> list) {
+  public static List<SongEntity> getFilteredTop10(List<SongEntity> list) {
     HashMap<String, SongEntity> map = new HashMap<>(); 
 
     for (SongEntity entity : list) {
@@ -153,6 +145,9 @@ public final class AnalysisHelper {
       }
     }
 
-    return new ArrayList<SongEntity>(map.values());
+    return map.values().stream()
+    .sorted(SongEntity.ORDER_BY_SALIENCE_DESCENDING)
+    .limit(MAX_ENTITIES)
+    .collect(Collectors.toList());
   }
 }
