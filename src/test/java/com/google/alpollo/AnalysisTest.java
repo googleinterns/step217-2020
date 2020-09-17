@@ -71,7 +71,7 @@ public final class AnalysisTest {
   private static final String INCOMPLETE_ARTIST_NAME = "Emine";
   private static final String WRONG_ARTIST_NAME = "Emnem";
   private static final String INCOMPLETE_BAND_NAME = "Rammste";
-  private static final String INCOMPLETE_SONG_NAME = "Under The Influ";
+  private static final String INCOMPLETE_SONG_NAME = "master o";
   private static final String SEARCH_STRING = "searchString";
   private static final String TYPES = "types";
   private static final String ARTIST_TYPES = "Person, MusicGroup";
@@ -280,5 +280,18 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
-  
+  @Test
+  public void searchSongWithIncompleteName() throws IOException {
+    when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_SONG_NAME);
+    when(request.getParameter(TYPES)).thenReturn(SONG_TYPES);;
+    autocompleteServletUnderTest.doPost(request, response);
+    String responseString = responseWriter.toString();
+
+    List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
+    List<String> expected = Arrays.asList("Master of the House (Kono Uchi no Shu)", "Master of Xone",
+        "Master of No Mercy", "Master of the Dead", "Master of Time", "Master of Destiny",
+        "Master of Sleep", "Master of Art", "Master of the Universe", "Master of Puppets (Metallica cover)");
+
+    Assert.assertEquals(expected, actual);
+  }  
 }
