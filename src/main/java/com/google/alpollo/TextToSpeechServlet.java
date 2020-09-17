@@ -27,7 +27,7 @@ public class TextToSpeechServlet extends HttpServlet {
 
       byte[] audio = audioContents.toByteArray();
       response.setContentType("application/json;");
-      response.getWriter().println(new Gson().toJson(audio));
+      response.getWriter().println(gson.toJson(audio));
     } catch (Exception e) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
     }
