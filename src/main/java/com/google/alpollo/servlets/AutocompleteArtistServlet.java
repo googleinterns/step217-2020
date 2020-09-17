@@ -48,7 +48,7 @@ public class AutocompleteArtistServlet extends HttpServlet {
 
       GenericUrl url = new GenericUrl("https://kgsearch.googleapis.com/v1/entities:search");
       url.put("query", artistName);
-      url.put("limit", "5");
+      url.put("limit", "10");
       url.put("types", Arrays.asList("MusicGroup", "Person"));
       url.put("indent", "true");
       url.put("key", ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.API_KEY));
