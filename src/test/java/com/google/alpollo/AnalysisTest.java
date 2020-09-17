@@ -71,7 +71,7 @@ public final class AnalysisTest {
   private static final String INCOMPLETE_ARTIST_NAME = "Emine";
   private static final String WRONG_ARTIST_NAME = "Emnem";
   private static final String INCOMPLETE_BAND_NAME = "Rammste";
-  private static final String INCOMPLETE_SONG_NAME = "Lost On";
+  private static final String INCOMPLETE_SONG_NAME = "Under The Influ";
   private static final String SEARCH_STRING = "searchString";
   private static final String TYPES = "types";
   private static final String ARTIST_TYPES = "Person, MusicGroup";
@@ -234,7 +234,7 @@ public final class AnalysisTest {
     String responseString = responseWriter.toString();
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
-    List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Bad Meets Evil", "Vincent Vinel");
+    List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Vincent Vinel", "Figgkidd", "Peter Litvin");
 
     Assert.assertEquals(expected, actual);
   }
@@ -247,7 +247,9 @@ public final class AnalysisTest {
     String responseString = responseWriter.toString();
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
-    List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Emine Erdoğan", "Emine Gülbahar Hatun");
+    List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Emine Erdoğan",
+        "Emine Gülbahar Hatun", "Emine Ülker Tarhan", "Mihai Eminescu", "Emine Şenlikoğlu", 
+        "Cardinal Richelieu", "Gönül Ülkü");
 
     Assert.assertEquals(expected, actual);
   }
@@ -273,8 +275,10 @@ public final class AnalysisTest {
     String responseString = responseWriter.toString();
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
-    List<String> expected = Arrays.asList("Rammstein", "Otthein Rammstedt", "Rammstedt");
+    List<String> expected = Arrays.asList("Otthein Rammstedt", "Rammstein", "Rammstedt");
 
     Assert.assertEquals(expected, actual);
-  }  
+  }
+
+  
 }
