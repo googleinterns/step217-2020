@@ -28,8 +28,13 @@ import org.json.simple.parser.ParseException;
 public class AutocompleteServlet extends HttpServlet {
   private final Gson gson = new Gson();
   private final static String SEARCH_STRING = "searchString";
-  private final static String TYPES = "types";
+  private final static String TYPE = "type";
   private final static String LIMIT = "10";
+  private List<String> typeList;
+  private enum SearchType {
+    ARTIST,
+    SONG;
+  };
 
   /**
    * Making a POST request to this servlet with a search string and the types searched for
@@ -41,10 +46,21 @@ public class AutocompleteServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String searchString;
-    String types;
+    SearchType type;
     try {
       searchString = request.getParameter(SEARCH_STRING);
-      types = request.getParameter(TYPES);
+      type = SearchType.valueOf(request.getParameter(TYPE));
+      switch (type) {
+        case ARTIST:
+          typeList = Arrays.asList("Person", "MusicGroup");
+          break;
+        case SONG:
+          typeList = Arrays.asList("MusicRecording");
+          break;
+        default:
+          response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Type not supported.");
+          return;
+      }
 
       HttpTransport httpTransport = new NetHttpTransport();
       HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
@@ -54,7 +70,7 @@ public class AutocompleteServlet extends HttpServlet {
       GenericUrl url = new GenericUrl("https://kgsearch.googleapis.com/v1/entities:search");
       url.put("query", searchString);
       url.put("limit", LIMIT);
-      url.put("types", Arrays.asList(types.split(",")));
+      url.put("types", typeList);
       url.put("key", ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.API_KEY));
 
       HttpRequest autocompleteRequest = requestFactory.buildGetRequest(url);
