@@ -88,6 +88,6 @@ public class SongEntity {
   }
 
   public void setSalience(double newSalience) {
-    this.salience = newSalience;
+    salience = newSalience;
   }
 }
