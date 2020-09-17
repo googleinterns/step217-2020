@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import AutocompleteTextField from './autocompleteTextField';
 import axios from "axios";
 
 const styles = () => ({
@@ -78,10 +79,11 @@ class Search extends React.Component {
 
   /**
    * Save printed text to state while printing.
-   * @param {Event} event 
+   * @param {string} id id of the input field
+   * @param {string} value value of the input field
    */
-  handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+  handleChange(id, value) {
+    this.setState({ [id]: value });
     this.setState({ error: null, isLoading: false });
   }
 
@@ -140,13 +142,13 @@ class Search extends React.Component {
             noValidate
             autoComplete="off"
           >
-            <StyledTextField
+            <AutocompleteTextField
               className={classes.textField}
               id="artistName"
               label="Artist"
               variant="outlined"
-              value={this.state.artistName}
-              onChange={this.handleChange}
+              artistName={this.state.artistName}
+              handleChange={this.handleChange}
             />
             <StyledTextField
               className={classes.textField}
@@ -154,7 +156,7 @@ class Search extends React.Component {
               label="Song"
               variant="outlined"
               value={this.state.songName}
-              onChange={this.handleChange}
+              onChange={(event) => this.handleChange(event.target.id, event.target.value)}
             />
             <Button
               disabled={isDisabled}
