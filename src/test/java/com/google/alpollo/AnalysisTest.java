@@ -289,9 +289,9 @@ public final class AnalysisTest {
     String responseString = responseWriter.toString();
 
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
-    List<String> expected = Arrays.asList("Master of the House (Kono Uchi no Shu)", "Master of Xone",
-        "Master of No Mercy", "Master of the Dead", "Master of Time", "Master of Destiny",
-        "Master of Sleep", "Master of Art", "Master of the Universe", "Master of Puppets (Metallica cover)");
+    List<String> expected = Arrays.asList("Master of the House (Kono Uchi no Shu)", "Master Of Tiramisu",
+        "Master of Xone", "Master of No Mercy", "Master of the Dead", "Master of Time", "Master of Destiny",
+        "Master of Sleep", "Master of Art", "Master of the Universe");
 
     Assert.assertEquals(expected, actual);
   }  
@@ -303,6 +303,7 @@ public final class AnalysisTest {
     autocompleteServletUnderTest.doPost(request, response);
     
     verify(response).sendError(
-        HttpServletResponse.SC_BAD_REQUEST, "Type not supported.");
+        HttpServletResponse.SC_BAD_REQUEST,
+        "Type not supported.");
   }  
 }
