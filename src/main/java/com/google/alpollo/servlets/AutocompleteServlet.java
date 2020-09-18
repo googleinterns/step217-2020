@@ -37,11 +37,9 @@ public class AutocompleteServlet extends HttpServlet {
   };
 
   /**
-   * Making a POST request to this servlet with a search string and the types searched for
+   * Making a POST request to this servlet with a search string and the type searched for
    * as parameters will make a call to the Knowledge Graph Search API and it will return a list of
    * possible search results.
-   * 
-   * The artist's name doesn't necessarily have to be complete
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -75,12 +73,12 @@ public class AutocompleteServlet extends HttpServlet {
       JSONObject responseObject = (JSONObject) parser.parse(autocompleteResponse.parseAsString());
       JSONArray elements = (JSONArray) responseObject.get("itemListElement");
 
-      List<String> artists = new ArrayList<>();
+      List<String> results = new ArrayList<>();
       for (Object element : elements) {
-        artists.add(JsonPath.read(element, "$.result.name").toString());
+        results.add(JsonPath.read(element, "$.result.name").toString());
       }
 
-      String json = gson.toJson(artists);
+      String json = gson.toJson(results);
       response.setContentType("application/json");
       response.getWriter().println(json);
     } catch (JsonSyntaxException | JsonIOException | IOException | ParseException autoException) {
