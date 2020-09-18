@@ -4,6 +4,7 @@ import java.util.List;
 import com.google.alpollo.model.AnalysisInfo;
 import com.google.alpollo.model.Song;
 import com.google.alpollo.model.SongCounter;
+import com.google.alpollo.model.SearchHistory;
 
 /** Class that provides methods to work with the database. */
 public class SongDataBase {
@@ -17,6 +18,7 @@ public class SongDataBase {
       songCounter = new SongCounter(song);
     }
     songCounter.incrementSearchCounter();
+    saveInUserHistory(song);
     OfyService.ofy().save().entity(songCounter).now();
     return songCounter;
   }
@@ -46,5 +48,20 @@ public class SongDataBase {
   /** Returns the analysis info by song id. */
   public static AnalysisInfo getAnanlysisInfo(Long id) {
     return OfyService.ofy().load().type(AnalysisInfo.class).id(id).now();
+  }
+
+  /** Save search request to user history. */
+  public static void saveInUserHistory(Song song) {
+  //   SongCounter songCounter = OfyService.ofy().load().type(SearchHistory.class).id(song.id()).now();
+  //   if (songCounter == null) {
+  //     songCounter = new SongCounter(song);
+  //   }
+  //   songCounter.incrementSearchCounter();
+  //   saveInUserHistory(song);
+  }
+
+  /** Returns the list of the most requested songs from the user. */
+  public static List<SongCounter> searchHistory(String userId) {
+    return OfyService.ofy().load().type(SearchHistory.class).id(userId).now().getHistory();
   }
 }
