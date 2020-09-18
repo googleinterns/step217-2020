@@ -24,22 +24,38 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-@WebServlet("/autocomplete-artist")
-public class AutocompleteArtistServlet extends HttpServlet {
+@WebServlet("/autocomplete")
+public class AutocompleteServlet extends HttpServlet {
   private final Gson gson = new Gson();
+  private final static String SEARCH_STRING = "searchString";
+  private final static String TYPE = "type";
+  private final static String LIMIT = "10";
+  private List<String> typeList;
+  private enum SearchType {
+    ARTIST,
+    SONG;
+  };
 
   /**
-   * Making a POST request to this servlet with an artist's name in the body
-   * will make a call to the Knowledge Graph Search API and it will return a list of
+   * Making a POST request to this servlet with a search string and the type searched for
+   * as parameters will make a call to the Knowledge Graph Search API and it will return a list of
    * possible search results.
-   * 
-   * The artist's name doesn't necessarily have to be complete
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String artistName;
+    String searchString;
+    SearchType type;
     try {
-      artistName = gson.fromJson(request.getReader(), String.class);
+      searchString = request.getParameter(SEARCH_STRING);
+      type = SearchType.valueOf(request.getParameter(TYPE));
+      switch (type) {
+        case ARTIST:
+          typeList = Arrays.asList("Person", "MusicGroup");
+          break;
+        case SONG:
+          typeList = Arrays.asList("MusicRecording");
+          break;
+      }
 
       HttpTransport httpTransport = new NetHttpTransport();
       HttpRequestFactory requestFactory = httpTransport.createRequestFactory();
@@ -47,10 +63,9 @@ public class AutocompleteArtistServlet extends HttpServlet {
       JSONParser parser = new JSONParser();
 
       GenericUrl url = new GenericUrl("https://kgsearch.googleapis.com/v1/entities:search");
-      url.put("query", artistName);
-      url.put("limit", "5");
-      url.put("types", Arrays.asList("MusicGroup", "Person"));
-      url.put("indent", "true");
+      url.put("query", searchString);
+      url.put("limit", LIMIT);
+      url.put("types", typeList);
       url.put("key", ConfigHelper.getSensitiveData(this.getServletContext(), ConfigHelper.SENSITIVE_DATA.API_KEY));
 
       HttpRequest autocompleteRequest = requestFactory.buildGetRequest(url);
@@ -58,16 +73,18 @@ public class AutocompleteArtistServlet extends HttpServlet {
       JSONObject responseObject = (JSONObject) parser.parse(autocompleteResponse.parseAsString());
       JSONArray elements = (JSONArray) responseObject.get("itemListElement");
 
-      List<String> artists = new ArrayList<>();
+      List<String> results = new ArrayList<>();
       for (Object element : elements) {
-        artists.add(JsonPath.read(element, "$.result.name").toString());
+        results.add(JsonPath.read(element, "$.result.name").toString());
       }
 
-      String json = gson.toJson(artists);
+      String json = gson.toJson(results);
       response.setContentType("application/json");
       response.getWriter().println(json);
     } catch (JsonSyntaxException | JsonIOException | IOException | ParseException autoException) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, autoException.getMessage());
+    } catch (IllegalArgumentException enumException) {
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Type not supported.");
     }
   }
 }
