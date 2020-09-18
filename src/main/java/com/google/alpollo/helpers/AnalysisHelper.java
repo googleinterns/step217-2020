@@ -27,8 +27,6 @@ public final class AnalysisHelper {
   private static LanguageServiceSettings settings;
   /** How many entities we want in our TopSalientEntities list. (Top 10, Top 15 etc.)*/
   private static final int MAX_ENTITIES = 10;
-  /** The index where we start our top list from. */
-  private static final int FIRST_ENTITY = 0;
   public static final String NEUTRAL = "This song doesn't convey any positive or negative feelings.";
   public static final String NEGATIVE = "This song is predominantly negative.";
   public static final String POSITIVE = "This song is predominantly positive";
@@ -128,7 +126,7 @@ public final class AnalysisHelper {
     return MIXED;
   }
 
-  public static List<SongEntity> getFilteredTop10(List<SongEntity> list) {
+  public static List<SongEntity> getFilteredTopEntities(List<SongEntity> list) {
     HashMap<String, SongEntity> map = new HashMap<>(); 
 
     for (SongEntity entity : list) {

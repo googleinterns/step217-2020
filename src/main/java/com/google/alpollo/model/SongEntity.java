@@ -26,7 +26,6 @@ public class SongEntity {
   private Set<String> type;
   /** Some entities might have a wikipedia link attached to them. */
   @Index private String wikiLink;
-  private static final double TOLERANCE = 0.02;
 
   /** Objectify requires no argument constructor. Do not use it. */
   private SongEntity() { }
