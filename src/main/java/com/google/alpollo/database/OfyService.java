@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.database;
 
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
