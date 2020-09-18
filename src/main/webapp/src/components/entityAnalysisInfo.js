@@ -99,7 +99,7 @@ class EntityAnalysisInfo extends React.Component {
     function getTooltip(entity) {
       return '<div style="font-size:15px">' + entity.name + '<br>' 
           + '<b>Type: </b>' + entity.type + '<br>' 
-          + '<b>Salience: </b>' + entity.salience + '<br>' 
+          + '<b>Salience: </b>' + entity.salience.toFixed(2) + '<br>' 
           + ((entity.wikiLink !== "") ? 'Click for wiki link' : '')
           + '</div>';
     }
