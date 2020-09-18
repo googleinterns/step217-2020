@@ -42,25 +42,6 @@ const styles = () => ({
 });
 
 /**
- * Change TextField outline border default colors.
- */
-const StyledTextField = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "black",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#733F94",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "#733F94",
-      },
-    },
-  },
-})(TextField);
-
-/**
  * Displays search component for song lyrics.
  */
 class Search extends React.Component {
@@ -146,17 +127,19 @@ class Search extends React.Component {
               className={classes.textField}
               id="artistName"
               label="Artist"
+              type="ARTIST"
               variant="outlined"
-              artistName={this.state.artistName}
+              value={this.state.artistName}
               handleChange={this.handleChange}
             />
-            <StyledTextField
+            <AutocompleteTextField
               className={classes.textField}
               id="songName"
               label="Song"
+              type="SONG"
               variant="outlined"
               value={this.state.songName}
-              onChange={(event) => this.handleChange(event.target.id, event.target.value)}
+              handleChange={this.handleChange}
             />
             <Button
               disabled={isDisabled}

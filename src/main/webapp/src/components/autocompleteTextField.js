@@ -26,19 +26,14 @@ const StyledTextField = withStyles({
 })(TextField);
 
 export default function AutocompleteTextField(props) {
-  const [value, setValue] = React.useState(props.artistName);
+  const [value, setValue] = React.useState(props.value);
   const [options, setOptions] = React.useState([]);
 
   const fetch = React.useMemo(
     () =>
       throttle((request, callback) => {
         axios
-          .post("/autocomplete-artist", "\"" + request + "\"", {
-            headers: {
-              "Accept": "application/json",
-              "Content-type": "application/json"
-            }
-          })
+          .post(`/autocomplete?type=${props.type}&searchString=${request}`)
           .then((result) => result.data)
           .then((options) => callback(options));
       }, 200),
