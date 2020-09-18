@@ -59,10 +59,9 @@ public class TextToSpeechService {
 
       SynthesizeSpeechResponse response =
           textToSpeechClient.synthesizeSpeech(input, voice, audioConfig);
-      ByteString audioContents = response.getAudioContent();
 
-      return audioContents;
-    } catch (Exception e) {
+      return response.getAudioContent();
+    } catch (IOException e) {
       return null;
     }
   }
