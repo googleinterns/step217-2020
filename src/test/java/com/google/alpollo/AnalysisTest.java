@@ -74,10 +74,9 @@ public final class AnalysisTest {
   private static final String INCOMPLETE_SONG_NAME = "master o";
   private static final String SEARCH_STRING = "searchString";
   private static final String TYPE = "type";
-  private static final String ARTIST_TYPES = "Person, MusicGroup";
-  private static final String SONG_TYPES = "MusicRecording";
   private static final String ARTIST = "ARTIST";
   private static final String SONG = "SONG";
+  private static final String PAINTING = "PAINTING";
 
   @Before
   public void setUp() throws Exception {
@@ -295,5 +294,15 @@ public final class AnalysisTest {
         "Master of Sleep", "Master of Art", "Master of the Universe", "Master of Puppets (Metallica cover)");
 
     Assert.assertEquals(expected, actual);
+  }  
+
+  @Test
+  public void autocompleteBadTypeRequest() throws IOException {
+    when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_SONG_NAME);
+    when(request.getParameter(TYPE)).thenReturn(PAINTING);
+    autocompleteServletUnderTest.doPost(request, response);
+    
+    verify(response).sendError(
+        HttpServletResponse.SC_BAD_REQUEST, "Type not supported.");
   }  
 }

@@ -57,9 +57,6 @@ public class AutocompleteServlet extends HttpServlet {
         case SONG:
           typeList = Arrays.asList("MusicRecording");
           break;
-        default:
-          response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Type not supported.");
-          return;
       }
 
       HttpTransport httpTransport = new NetHttpTransport();
@@ -88,6 +85,8 @@ public class AutocompleteServlet extends HttpServlet {
       response.getWriter().println(json);
     } catch (JsonSyntaxException | JsonIOException | IOException | ParseException autoException) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, autoException.getMessage());
+    } catch (IllegalArgumentException enumException) {
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Type not supported.");
     }
   }
 }
