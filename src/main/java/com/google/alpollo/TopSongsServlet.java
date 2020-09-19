@@ -17,7 +17,7 @@ public class TopSongsServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    response.setContentType("application/json");
+    response.setContentType("application/json; charset=UTF-8");
 
     final List<SongCounter> songs = SongDataBase.topSongs();
     response.getWriter().write(gson.toJson(songs));
