@@ -1,19 +1,14 @@
 package com.google.alpollo;
 
+import com.google.cloud.translate.Detection;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.cloud.language.v1.LanguageServiceSettings;
 import com.google.cloud.texttospeech.v1.*;
 import com.google.protobuf.ByteString;
-
 import java.io.IOException;
 
 public class TextToSpeechService {
   private static TextToSpeechSettings settings;
-  /**
-   * Language code of the lyrics
-   * TODO: define language code from the text or receive it as an argument.
-   */
-  private static final String LANGUAGE_CODE = "en-US";
 
   private TextToSpeechService() {};
 
@@ -45,10 +40,15 @@ public class TextToSpeechService {
 
     try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create(settings)) {
       SynthesisInput input = SynthesisInput.newBuilder().setText(text).build();
+      final String languageCode = DetectLanguageService.detectLanguage(text, projectID);
+
+      if (languageCode == null) {
+        throw new IllegalArgumentException("Can't detect language of this text.");
+      }
 
       VoiceSelectionParams voice =
           VoiceSelectionParams.newBuilder()
-              .setLanguageCode(LANGUAGE_CODE)
+              .setLanguageCode(languageCode)
               .setSsmlGender(SsmlVoiceGender.NEUTRAL)
               .build();
 
