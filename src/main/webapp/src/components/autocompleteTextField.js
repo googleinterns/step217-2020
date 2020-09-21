@@ -41,11 +41,12 @@ export default function AutocompleteTextField(props) {
   );
 
   React.useEffect(() => {
-    let active = true;
-
+    // Don't suggest anything if the value is empty.
     if (value === '') {
-      return undefined;
+      return;
     }
+
+    let active = true;
 
     fetch(value, (results) => {
       if (active) {
