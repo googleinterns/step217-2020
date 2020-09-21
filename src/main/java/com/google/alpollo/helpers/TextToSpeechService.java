@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class TextToSpeechService {
   private static TextToSpeechSettings settings;
-  private static final String defaultLanguageCode = "en-US";
+  private static final String DEFAULT_LANGUAGE_CODE = "en-US";
 
   private TextToSpeechService() {}
 
@@ -44,7 +44,7 @@ public class TextToSpeechService {
       String languageCode = DetectLanguageService.detectLanguage(text, projectID);
 
       if (languageCode == null) {
-        languageCode = defaultLanguageCode;
+        languageCode = DEFAULT_LANGUAGE_CODE;
       }
 
       VoiceSelectionParams voice =
