@@ -44,7 +44,7 @@ public class DetectLanguageService {
    * @return code of the language with the largest confidence; {@code null} if language wasn't detected
    */
   public static String detectLanguage(String text, String projectID) throws IOException {
-    try (TranslationServiceClient client = createTranslationServiceClient(projectID);) {
+    try (TranslationServiceClient client = createTranslationServiceClient(projectID)) {
       LocationName parent = LocationName.of(projectID, "global");
 
       DetectLanguageRequest request =

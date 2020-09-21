@@ -12,7 +12,7 @@ public class TextToSpeechService {
   private static TextToSpeechSettings settings;
   private static final String defaultLanguageCode = "en-US";
 
-  private TextToSpeechService() {};
+  private TextToSpeechService() {}
 
   /**
    * Creates setting for TextToSpeech service. Adds special header to make it
