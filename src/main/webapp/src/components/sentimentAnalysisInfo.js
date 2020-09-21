@@ -126,6 +126,7 @@ class SentimentAnalysisInfo extends React.Component {
             <InfoIcon fontSize="inherit" />
           </LargeTextTooltip>
         </div>
+        <p>Interpretation: {this.state.sentimentAnalysisInfo.interpretation}</p>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.servlets;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,6 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.alpollo.helpers.AnalysisHelper;
+import com.google.alpollo.helpers.ConfigHelper;
 import com.google.alpollo.model.Lyrics;
 import com.google.alpollo.model.SongEntity;
 import com.google.cloud.language.v1.Entity;
@@ -27,8 +30,7 @@ public class EntityServlet extends HttpServlet {
       // Get the Entity list from the API
       List<Entity> entityList = AnalysisHelper.getEntityList(projectID, lyrics);
       List<SongEntity> simplifiedEntityList = AnalysisHelper.getSimplifiedEntityList(entityList);
-      List<SongEntity> topSalientEntities = AnalysisHelper.getTopSalientEntities(simplifiedEntityList);
-
+      List<SongEntity> topSalientEntities = AnalysisHelper.getFilteredTopEntities(simplifiedEntityList);
       String json = gson.toJson(topSalientEntities);
       response.setContentType("application/json; charset=UTF-8");
       response.getWriter().println(json);

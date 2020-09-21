@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.servlets;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
