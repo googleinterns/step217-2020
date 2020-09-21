@@ -302,17 +302,6 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }  
 
-  @Test
-  public void autocompleteBadTypeRequest() throws IOException {
-    when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_SONG_NAME);
-    when(request.getParameter(TYPE)).thenReturn(PAINTING);
-    autocompleteServletUnderTest.doPost(request, response);
-    
-    verify(response).sendError(
-        HttpServletResponse.SC_BAD_REQUEST,
-        "Type not supported.");
-  }
-
   public void duplicateEntitiesWithSameType() {
     List<SongEntity> duplicateList = Arrays.asList(
         new SongEntity("mountain", 0.03, Sets.newHashSet("OTHER"), EMPTY_STRING),
