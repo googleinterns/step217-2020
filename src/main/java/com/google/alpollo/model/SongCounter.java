@@ -32,4 +32,8 @@ public class SongCounter {
   public int getSearchCounter() {
     return searchCounter;
   }
+
+  public void setSearchCounter(int searchCounter) {
+    this.searchCounter = searchCounter;
+  }
 }
