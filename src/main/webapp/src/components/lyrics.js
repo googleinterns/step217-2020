@@ -1,5 +1,31 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/styles";
+import { lighten } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
+import LinearProgress from '@material-ui/core/LinearProgress';
+import AudioPlayer from 'material-ui-audio-player';
+import axios from "axios";
+
+const styles = () => ({
+  root: {
+    minWidth: "300px",
+    display: "flex",
+    flexDirection: "column"
+  },
+  audio: {
+    margin: "20px 0 20px 0",
+  }
+});
+
+const StyledLinearProgress = withStyles({
+  root: {
+    backgroundColor: lighten('#000000', 0.5), 
+  },
+  bar: {
+    background: '#000000',
+  },
+})(LinearProgress);
 
 /**
  * Displays search component for song lyrics.
@@ -7,9 +33,45 @@ import Typography from "@material-ui/core/Typography";
 class Lyrics extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      speechUrl: undefined,
+      isLoading: false,
+      error: null,
+    };
+  }
+
+  getSpeech = () => {
+    this.setState({ isLoading: true });
+
+    axios
+      .post("/text-to-speech", {
+        lyrics: this.props.lyrics
+      })
+      .then((result) => result.data)
+      .then((json) => {
+        const blob = new Blob([new Uint8Array(json)], { type: "audio/mp3" });
+        const url = URL.createObjectURL(blob);
+        this.setState({
+          speechUrl: url,
+          isLoading: false,
+        })
+      })
+      .catch((error) =>
+        this.setState({
+          error,
+          isLoading: false,
+        })
+      );
+  }
+
+  componentDidMount() {
+    this.getSpeech();
   }
 
   render() {
+    const classes = this.props.classes;
+
     /**
      * Lyrics, returned by lyrics.ovh has `\n\n\n`
      * and `\r\n`.
@@ -20,14 +82,57 @@ class Lyrics extends React.Component {
     const lyrics = this.props.lyrics
       .replace(/\r\n/g, "\n")
       .replace(/\n\n\n/g, "\n\n");
+    
+    const speechUrl = this.state.speechUrl;
 
-    return (
+    const AudioPlayerHTML = (
+      <AudioPlayer
+        src={speechUrl}
+      />);
+
+    const LoadingProgressHTML = (
       <div>
-        <Typography variant="h4">Lyrics</Typography>
-        <p style={{ whiteSpace: "pre-wrap" }}>{lyrics}</p>
+        <p>Loading audio file...</p>
+        <StyledLinearProgress/>
       </div>
     );
+
+    const AudioErrorHTML = (
+      <p>{`Couldn't load the audio, please try again later.`}</p>
+    );
+
+    const LyricsHTML = (AudioPlayerStatus) => { return (
+      <div className={classes.root}>
+        <Typography variant="h4">Lyrics</Typography>
+        <div className={classes.audio}>
+          {AudioPlayerStatus}
+        </div>
+        <p style={{ whiteSpace: "pre-wrap" }}>{lyrics}</p>
+      </div>);};
+
+    if (this.state.error) {
+      console.error(this.state.error)
+      return (
+        <div>
+          {LyricsHTML(AudioErrorHTML)}
+        </div>
+      );
+    }
+
+    if (this.state.isLoading) {
+      return (
+        <div>
+          {LyricsHTML(LoadingProgressHTML)}
+        </div>
+      );
+    }
+
+    return LyricsHTML(AudioPlayerHTML);
   }
 }
 
-export default Lyrics;
+Lyrics.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Lyrics);
