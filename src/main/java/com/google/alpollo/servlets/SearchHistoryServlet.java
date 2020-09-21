@@ -11,6 +11,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.alpollo.database.SongDataBase;
 
 /** Servlet that returns a list of no more than 10 songs that the user most searched for. */
 @WebServlet("/top")
@@ -22,9 +23,9 @@ public class SearchHistoryServlet extends HttpServlet {
     response.setContentType("application/json");
 
     UserService userService = UserServiceFactory.getUserService();
-    String userId = userService.getCurrentUser().getUserId();
-
+    
     if (userService.isUserLoggedIn()) {
+    String userId = userService.getCurrentUser().getUserId();
       final List<SongCounter> songs = SongDataBase.searchHistory(userId);
       response.getWriter().write(gson.toJson(songs));
     } else {

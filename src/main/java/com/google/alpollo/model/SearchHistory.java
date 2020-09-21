@@ -19,11 +19,8 @@ public class SearchHistory {
   /** Objectify requires no argument constructor. Do not use it. */
   private SearchHistory() { }
 
-  public SearchHistory(String userId) {
+  public SearchHistory(String userId, SongCounter song) {
     id = userId;
-  }
-
-  public void addSong(SongCounter song) {
     history.add(song);
   }
 
