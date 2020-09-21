@@ -1,5 +1,7 @@
-package com.google.alpollo;
+package com.google.alpollo.servlets;
 
+import com.google.alpollo.helpers.ConfigHelper;
+import com.google.alpollo.helpers.TextToSpeechService;
 import com.google.alpollo.model.Lyrics;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;

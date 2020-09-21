@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.helpers;
 
 import com.google.cloud.translate.v3.DetectLanguageRequest;
 import com.google.cloud.translate.v3.DetectedLanguage;

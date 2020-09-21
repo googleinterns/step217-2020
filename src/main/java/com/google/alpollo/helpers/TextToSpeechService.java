@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.helpers;
 
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.cloud.texttospeech.v1.*;
