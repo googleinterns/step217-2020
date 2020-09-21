@@ -37,10 +37,11 @@ public class DetectLanguageService {
   }
 
   /**
-   * Generates speech audio file from the text.
+   * Detects language of the text
    *
-   * @param text the text for convertion
-   * @return ByteString of audio; {@code null} if something went wrong
+   * @param text the text for language detection
+   * @param projectID ID of the project
+   * @return code of the language with the largest confidence; {@code null} if language wasn't detected
    */
   public static String detectLanguage(String text, String projectID) throws IOException {
     try (TranslationServiceClient client = createTranslationServiceClient(projectID);) {
