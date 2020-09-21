@@ -30,7 +30,6 @@ public class AutocompleteServlet extends HttpServlet {
   private final static String SEARCH_STRING = "searchString";
   private final static String TYPE = "type";
   private final static String LIMIT = "10";
-  private List<String> typeList;
   private enum SearchType {
     ARTIST,
     SONG;
@@ -43,11 +42,10 @@ public class AutocompleteServlet extends HttpServlet {
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String searchString;
-    SearchType type;
+    List<String> typeList;
     try {
-      searchString = request.getParameter(SEARCH_STRING);
-      type = SearchType.valueOf(request.getParameter(TYPE));
+      String searchString = request.getParameter(SEARCH_STRING);
+      SearchType type = SearchType.valueOf(request.getParameter(TYPE));
       switch (type) {
         case ARTIST:
           typeList = Arrays.asList("Person", "MusicGroup");
@@ -55,6 +53,8 @@ public class AutocompleteServlet extends HttpServlet {
         case SONG:
           typeList = Arrays.asList("MusicRecording");
           break;
+        default:
+          typeList = new ArrayList<>();
       }
 
       HttpTransport httpTransport = new NetHttpTransport();
