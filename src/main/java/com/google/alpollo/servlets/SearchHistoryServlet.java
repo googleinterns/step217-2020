@@ -25,7 +25,7 @@ public class SearchHistoryServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     
     if (userService.isUserLoggedIn()) {
-    String userId = userService.getCurrentUser().getUserId();
+      String userId = userService.getCurrentUser().getUserId();
       final List<Song> songs = SongDataBase.searchHistory(userId);
       response.getWriter().write(gson.toJson(songs));
     } else {

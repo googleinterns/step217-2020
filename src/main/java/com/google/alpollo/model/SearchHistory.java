@@ -8,6 +8,8 @@ import java.util.Comparator;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Stringify;
+import com.google.alpollo.database.SongStringifier;
 
 /** 
  * Represents the structure of user's searc history.
@@ -16,7 +18,8 @@ import com.googlecode.objectify.annotation.Entity;
 @Entity
 public class SearchHistory {
   @Id private String id;
-  @Index private HashMap<Song, Integer> history = new HashMap<>();
+  @Stringify(SongStringifier.class)
+  private HashMap<Song, Integer> history = new HashMap<>();
   /** Number of the songs that will be shown to the user. */
   private static final int TOP_SIZE = 10;
 
@@ -40,11 +43,11 @@ public class SearchHistory {
   public List<Song> getHistory() {
     // sort by values and then add only top 10 songs to result list 
     List<Song> sortedSongs = new ArrayList<>();
-    history.entrySet()
-        .stream()
-        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-        .limit(TOP_SIZE)
-        .forEachOrdered(x -> sortedSongs.add(x.getKey()));
+//    history.entrySet()
+//        .stream()
+//        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+//        .limit(TOP_SIZE)
+//        .forEachOrdered(x -> sortedSongs.add(x.getKey()));
     return sortedSongs;
   }
 }
