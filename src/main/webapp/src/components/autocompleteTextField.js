@@ -33,7 +33,7 @@ export default function AutocompleteTextField(props) {
     () =>
       throttle((request, callback) => {
         axios
-          .post(`/autocomplete?type=${props.type}&searchString=${request}`)
+          .post(`/autocomplete`, { type: props.type, searchString: request })
           .then((result) => result.data)
           .then((options) => callback(options));
       }, 200),
