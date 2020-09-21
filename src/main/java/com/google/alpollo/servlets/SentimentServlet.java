@@ -1,10 +1,13 @@
-package com.google.alpollo;
+package com.google.alpollo.servlets;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.alpollo.helpers.AnalysisHelper;
+import com.google.alpollo.helpers.ConfigHelper;
 import com.google.alpollo.model.Lyrics;
 import com.google.alpollo.model.SongSentiment;
 import com.google.cloud.language.v1.Sentiment;

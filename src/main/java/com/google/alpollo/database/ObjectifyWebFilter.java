@@ -1,3 +1,5 @@
+package com.google.alpollo.database;
+
 import javax.servlet.annotation.WebFilter;
 import com.googlecode.objectify.ObjectifyFilter;
 

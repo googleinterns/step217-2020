@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.helpers;
 
 import com.google.gson.Gson;
 import java.io.*;

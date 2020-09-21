@@ -1,5 +1,7 @@
-package com.google.alpollo;
+package com.google.alpollo.servlets;
 
+import com.google.alpollo.helpers.ConfigHelper;
+import com.google.alpollo.helpers.TextToSpeechService;
 import com.google.alpollo.model.Lyrics;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
@@ -28,8 +30,6 @@ public class TextToSpeechServlet extends HttpServlet {
       byte[] audio = audioContents.toByteArray();
       response.setContentType("application/json;");
       response.getWriter().println(gson.toJson(audio));
-    } catch (IllegalArgumentException notDetectedLanguageException) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, notDetectedLanguageException.getMessage());
     } catch (Exception e) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
     }

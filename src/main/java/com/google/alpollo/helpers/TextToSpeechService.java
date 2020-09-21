@@ -1,16 +1,18 @@
-package com.google.alpollo;
+package com.google.alpollo.helpers;
 
-import com.google.cloud.translate.Detection;
 import com.google.api.gax.rpc.FixedHeaderProvider;
-import com.google.cloud.language.v1.LanguageServiceSettings;
 import com.google.cloud.texttospeech.v1.*;
 import com.google.protobuf.ByteString;
 import java.io.IOException;
 
+/**
+ * Contains methods for converting text to speech.
+ */
 public class TextToSpeechService {
   private static TextToSpeechSettings settings;
+  private static final String DEFAULT_LANGUAGE_CODE = "en-US";
 
-  private TextToSpeechService() {};
+  private TextToSpeechService() {}
 
   /**
    * Creates setting for TextToSpeech service. Adds special header to make it
@@ -18,7 +20,7 @@ public class TextToSpeechService {
    * @param projectID
    * @throws IOException
    */
-  private static void createTextToSpeechSettings(String projectID) throws IOException {
+  private static TextToSpeechClient createTextToSpeechClient(String projectID) throws IOException {
     if (projectID == null) {
       throw new IllegalStateException("Project ID wasn't defined.");
     }
@@ -27,23 +29,22 @@ public class TextToSpeechService {
       settings = TextToSpeechSettings.newBuilder().setHeaderProvider(
           FixedHeaderProvider.create("X-Goog-User-Project", projectID)).build();
     }
+
+    return TextToSpeechClient.create(settings);
   }
 
   /**
    * Generates speech audio file from the text.
    *
    * @param text the text for convertion
-   * @return ByteString of audio; {@code null} if something went wrong
+   * @return ByteString of audio; {@code null} if we couldn't synthesize speech from the text.
    */
   public static ByteString convertTextToSpeech(String text, String projectID) throws IOException {
-    createTextToSpeechSettings(projectID);
-
-    try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create(settings)) {
-      SynthesisInput input = SynthesisInput.newBuilder().setText(text).build();
-      final String languageCode = DetectLanguageService.detectLanguage(text, projectID);
+    try (TextToSpeechClient textToSpeechClient = createTextToSpeechClient(projectID)) {
+      String languageCode = DetectLanguageService.detectLanguage(text, projectID);
 
       if (languageCode == null) {
-        throw new IllegalArgumentException("Can't detect language of this text.");
+        languageCode = DEFAULT_LANGUAGE_CODE;
       }
 
       VoiceSelectionParams voice =
@@ -57,6 +58,7 @@ public class TextToSpeechService {
               .setAudioEncoding(AudioEncoding.MP3)
               .build();
 
+      SynthesisInput input = SynthesisInput.newBuilder().setText(text).build();
       SynthesizeSpeechResponse response =
           textToSpeechClient.synthesizeSpeech(input, voice, audioConfig);
 

@@ -111,7 +111,7 @@ class Lyrics extends React.Component {
       </div>);};
 
     if (this.state.error) {
-      console.log(this.state.error.message)
+      console.error(this.state.error)
       return (
         <div>
           {LyricsHTML(AudioErrorHTML)}
