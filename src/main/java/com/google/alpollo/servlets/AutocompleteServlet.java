@@ -81,7 +81,7 @@ public class AutocompleteServlet extends HttpServlet {
 
       List<String> results = new ArrayList<>();
       for (Object element : elements) {
-        results.add(JsonPath.read(element, "$.result.name").toString());
+        results.add(JsonPath.read(element, "$.result.name").toString().replace("\"", ""));
       }
 
       String json = gson.toJson(results);
