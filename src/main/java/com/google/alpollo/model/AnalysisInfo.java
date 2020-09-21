@@ -18,6 +18,8 @@ public class AnalysisInfo {
   @Index private float score;
   /** Magnitude tells us how strong the main sentiment of the song is, ranging from 0.0 to +inf. */
   @Index private float magnitude;
+  /** Based on the score and magnitude of a sentiment, we can make up an interpretation of these values. */
+  @Index private String interpretation;
   /** TopSalientEntities is a list containing the 10 most important words, given the song context. */
   @Index private List<SongEntity> topSalientEntities;
   @Index private String lyrics;
@@ -27,12 +29,13 @@ public class AnalysisInfo {
   /** Objectify requires no argument constructor. Do not use it. */
   private AnalysisInfo() { }
   
-  public AnalysisInfo(Song song, float score, float magnitude,
+  public AnalysisInfo(Song song, float score, float magnitude, String interpretation,
       List<SongEntity> topSalientEntities, String lyrics, List<String> youTubeIds) {
     this.id = song.id();
     this.song = song;
     this.score = score;
     this.magnitude = magnitude;
+    this.interpretation = interpretation;
     this.topSalientEntities = topSalientEntities;
     this.lyrics = lyrics;
     this.youTubeIds = youTubeIds;
