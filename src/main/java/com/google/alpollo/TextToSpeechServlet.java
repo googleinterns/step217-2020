@@ -28,8 +28,6 @@ public class TextToSpeechServlet extends HttpServlet {
       byte[] audio = audioContents.toByteArray();
       response.setContentType("application/json;");
       response.getWriter().println(gson.toJson(audio));
-    } catch (IllegalArgumentException notDetectedLanguageException) {
-      response.sendError(HttpServletResponse.SC_BAD_REQUEST, notDetectedLanguageException.getMessage());
     } catch (Exception e) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
     }

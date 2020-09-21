@@ -1,7 +1,6 @@
 package com.google.alpollo;
 
 import com.google.cloud.translate.v3.DetectLanguageRequest;
-import com.google.cloud.translate.v3.DetectLanguageResponse;
 import com.google.cloud.translate.v3.DetectedLanguage;
 import com.google.cloud.translate.v3.LocationName;
 import com.google.cloud.translate.v3.TranslationServiceClient;
@@ -10,6 +9,9 @@ import com.google.api.gax.rpc.FixedHeaderProvider;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Class that contains method for detecting the language of the lyrics.
+ */
 public class DetectLanguageService {
   private static TranslationServiceSettings settings;
 
@@ -21,7 +23,7 @@ public class DetectLanguageService {
    * @param projectID
    * @throws IOException
    */
-  private static void createTranslationServiceSettings(String projectID) throws IOException {
+  private static TranslationServiceClient createTranslationServiceClient(String projectID) throws IOException {
     if (projectID == null) {
       throw new IllegalStateException("Project ID wasn't defined.");
     }
@@ -30,6 +32,8 @@ public class DetectLanguageService {
       settings = TranslationServiceSettings.newBuilder().setHeaderProvider(
           FixedHeaderProvider.create("X-Goog-User-Project", projectID)).build();
     }
+
+    return TranslationServiceClient.create(settings);
   }
 
   /**
@@ -39,9 +43,7 @@ public class DetectLanguageService {
    * @return ByteString of audio; {@code null} if something went wrong
    */
   public static String detectLanguage(String text, String projectID) throws IOException {
-    createTranslationServiceSettings(projectID);
-
-    try (TranslationServiceClient client = TranslationServiceClient.create(settings)) {
+    try (TranslationServiceClient client = createTranslationServiceClient(projectID);) {
       LocationName parent = LocationName.of(projectID, "global");
 
       DetectLanguageRequest request =
@@ -53,8 +55,8 @@ public class DetectLanguageService {
 
       List<DetectedLanguage> response = client.detectLanguage(request).getLanguagesList();
 
-      /* Return null if language wasn't detected or 
-         return the code of the language with the largest confidence. */
+      // Return null if language wasn't detected or
+      // return the code of the language with the largest confidence.
       if (response.isEmpty()) {
         return null;
       } else {
