@@ -1,6 +1,6 @@
 package com.google.alpollo;
 
-import com.google.alpollo.model.SongCounter;
+import com.google.alpollo.model.Song;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +26,7 @@ public class SearchHistoryServlet extends HttpServlet {
     
     if (userService.isUserLoggedIn()) {
     String userId = userService.getCurrentUser().getUserId();
-      final List<SongCounter> songs = SongDataBase.searchHistory(userId);
+      final List<Song> songs = SongDataBase.searchHistory(userId);
       response.getWriter().write(gson.toJson(songs));
     } else {
       response.getWriter().write(gson.toJson("Please authorize :)"));

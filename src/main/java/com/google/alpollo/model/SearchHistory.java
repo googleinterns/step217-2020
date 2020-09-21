@@ -14,7 +14,7 @@ import com.googlecode.objectify.annotation.Entity;
 @Entity
 public class SearchHistory {
   @Id private String id;
-  @Index private HashSet<SongCounter> history = new HashSet<>();
+  @Index private HashSet<Song> history = new HashSet<>();
 
   /** Objectify requires no argument constructor. Do not use it. */
   private SearchHistory() { }
@@ -23,11 +23,11 @@ public class SearchHistory {
     id = userId;
   }
 
-  public void addSearchRequest(SongCounter song) {
+  public void addSearchRequest(Song song) {
     history.add(song);
   }
 
-  public List<SongCounter> getHistory() {
+  public List<Song> getHistory() {
     return new ArrayList<>(history);
   }
 }

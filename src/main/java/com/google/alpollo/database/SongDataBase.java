@@ -64,13 +64,13 @@ public class SongDataBase {
       if (searchHistory == null) {
         searchHistory = new SearchHistory(userId);
       }
-      searchHistory.addSearchRequest(new SongCounter(song));
+      searchHistory.addSearchRequest(song);
       OfyService.ofy().save().entity(searchHistory).now();
     } 
   }
 
   /** Returns the list of the most requested songs from the user. */
-  public static List<SongCounter> searchHistory(String userId) {
+  public static List<Song> searchHistory(String userId) {
     SearchHistory searchHistory = OfyService.ofy().load().type(SearchHistory.class).id(userId).now();
     if (searchHistory == null) {
       return new ArrayList<>();
