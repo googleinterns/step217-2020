@@ -30,7 +30,7 @@ public class YouTubeServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Gson gson = new Gson();
-    response.setContentType("application/json");
+    response.setContentType("application/json; charset=UTF-8");
     String query = request.getParameter("query");
     if (query.equals("")){
       response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Empty query.");
