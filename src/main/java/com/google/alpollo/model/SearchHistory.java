@@ -43,11 +43,11 @@ public class SearchHistory {
   public List<Song> getHistory() {
     // sort by values and then add only top 10 songs to result list 
     List<Song> sortedSongs = new ArrayList<>();
-//    history.entrySet()
-//        .stream()
-//        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-//        .limit(TOP_SIZE)
-//        .forEachOrdered(x -> sortedSongs.add(x.getKey()));
+   history.entrySet()
+       .stream()
+       .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+       .limit(TOP_SIZE)
+       .forEachOrdered(x -> sortedSongs.add(x.getKey()));
     return sortedSongs;
   }
 }

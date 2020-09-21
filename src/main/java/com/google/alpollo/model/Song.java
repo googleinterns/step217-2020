@@ -11,7 +11,7 @@ public class Song {
   /** For counting hashcode. */
   private static final long BIG_PRIME_NUMBER = 2_147_483_647;
   /** To separate the artist name and the name of the song. */
-  private static final String SEPARATOR = "&^*$|~@#";
+  private static final String SEPARATOR = "±";
 
   /** Objectify requires no argument constructor. Do not use it. */
   private Song() { }
