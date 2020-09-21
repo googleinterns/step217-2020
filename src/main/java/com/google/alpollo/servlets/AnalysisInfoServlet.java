@@ -26,7 +26,7 @@ public class AnalysisInfoServlet extends HttpServlet {
     long songId = gson.fromJson(request.getParameter(SONG_ID), Long.class);
     AnalysisInfo analysisInfo = SongDataBase.getAnanlysisInfo(songId);
 
-    response.setContentType("application/json;");
+    response.setContentType("application/json; charset=UTF-8");
     try {
       response.getWriter().println(gson.toJson(analysisInfo));
     } catch (IOException e) {
