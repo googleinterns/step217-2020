@@ -102,7 +102,7 @@ class EntityAnalysisInfo extends React.Component {
           + '<b>Salience: </b>' + entity.salience.toFixed(2) + '<br>' 
           + ((entity.wikiLink !== "") ? 'Click for wiki link' : '')
           + '</div>';
-    }
+    } 
 
     /** Array that holds the data that will be displayed by the chart. */
     var top10WordsData = [];
@@ -132,7 +132,7 @@ class EntityAnalysisInfo extends React.Component {
      */
     top10WordsData.push(['Word and Type', 'Importance', customTooltip])
     this.state.entityAnalysisInfo.forEach((entity) => {
-      top10WordsData.push([entity.name + ' (' + entity.type + ')', entity.salience, getTooltip(entity)]);
+      top10WordsData.push([entity.name + ' (' + entity.type + ')', Number(entity.salience.toFixed(2)), getTooltip(entity)]);
       top10WordsLinks.push(entity.wikiLink);
     })
 
