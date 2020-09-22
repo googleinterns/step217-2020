@@ -42,6 +42,10 @@ public class AutocompleteServlet extends HttpServlet {
     ARTIST, SONG;
   };
 
+  public AutocompleteServlet() {
+    configJsonPathWithGson();
+  }
+
   /**
    * Making a POST request to this servlet with a search string and the type
    * searched for as parameters will make a call to the Knowledge Graph Search API
@@ -75,7 +79,6 @@ public class AutocompleteServlet extends HttpServlet {
 
       HttpRequest autocompleteRequest = requestFactory.buildGetRequest(url);
       HttpResponse autocompleteResponse = autocompleteRequest.execute();
-      configJsonPathWithGson();
       JsonObject responseObject = (JsonObject) JsonParser.parseString(autocompleteResponse.parseAsString());
       JsonArray elements = (JsonArray) responseObject.get("itemListElement");
 
@@ -94,7 +97,7 @@ public class AutocompleteServlet extends HttpServlet {
     }
   }
 
-  private void configJsonPathWithGson() {
+  private static void configJsonPathWithGson() {
     Configuration.setDefaults(new Configuration.Defaults() {
       private final JsonProvider jsonProvider = new GsonJsonProvider();
       private final MappingProvider mappingProvider = new GsonMappingProvider();
