@@ -33,7 +33,7 @@ public final class DataBaseTest {
    * We save 10 songs to database and this constant provides us to check adding more then 10 songs, 
    * in this case 15, but we can change. 
    */
-  private static final int MORE_THAN_TEN = 15;
+  private static final int NUM_OF_ACCEPTED_SONGS = 15;
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -55,7 +55,7 @@ public final class DataBaseTest {
     this.helper.tearDown();
   }
 
-  /** Check that at the begining database is empty. */
+  /** Check that at the beginning database is empty. */
   @Test
   public void noRequests() {
     Assert.assertEquals(new ArrayList<SongCounter>(), SongDataBase.topSongs());
@@ -83,7 +83,7 @@ public final class DataBaseTest {
   public void addTenRequests() {
     ArrayList<Song> exceptedSongs = new ArrayList<>(); 
     for (int i = 0; i < TEN; i++) {
-      Song song = new Song(Integer.toString(i), Integer.toString(i + TEN));
+      Song song = new Song(Integer.toString(i), Integer.toString(i));
       exceptedSongs.add(song);
       SongDataBase.saveSongRequest(song);
     }
@@ -94,25 +94,25 @@ public final class DataBaseTest {
   @Test
   public void addMoreThanTenRequests() {
     ArrayList<Song> exceptedSongs = new ArrayList<>(); 
-    for (int i = 0; i < MORE_THAN_TEN; i++) {
-      Song song = new Song(Integer.toString(i), Integer.toString(i + MORE_THAN_TEN));
+    for (int i = 0; i < NUM_OF_ACCEPTED_SONGS; i++) {
+      Song song = new Song(Integer.toString(i), Integer.toString(i));
       for (int j = 0; j <= i; j++) {
         SongDataBase.saveSongRequest(song);
       }
-      // because last 10 songs will be serched more
-      if (MORE_THAN_TEN - TEN <= i) {
+      // because last 10 songs will be searched more
+      if (NUM_OF_ACCEPTED_SONGS - TEN <= i) {
         exceptedSongs.add(song);
       }
     }
     checkList(exceptedSongs);
   }
 
-  /** Serach for one song twice, for other once and check that fisrts song is in top10. */
+  /** Search for one song twice, for other once and check that fisrt song is in top10. */
   @Test
   public void changeOneCounter() {
     SongDataBase.saveSongRequest(SONG);
     for (int i = 0; i < TEN; i++) {
-      Song song = new Song(Integer.toString(i), Integer.toString(i + TEN));
+      Song song = new Song(Integer.toString(i), Integer.toString(i));
       SongDataBase.saveSongRequest(song);
     }
     SongDataBase.saveSongRequest(SONG);
