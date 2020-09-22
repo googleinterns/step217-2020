@@ -141,9 +141,7 @@ class SongInfo extends React.Component {
             name: state.songName,
           },
           lyrics: state.lyrics,
-          score: state.sentimentState.sentimentAnalysisInfo.score,
-          magnitude: state.sentimentState.sentimentAnalysisInfo.magnitude,
-          interpretation: state.sentimentState.sentimentAnalysisInfo.interpretation,
+          songSentiment: state.sentimentState.sentimentAnalysisInfo,
           topSalientEntities: state.entityState.entityAnalysisInfo,
           youTubeIds: state.youTubeState.videoIds,
         })
@@ -171,9 +169,9 @@ class SongInfo extends React.Component {
       .then((songInfo) => {
         this.handleSentimentChange({
           sentimentAnalysisInfo: {
-            score: songInfo.score,
-            magnitude: songInfo.magnitude,
-            interpretation: songInfo.interpretation
+            score: songInfo.songSentiment.score,
+            magnitude: songInfo.songSentiment.magnitude,
+            interpretation: songInfo.songSentiment.interpretation
           },
           isLoading: false,
           error: null,

@@ -80,7 +80,6 @@ public final class AnalysisTest {
   private static final String TYPE = "type";
   private static final String ARTIST = "ARTIST";
   private static final String SONG = "SONG";
-  private static final String PAINTING = "PAINTING";
 
   @Before
   public void setUp() throws Exception {
@@ -259,7 +258,7 @@ public final class AnalysisTest {
     List<String> actual = gson.fromJson(responseString, new TypeToken<List<String>>(){}.getType());
     List<String> expected = Arrays.asList("Dr. Dre", "Michael Clarke", "Eminem", "Emine Erdoğan",
         "Emine Gülbahar Hatun", "Emine Ülker Tarhan", "Mihai Eminescu", "Emine Şenlikoğlu", 
-        "Cardinal Richelieu", "Gönül Ülkü");
+        "Cardinal Richelieu", "Emine Dzhaparova");
 
     Assert.assertEquals(expected, actual);
   }
@@ -307,18 +306,6 @@ public final class AnalysisTest {
 
     Assert.assertEquals(expected, actual);
   }  
-
-  @Test
-  public void autocompleteBadTypeRequest() throws IOException {
-    final AutocompleteSearchRequest searchRequest = new AutocompleteSearchRequest(INCOMPLETE_SONG_NAME, PAINTING);
-    when(request.getReader()).thenReturn(
-      new BufferedReader(new StringReader(gson.toJson(searchRequest))));
-    autocompleteServletUnderTest.doPost(request, response);
-    
-    verify(response).sendError(
-        HttpServletResponse.SC_BAD_REQUEST,
-        "Type not supported.");
-  }
 
   public void duplicateEntitiesWithSameType() {
     List<SongEntity> duplicateList = Arrays.asList(
