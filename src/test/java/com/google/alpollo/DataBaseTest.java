@@ -27,7 +27,12 @@ public final class DataBaseTest {
   private Closeable session;
 
   private static final Song SONG = new Song("Drake", "Toosie Slide");
+  /** We save 10 songs to database and to test it we use this constant. */
   private static final int TEN = 10;
+  /** 
+   * We save 10 songs to database and this constant provides us to check adding more then 10 songs, 
+   * in this case 15, but we can change. 
+   */
   private static final int MORE_THAN_TEN = 15;
 
   @BeforeClass
@@ -102,7 +107,7 @@ public final class DataBaseTest {
     checkList(exceptedSongs);
   }
 
-  /** Serach for one  song twice, for other once and check that fisrts song is in top10. */
+  /** Serach for one song twice, for other once and check that fisrts song is in top10. */
   @Test
   public void changeOneCounter() {
     SongDataBase.saveSongRequest(SONG);
