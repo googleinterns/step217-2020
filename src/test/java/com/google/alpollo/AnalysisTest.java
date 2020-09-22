@@ -79,7 +79,6 @@ public final class AnalysisTest {
   private static final String TYPE = "type";
   private static final String ARTIST = "ARTIST";
   private static final String SONG = "SONG";
-  private static final String PAINTING = "PAINTING";
 
   @Before
   public void setUp() throws Exception {
