@@ -1,5 +1,6 @@
 package com.google.alpollo;
 
+import com.google.alpollo.model.AutocompleteSearchRequest;
 import com.google.alpollo.helpers.AnalysisHelper;
 import com.google.alpollo.model.Lyrics;
 import com.google.alpollo.model.SongSentiment;
@@ -234,8 +235,9 @@ public final class AnalysisTest {
 
   @Test
   public void foundArtistWithFullName() throws IOException {
-    when(request.getParameter(SEARCH_STRING)).thenReturn(FULL_ARTIST_NAME);
-    when(request.getParameter(TYPE)).thenReturn(ARTIST);
+    final AutocompleteSearchRequest searchRequest = new AutocompleteSearchRequest(FULL_ARTIST_NAME, ARTIST);
+    when(request.getReader()).thenReturn(
+      new BufferedReader(new StringReader(gson.toJson(searchRequest))));
     autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
@@ -247,8 +249,9 @@ public final class AnalysisTest {
 
   @Test
   public void foundArtistWithIncompleteName() throws IOException {
-    when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_ARTIST_NAME);
-    when(request.getParameter(TYPE)).thenReturn(ARTIST);
+    final AutocompleteSearchRequest searchRequest = new AutocompleteSearchRequest(INCOMPLETE_ARTIST_NAME, ARTIST);
+    when(request.getReader()).thenReturn(
+      new BufferedReader(new StringReader(gson.toJson(searchRequest))));
     autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
@@ -262,8 +265,9 @@ public final class AnalysisTest {
 
   @Test
   public void foundArtistWithWrongName() throws IOException {
-    when(request.getParameter(SEARCH_STRING)).thenReturn(WRONG_ARTIST_NAME);
-    when(request.getParameter(TYPE)).thenReturn(ARTIST);
+    final AutocompleteSearchRequest searchRequest = new AutocompleteSearchRequest(WRONG_ARTIST_NAME, ARTIST);
+    when(request.getReader()).thenReturn(
+      new BufferedReader(new StringReader(gson.toJson(searchRequest))));
     autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
@@ -275,8 +279,9 @@ public final class AnalysisTest {
 
   @Test
   public void artistIsABand() throws IOException {
-    when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_BAND_NAME);
-    when(request.getParameter(TYPE)).thenReturn(ARTIST);
+    final AutocompleteSearchRequest searchRequest = new AutocompleteSearchRequest(INCOMPLETE_BAND_NAME, ARTIST);
+    when(request.getReader()).thenReturn(
+      new BufferedReader(new StringReader(gson.toJson(searchRequest))));
     autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 
@@ -288,8 +293,9 @@ public final class AnalysisTest {
 
   @Test
   public void searchSongWithIncompleteName() throws IOException {
-    when(request.getParameter(SEARCH_STRING)).thenReturn(INCOMPLETE_SONG_NAME);
-    when(request.getParameter(TYPE)).thenReturn(SONG);
+    final AutocompleteSearchRequest searchRequest = new AutocompleteSearchRequest(INCOMPLETE_SONG_NAME, SONG);
+    when(request.getReader()).thenReturn(
+      new BufferedReader(new StringReader(gson.toJson(searchRequest))));
     autocompleteServletUnderTest.doPost(request, response);
     String responseString = responseWriter.toString();
 

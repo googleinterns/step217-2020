@@ -1,5 +1,6 @@
 package com.google.alpollo.servlets;
 
+import com.google.alpollo.model.AutocompleteSearchRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +35,6 @@ import com.jayway.jsonpath.spi.mapper.MappingProvider;
 @WebServlet("/autocomplete")
 public class AutocompleteServlet extends HttpServlet {
   private final Gson gson = new Gson();
-  private final static String SEARCH_STRING = "searchString";
-  private final static String TYPE = "type";
   private final static String LIMIT = "10";
 
   private enum SearchType {
@@ -55,8 +54,9 @@ public class AutocompleteServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     List<String> typeList;
     try {
-      String searchString = request.getParameter(SEARCH_STRING);
-      SearchType type = SearchType.valueOf(request.getParameter(TYPE));
+      AutocompleteSearchRequest searchRequest = gson.fromJson(request.getReader(), AutocompleteSearchRequest.class);
+      String searchString = searchRequest.getSearchString();
+      SearchType type = SearchType.valueOf(searchRequest.getType());
       switch (type) {
         case ARTIST:
           typeList = Arrays.asList("Person", "MusicGroup");

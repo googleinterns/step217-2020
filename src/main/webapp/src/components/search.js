@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import AutocompleteTextField from './autocompleteTextField';
 import axios from "axios";
 
 const styles = () => ({
@@ -41,25 +42,6 @@ const styles = () => ({
 });
 
 /**
- * Change TextField outline border default colors.
- */
-const StyledTextField = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "black",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#733F94",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "#733F94",
-      },
-    },
-  },
-})(TextField);
-
-/**
  * Displays search component for song lyrics.
  */
 class Search extends React.Component {
@@ -78,10 +60,11 @@ class Search extends React.Component {
 
   /**
    * Save printed text to state while printing.
-   * @param {Event} event 
+   * @param {string} id id of the input field
+   * @param {string} value value of the input field
    */
-  handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+  handleChange(id, value) {
+    this.setState({ [id]: value });
     this.setState({ error: null, isLoading: false });
   }
 
@@ -140,21 +123,23 @@ class Search extends React.Component {
             noValidate
             autoComplete="off"
           >
-            <StyledTextField
+            <AutocompleteTextField
               className={classes.textField}
               id="artistName"
               label="Artist"
+              type="ARTIST"
               variant="outlined"
               value={this.state.artistName}
-              onChange={this.handleChange}
+              handleChange={this.handleChange}
             />
-            <StyledTextField
+            <AutocompleteTextField
               className={classes.textField}
               id="songName"
               label="Song"
+              type="SONG"
               variant="outlined"
               value={this.state.songName}
-              onChange={this.handleChange}
+              handleChange={this.handleChange}
             />
             <Button
               disabled={isDisabled}
