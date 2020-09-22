@@ -12,7 +12,7 @@ import com.googlecode.objectify.annotation.Stringify;
 import com.google.alpollo.database.SongStringifier;
 
 /** 
- * Represents the structure of user's searc history.
+ * Represents the structure of user's search history.
  * Contains the list with all songs.
  */
 @Entity
@@ -30,7 +30,7 @@ public class SearchHistory {
     id = userId;
   }
 
-  /** Saves new  search request from autorized user. */
+  /** Saves new search request from authorized user. */
   public void addSearchRequest(Song song) {
     if (history.containsKey(song)) {
       history.put(song, history.get(song) + 1);
@@ -39,15 +39,15 @@ public class SearchHistory {
     }
   }
 
-  /** Returns list with top 10 searched songs from autorized user. */
+  /** Returns list with top 10 searched songs from authorized user. */
   public List<Song> getHistory() {
-    // sort by values and then add only top 10 songs to result list 
+    // Sort by values and then add only top 10 songs to result list 
     List<Song> sortedSongs = new ArrayList<>();
-   history.entrySet()
-       .stream()
-       .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-       .limit(TOP_SIZE)
-       .forEachOrdered(x -> sortedSongs.add(x.getKey()));
+    history.entrySet()
+           .stream()
+           .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+           .limit(TOP_SIZE)
+           .forEachOrdered(x -> sortedSongs.add(x.getKey()));
     return sortedSongs;
   }
 }

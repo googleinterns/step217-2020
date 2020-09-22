@@ -1,6 +1,7 @@
 package com.google.alpollo.model;
 
 import com.google.alpollo.helpers.AnalysisHelper;
+import com.googlecode.objectify.annotation.Index;
 
 /**
  * Class created to store only sentiment score and magnitude, leaving the other
@@ -9,11 +10,14 @@ import com.google.alpollo.helpers.AnalysisHelper;
  */
 public class SongSentiment {
   /** Each sentiment has a score, showing the overall positivity of the text, ranging from -1.0 to 1.0. */
-  private final float score;
+  @Index private float score;
   /** Each sentiment has a magnitude, representing how strong the sentiment is, ranging from 0.0 to +inf. */
-  private final float magnitude;
+  @Index private float magnitude;
   /** Based on the score and magnitude of a sentiment, we can make up an interpretation of these values. */
-  private final String interpretation;
+  @Index private String interpretation;
+
+  /** Objectify requires no argument constructor. Do not use it. */
+  private SongSentiment() { }
 
   public SongSentiment(float score, float magnitude) {
     this.score = score;
