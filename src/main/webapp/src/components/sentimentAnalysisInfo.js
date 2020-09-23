@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { createMuiTheme, withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/Info';
 import objectEquals from '../helpers/objectEquals';
 import axios from "axios";
+import LargeTextTooltip from "../styledComponents/styledTextTooltip";
 
 const styles = (theme) => ({
   root: {
@@ -22,12 +22,6 @@ const styles = (theme) => ({
     paddingLeft: "15px",
   },
 });
-
-const LargeTextTooltip = withStyles({
-  tooltip: {
-    fontSize: "14px",
-  }
-})(Tooltip);
 
 /**
  * Displays sentiment analysis info for the lyrics.
