@@ -1,29 +1,10 @@
 import React from 'react';
 import { withStyles } from "@material-ui/styles";
-import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Typography from '@material-ui/core/Typography';
 import throttle from 'lodash/throttle';
 import axios from "axios";
-
-/**
- * Change TextField outline border default colors.
- */
-const StyledTextField = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "black",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#733F94",
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "#733F94",
-      },
-    },
-  },
-})(TextField);
+import StyledTextField from "../styledComponents/styledTextField";
 
 export default function AutocompleteTextField(props) {
   const [value, setValue] = React.useState(props.value);

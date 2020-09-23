@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/styles";
-import { lighten } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
-import LinearProgress from '@material-ui/core/LinearProgress';
 import AudioPlayer from 'material-ui-audio-player';
 import axios from "axios";
+import StyledLinearProgress from "../styledComponents/styledLinearProgress";
 
 const styles = () => ({
   root: {
@@ -17,15 +16,6 @@ const styles = () => ({
     margin: "20px 0 20px 0",
   }
 });
-
-const StyledLinearProgress = withStyles({
-  root: {
-    backgroundColor: lighten('#000000', 0.5), 
-  },
-  bar: {
-    background: '#000000',
-  },
-})(LinearProgress);
 
 /**
  * Displays search component for song lyrics.
