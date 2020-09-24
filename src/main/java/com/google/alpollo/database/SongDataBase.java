@@ -1,7 +1,7 @@
 package com.google.alpollo.database;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Collections;
 import com.google.alpollo.database.OfyService;
 import com.google.alpollo.model.AnalysisInfo;
 import com.google.alpollo.model.Song;
@@ -73,7 +73,7 @@ public class SongDataBase {
   public static List<Song> searchHistory(String userId) {
     SearchHistory searchHistory = OfyService.ofy().load().type(SearchHistory.class).id(userId).now();
     if (searchHistory == null) {
-      return new ArrayList<>();
+      return Collections.emptyList();
     }
     return searchHistory.getHistory();
   }

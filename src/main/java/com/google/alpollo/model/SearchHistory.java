@@ -19,6 +19,7 @@ import com.google.alpollo.database.SongStringifier;
 public class SearchHistory {
   @Id private String id;
   @Stringify(SongStringifier.class)
+  /** Saves search counter for each song that was searched by user. */
   private HashMap<Song, Integer> history = new HashMap<>();
   /** Number of the songs that will be shown to the user. */
   private static final int TOP_SIZE = 10;

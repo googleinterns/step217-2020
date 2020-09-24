@@ -1,4 +1,4 @@
-package com.google.alpollo;
+package com.google.alpollo.servlets;
 
 import com.google.alpollo.model.Song;
 import javax.servlet.ServletException;

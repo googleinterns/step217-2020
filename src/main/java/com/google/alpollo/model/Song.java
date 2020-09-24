@@ -23,7 +23,7 @@ public class Song {
 
   /** 
    * Objectify requires to write this constructor to save maps to database.
-   * More detail we need to convert class Song to String and convert back because we use Song class as a keys.
+   * More detail we need to convert class Song to String and convert back because we use Song class as a key.
    */
   public Song(String string) {
     String[] strings = string.split(SEPARATOR);
@@ -50,7 +50,7 @@ public class Song {
 
   /** 
    * Objectify requires to write this constructor to save maps to database.
-   * More detail we need to convert class Song to String and convert back because we use Song class as a keys.
+   * More detail we need to convert class Song to String and convert back because we use Song class as a key.
    */
   public String getString() {
     return artist + SEPARATOR + name;
