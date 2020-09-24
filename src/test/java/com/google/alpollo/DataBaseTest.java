@@ -27,13 +27,13 @@ public final class DataBaseTest {
   private Closeable session;
 
   private static final Song SONG = new Song("Drake", "Toosie Slide");
-  /** We save 10 songs to database and to test it we use this constant. */
-  private static final int TEN = 10;
+  /** We save 10 songs to database and to test it we use this constant. This number is maximum. */
+  private static final int NUM_SONGS_DATABASE = 10;
   /** 
    * We save 10 songs to database and this constant provides us to check adding more then 10 songs, 
    * in this case 15, but we can change. 
    */
-  private static final int NUM_OF_ACCEPTED_SONGS = 15;
+  private static final int NUM_OF_ACCEPTED_SONGS = NUM_SONGS_DATABASE + 5;
 
   @BeforeClass
   public static void beforeClass() throws Exception {
@@ -62,56 +62,56 @@ public final class DataBaseTest {
   }
 
   /** Compare songs from database with correct list. */
-  private void checkList(List<Song> exceptedSongs) {
+  private void checkList(List<Song> expectedSongs) {
     ArrayList<Song> actualSongs = new ArrayList<>();
     SongDataBase.topSongs().forEach(songCounter -> actualSongs.add(songCounter.getSong()));
-    Assert.assertEquals(exceptedSongs.retainAll(actualSongs), actualSongs.retainAll(exceptedSongs));
-    Assert.assertTrue(exceptedSongs.size() <= TEN);
+    Assert.assertEquals(expectedSongs.retainAll(actualSongs), actualSongs.retainAll(expectedSongs));
+    Assert.assertTrue(expectedSongs.size() <= NUM_SONGS_DATABASE);
   }
 
   /** Add one song request and check that database returns list with this request. */
   @Test
   public void addOneRequest() {
     SongDataBase.saveSongRequest(SONG);
-    ArrayList<Song> exceptedSongs = new ArrayList<>();
-    exceptedSongs.add(SONG);
-    checkList(exceptedSongs);
+    ArrayList<Song> expectedSongs = new ArrayList<>();
+    expectedSongs.add(SONG);
+    checkList(expectedSongs);
   }
 
-  /** Add 10 requests and check that database returns list with them. */
+  /** Add maximum requests and check that database returns list with them. */
   @Test
-  public void addTenRequests() {
-    ArrayList<Song> exceptedSongs = new ArrayList<>(); 
-    for (int i = 0; i < TEN; i++) {
+  public void addMaximumOfRequests() {
+    ArrayList<Song> expectedSongs = new ArrayList<>(); 
+    for (int i = 0; i < NUM_SONGS_DATABASE; i++) {
       Song song = new Song(Integer.toString(i), Integer.toString(i));
-      exceptedSongs.add(song);
+      expectedSongs.add(song);
       SongDataBase.saveSongRequest(song);
     }
-    checkList(exceptedSongs);
+    checkList(expectedSongs);
   }
 
-  /** Add more than 10 requests and check that database returns only 10 most searched. */
+  /** Add more than maximum requests and check that database returns only maximum most searched. */
   @Test
-  public void addMoreThanTenRequests() {
-    ArrayList<Song> exceptedSongs = new ArrayList<>(); 
+  public void addMoreThanMaximumOfRequests() {
+    ArrayList<Song> expectedSongs = new ArrayList<>(); 
     for (int i = 0; i < NUM_OF_ACCEPTED_SONGS; i++) {
       Song song = new Song(Integer.toString(i), Integer.toString(i));
       for (int j = 0; j <= i; j++) {
         SongDataBase.saveSongRequest(song);
       }
       // because last 10 songs will be searched more
-      if (NUM_OF_ACCEPTED_SONGS - TEN <= i) {
-        exceptedSongs.add(song);
+      if (NUM_OF_ACCEPTED_SONGS - NUM_SONGS_DATABASE <= i) {
+        expectedSongs.add(song);
       }
     }
-    checkList(exceptedSongs);
+    checkList(expectedSongs);
   }
 
   /** Search for one song twice, for other once and check that fisrt song is in top10. */
   @Test
   public void changeOneCounter() {
     SongDataBase.saveSongRequest(SONG);
-    for (int i = 0; i < TEN; i++) {
+    for (int i = 0; i < NUM_SONGS_DATABASE; i++) {
       Song song = new Song(Integer.toString(i), Integer.toString(i));
       SongDataBase.saveSongRequest(song);
     }
