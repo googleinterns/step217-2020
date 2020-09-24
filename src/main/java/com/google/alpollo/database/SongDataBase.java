@@ -1,11 +1,14 @@
 package com.google.alpollo.database;
 
 import java.util.List;
-
+import java.util.Collections;
 import com.google.alpollo.database.OfyService;
 import com.google.alpollo.model.AnalysisInfo;
 import com.google.alpollo.model.Song;
 import com.google.alpollo.model.SongCounter;
+import com.google.alpollo.model.SearchHistory;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 /** Class that provides methods to work with the database. */
 public class SongDataBase {
@@ -19,6 +22,7 @@ public class SongDataBase {
       songCounter = new SongCounter(song);
     }
     songCounter.incrementSearchCounter();
+    saveInUserHistory(song);
     OfyService.ofy().save().entity(songCounter).now();
     return songCounter;
   }
@@ -48,5 +52,29 @@ public class SongDataBase {
   /** Returns the analysis info by song id. */
   public static AnalysisInfo getAnanlysisInfo(Long id) {
     return OfyService.ofy().load().type(AnalysisInfo.class).id(id).now();
+  }
+
+  /** Save search request to user history. */
+  public static void saveInUserHistory(Song song) {
+    UserService userService = UserServiceFactory.getUserService();
+    if (userService.isUserLoggedIn()) {
+      String userId = userService.getCurrentUser().getUserId();
+
+      SearchHistory searchHistory = OfyService.ofy().load().type(SearchHistory.class).id(userId).now();
+      if (searchHistory == null) {
+        searchHistory = new SearchHistory(userId);
+      }
+      searchHistory.addSearchRequest(song);
+      OfyService.ofy().save().entity(searchHistory).now();
+    } 
+  }
+
+  /** Returns the list of the most requested songs from the user. */
+  public static List<Song> searchHistory(String userId) {
+    SearchHistory searchHistory = OfyService.ofy().load().type(SearchHistory.class).id(userId).now();
+    if (searchHistory == null) {
+      return Collections.emptyList();
+    }
+    return searchHistory.getHistory();
   }
 }
