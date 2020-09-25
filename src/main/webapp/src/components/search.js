@@ -82,18 +82,25 @@ class Search extends React.Component {
       )
       .then((result) => result.data)
       .then((response) => {
-        this.setState({
-          lyrics: response.lyrics,
-          isLoading: false,
-        });
-        this.props.history.push({
-          pathname: '/song',
-          state: {
+        if (response.lyrics) {
+          this.setState({
             lyrics: response.lyrics,
-            artistName: this.state.artistName,
-            songName: this.state.songName,
-          },
-        });
+            isLoading: false,
+          });
+          this.props.history.push({
+            pathname: '/song',
+            state: {
+              lyrics: response.lyrics,
+              artistName: this.state.artistName,
+              songName: this.state.songName,
+            },
+          });
+        } else {
+          this.setState({
+            error: new Error("Lyrics not found"),
+            isLoading: false,
+          });
+        }
       })
       .catch((error) =>
         this.setState({

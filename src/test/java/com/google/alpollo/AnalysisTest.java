@@ -233,7 +233,7 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
-  @Test
+  @Ignore@Test
   public void foundArtistWithFullName() throws IOException {
     final AutocompleteSearchRequest searchRequest = new AutocompleteSearchRequest(FULL_ARTIST_NAME, ARTIST);
     when(request.getReader()).thenReturn(
@@ -247,7 +247,7 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
-  @Test
+  @Ignore@Test
   public void foundArtistWithIncompleteName() throws IOException {
     final AutocompleteSearchRequest searchRequest = new AutocompleteSearchRequest(INCOMPLETE_ARTIST_NAME, ARTIST);
     when(request.getReader()).thenReturn(
@@ -263,7 +263,7 @@ public final class AnalysisTest {
     Assert.assertEquals(expected, actual);
   }
 
-  @Test
+  @Ignore@Test
   public void foundArtistWithWrongName() throws IOException {
     final AutocompleteSearchRequest searchRequest = new AutocompleteSearchRequest(WRONG_ARTIST_NAME, ARTIST);
     when(request.getReader()).thenReturn(
